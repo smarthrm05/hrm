@@ -26,11 +26,14 @@ import { PaklaringPage } from './components/PaklaringPage';
 import { RegisterPage } from "./components/RegisterPage";
 import { LoginForm } from "./components/LoginForm";
 import { SuratPeringatanPage } from "./components/SuratPeringatanPage";
+import { KelolaKaryawanPage } from "./components/KelolaKaryawan/KelolaKaryawanPage";
+import { DataKaryawanPage } from "./components/KelolaKaryawan/DataKaryawanPage";
 
 
 // ✅ Auth
 import { AuthProvider } from "@/contexts/AuthContext";
 import { PrivateRoute } from "@/components/PrivateRoute";
+
 
 const queryClient = new QueryClient();
 
@@ -55,6 +58,8 @@ const App = () => (
                   <Route path="dashboard" element={<div>Selamat datang di Dashboard</div>} />
                   <Route path="kehadiran-page" element={<KehadiranPage />} />
                   <Route path="data-kehadiran" element={<DataKehadiranPage />} />
+                  <Route path="kelola-karyawan" element={<KelolaKaryawanPage />} />
+                  <Route path="data-karyawan" element={<DataKaryawanPage />} />
                   <Route path="cuti" element={<CutiPage />} />
                   <Route path="izin" element={<IzinPage />} />
                   <Route path="lembur" element={<LemburPage />} />
