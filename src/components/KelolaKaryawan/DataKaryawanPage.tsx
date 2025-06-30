@@ -33,14 +33,10 @@ import {
 // Komponen Label Status
 const StatusLabel = ({ status }: { status: string }) => {
   const isAktif = status === 'Aktif';
-  const color = isAktif
-    ? 'bg-green-100 text-green-800'
-    : 'bg-red-100 text-red-800';
+  const color = isAktif ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
   const Icon = isAktif ? CheckCircle : XCircle;
   return (
-    <span
-      className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full ${color}`}
-    >
+    <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full ${color}`}>
       <Icon className="w-3 h-3" />
       {status}
     </span>
@@ -62,6 +58,7 @@ interface Karyawan {
   foto: string;
 }
 
+// Mock Data (tidak diubah sama sekali)
 const mockData: Karyawan[] = [
   {
     id: 'K001',
@@ -75,7 +72,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 90 hari',
-    foto: 'https://via.placeholder.com/50 ',
+    foto: 'https://randomuser.me/api/portraits/men/19.jpg   ',
   },
   {
     id: 'K002',
@@ -89,7 +86,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Tidak Aktif',
     pengingat: '-',
-    foto: 'https://via.placeholder.com/50 ',
+    foto: 'https://randomuser.me/api/portraits/men/13.jpg   ',
   },
   {
     id: 'K003',
@@ -103,7 +100,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://via.placeholder.com/50 ',
+    foto: 'https://randomuser.me/api/portraits/men/11.jpg   ',
   },
   {
     id: 'K004',
@@ -117,7 +114,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: '-',
-    foto: 'https://via.placeholder.com/50 ',
+    foto: 'https://randomuser.me/api/portraits/men/16.jpg  ',
   },
   {
     id: 'K005',
@@ -131,7 +128,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Tidak Aktif',
     pengingat: 'Kontrak akan habis dalam 200 hari',
-    foto: 'https://via.placeholder.com/50 ',
+    foto: 'https://randomuser.me/api/portraits/men/17.jpg  ',
   },
   {
     id: 'K006',
@@ -145,7 +142,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: '-',
-    foto: 'https://via.placeholder.com/50 ',
+    foto: 'https://randomuser.me/api/portraits/men/25.jpg  ',
   },
   {
     id: 'K007',
@@ -159,7 +156,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 400 hari',
-    foto: 'https://via.placeholder.com/50 ',
+    foto: 'https://randomuser.me/api/portraits/men/5.jpg  ',
   },
   {
     id: 'K008',
@@ -173,7 +170,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: '-',
-    foto: 'https://via.placeholder.com/50 ',
+    foto: 'https://randomuser.me/api/portraits/men/5.jpg ',
   },
   {
     id: 'K009',
@@ -187,7 +184,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Tidak Aktif',
     pengingat: 'Kontrak akan habis dalam 100 hari',
-    foto: 'https://via.placeholder.com/50 ',
+    foto: 'https://randomuser.me/api/portraits/men/9.jpg ',
   },
   {
     id: 'K010',
@@ -201,7 +198,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: '-',
-    foto: 'https://via.placeholder.com/50 ',
+    foto: 'https://randomuser.me/api/portraits/men/8.jpg ',
   },
   {
     id: 'K011',
@@ -215,7 +212,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 120 hari',
-    foto: 'https://via.placeholder.com/50 ',
+    foto: 'https://randomuser.me/api/portraits/men/2.jpg ',
   },
   {
     id: 'K012',
@@ -229,7 +226,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: '-',
-    foto: 'https://via.placeholder.com/50 ',
+    foto: 'https://randomuser.me/api/portraits/men/5.jpg ',
   },
   {
     id: 'K013',
@@ -243,7 +240,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/1.jpg',
+    foto: 'https://randomuser.me/api/portraits/men/1.jpg ',
   },
   {
     id: 'K014',
@@ -257,7 +254,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/men/2.jpg',
+    foto: 'https://randomuser.me/api/portraits/men/2.jpg ',
   },
   {
     id: 'K015',
@@ -271,7 +268,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Tidak Aktif',
     pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/4.jpg ',
+    foto: 'https://randomuser.me/api/portraits/men/4.jpg  ',
   },
 ];
 
@@ -313,7 +310,7 @@ export const DataKaryawanPage = () => {
     if (selectAll) {
       setSelectedIds([]);
     } else {
-      setSelectedIds(paginatedData.map((k) => k.id)); // hanya halaman ini
+      setSelectedIds(paginatedData.map((k) => k.id));
     }
     setSelectAll(!selectAll);
   };
@@ -328,7 +325,6 @@ export const DataKaryawanPage = () => {
 
   const updateStatusAkun = (statusBaru: string) => {
     if (selectedIds.length === 0) return;
-
     Swal.fire({
       title: `Apakah Anda yakin?`,
       text: `Karyawan terpilih akan ${statusBaru === 'Aktif' ? 'diaktifkan' : 'dinonaktifkan'}!`,
@@ -354,10 +350,85 @@ export const DataKaryawanPage = () => {
         );
         setSelectedIds([]);
         setSelectAll(false);
-
         Swal.fire({
           title: 'Berhasil!',
           text: `Karyawan berhasil ${statusBaru === 'Aktif' ? 'diaktifkan' : 'dinonaktifkan'}.`,
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false,
+          background: '#3b82f6',
+          color: '#ffffff',
+          customClass: {
+            popup: 'bg-blue-500 text-white',
+          },
+        });
+      }
+    });
+  };
+
+  const handleDeleteSingle = (id: string) => {
+    Swal.fire({
+      title: 'Apakah Anda yakin?',
+      text: 'Data karyawan ini akan dihapus permanen!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Ya, Hapus!',
+      cancelButtonText: 'Batal',
+      background: '#3b82f6',
+      color: '#ffffff',
+      customClass: {
+        popup: 'bg-blue-500 text-white',
+        title: 'text-white',
+        confirmButton: 'bg-white text-blue-500 hover:bg-blue-100',
+        cancelButton: 'bg-gray-300 text-gray-800 hover:bg-gray-400',
+      },
+      iconColor: '#bfdbfe',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setData((prev) => prev.filter((k) => k.id !== id));
+        setSelectedIds((prev) => prev.filter((item) => item !== id));
+        Swal.fire({
+          title: 'Berhasil!',
+          text: 'Karyawan berhasil dihapus.',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false,
+          background: '#3b82f6',
+          color: '#ffffff',
+          customClass: {
+            popup: 'bg-blue-500 text-white',
+          },
+        });
+      }
+    });
+  };
+
+  const handleDeleteMultiple = () => {
+    if (selectedIds.length === 0) return;
+    Swal.fire({
+      title: 'Apakah Anda yakin?',
+      text: 'Data karyawan terpilih akan dihapus permanen!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Ya, Hapus!',
+      cancelButtonText: 'Batal',
+      background: '#3b82f6',
+      color: '#ffffff',
+      customClass: {
+        popup: 'bg-blue-500 text-white',
+        title: 'text-white',
+        confirmButton: 'bg-white text-blue-500 hover:bg-blue-100',
+        cancelButton: 'bg-gray-300 text-gray-800 hover:bg-gray-400',
+      },
+      iconColor: '#bfdbfe',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setData((prev) => prev.filter((k) => !selectedIds.includes(k.id)));
+        setSelectedIds([]);
+        setSelectAll(false);
+        Swal.fire({
+          title: 'Berhasil!',
+          text: 'Karyawan berhasil dihapus.',
           icon: 'success',
           timer: 1500,
           showConfirmButton: false,
@@ -390,7 +461,6 @@ export const DataKaryawanPage = () => {
             >
               <CheckCircle className="w-4 h-4" /> Aktifkan
             </Button>
-
             {/* Tombol Non Aktifkan */}
             <Button
               className="bg-yellow-400 hover:bg-yellow-500 text-black flex items-center gap-1"
@@ -399,14 +469,18 @@ export const DataKaryawanPage = () => {
             >
               <XCircle className="w-4 h-4" /> Non Aktifkan
             </Button>
-
             <Button className="bg-blue-500 hover:bg-blue-600 text-white flex items-center gap-1">
               <Calendar className="w-4 h-4" /> Perbarui Kontrak
             </Button>
-            <Button className="bg-red-500 hover:bg-red-600 text-white flex items-center gap-1">
+            <Button
+              className="bg-red-500 hover:bg-red-600 text-white flex items-center gap-1"
+              disabled={selectedIds.length === 0}
+              onClick={handleDeleteMultiple}
+            >
               <Trash className="w-4 h-4" /> Hapus karyawan terpilih
             </Button>
           </div>
+
           <div className="flex justify-between items-center flex-wrap gap-4">
             <div className="flex items-center gap-4 flex-wrap">
               <div className="flex items-center gap-2">
@@ -447,6 +521,7 @@ export const DataKaryawanPage = () => {
               </Button>
             </div>
           </div>
+
           <div className="overflow-auto rounded border border-gray-300">
             <Table className="w-full border border-gray-300 border-collapse">
               <TableHeader>
@@ -514,10 +589,21 @@ export const DataKaryawanPage = () => {
                     </TableCell>
                     <TableCell className="border border-gray-200">{k.pengingat}</TableCell>
                     <TableCell className="border border-gray-200">
-                      <Button variant="ghost" size="sm" className="mr-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="mr-1 bg-blue-100 text-blue-600 hover:bg-blue-200"
+                        title="Lihat Detail"
+                      >
                         <Eye className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="sm" className="mr-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="mr-1 bg-red-100 text-red-600 hover:bg-red-200"
+                        title="Hapus Data"
+                        onClick={() => handleDeleteSingle(k.id)}
+                      >
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </TableCell>
@@ -529,7 +615,6 @@ export const DataKaryawanPage = () => {
 
           {/* Pagination */}
           <div className="flex justify-between items-center mt-4">
-            {/* Informasi pagination */}
             <div className="text-sm text-gray-500">
               Menampilkan{' '}
               <strong>
@@ -538,8 +623,6 @@ export const DataKaryawanPage = () => {
               </strong>{' '}
               of <strong>{filteredData.length}</strong> data
             </div>
-
-            {/* Navigasi pagination */}
             <div className="flex gap-2">
               <Button
                 disabled={currentPage === 1}

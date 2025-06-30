@@ -28,6 +28,7 @@ import { LoginForm } from "./components/LoginForm";
 import { SuratPeringatanPage } from "./components/SuratPeringatanPage";
 import { KelolaKaryawanPage } from "./components/KelolaKaryawan/KelolaKaryawanPage";
 import { DataKaryawanPage } from "./components/KelolaKaryawan/DataKaryawanPage";
+import { DivisiPage } from "./components/KelolaKaryawan/DivisiPage";
 
 
 // ✅ Auth
@@ -60,6 +61,7 @@ const App = () => (
                   <Route path="data-kehadiran" element={<DataKehadiranPage />} />
                   <Route path="kelola-karyawan" element={<KelolaKaryawanPage />} />
                   <Route path="data-karyawan" element={<DataKaryawanPage />} />
+                  <Route path="divisi" element={<DivisiPage />} />
                   <Route path="cuti" element={<CutiPage />} />
                   <Route path="izin" element={<IzinPage />} />
                   <Route path="lembur" element={<LemburPage />} />

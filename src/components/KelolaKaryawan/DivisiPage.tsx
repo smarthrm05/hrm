@@ -33,9 +33,19 @@ const divisiData = [
 export const DivisiPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showEntries, setShowEntries] = useState('10');
+  const [currentPage, setCurrentPage] = useState(1);
 
+  // Filter data
   const filteredData = divisiData.filter((item) =>
     item.nama.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Pagination
+  const entriesPerPage = parseInt(showEntries);
+  const totalPages = Math.ceil(filteredData.length / entriesPerPage);
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
   );
 
   return (
@@ -50,7 +60,7 @@ export const DivisiPage = () => {
 
         <CardContent className="space-y-4">
           {/* Controls */}
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center flex-wrap gap-4">
             <div className="flex items-center space-x-2">
               <span className="text-sm text-gray-600">Show</span>
               <Select value={showEntries} onValueChange={setShowEntries}>
@@ -85,25 +95,35 @@ export const DivisiPage = () => {
 
           {/* Table */}
           <div className="border rounded-lg overflow-hidden">
-            <Table className="w-full border border-gray-300">
+            <Table className="w-full border border-gray-300 border-collapse">
               <TableHeader>
-                <TableRow className="bg-blue-600 text-white">
-                  <TableHead className="border border-gray-300 font-semibold">No.</TableHead>
-                  <TableHead className="border border-gray-300 font-semibold">Nama Divisi</TableHead>
-                  <TableHead className="border border-gray-300 font-semibold">Aksi</TableHead>
+                <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
+                  <TableHead className="text-white border border-gray-200">No.</TableHead>
+                  <TableHead className="text-white border border-gray-200">Nama Divisi</TableHead>
+                  <TableHead className="text-white border border-gray-200">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredData.map((item, idx) => (
+                {paginatedData.map((item, idx) => (
                   <TableRow key={item.id} className="hover:bg-gray-50">
-                    <TableCell className="border border-gray-200">{idx + 1}</TableCell>
+                    <TableCell className="border border-gray-200">
+                      {(currentPage - 1) * entriesPerPage + idx + 1}
+                    </TableCell>
                     <TableCell className="border border-gray-200">{item.nama}</TableCell>
                     <TableCell className="border border-gray-200">
                       <div className="flex space-x-2">
-                        <Button size="sm" variant="outline" className="text-blue-600 border-blue-600">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="bg-blue-100 text-blue-600 hover:bg-blue-200"
+                        >
                           <Edit className="h-4 w-4" />
                         </Button>
-                        <Button size="sm" variant="outline" className="text-red-600 border-red-600">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="bg-red-100 text-red-600 hover:bg-red-200"
+                        >
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
@@ -114,15 +134,48 @@ export const DivisiPage = () => {
             </Table>
           </div>
 
-          {/* Footer */}
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">
-             Menampilkan 1 to {filteredData.length} of {filteredData.length} entries
-            </span>
-            <div className="flex space-x-2">
-              <Button variant="outline" size="sm">Previous</Button>
-              <Button variant="outline" size="sm" className="bg-blue-600 text-white">1</Button>
-              <Button variant="outline" size="sm">Next</Button>
+          {/* Footer / Pagination */}
+          <div className="flex justify-between items-center mt-4">
+            {/* Informasi pagination */}
+            <div className="text-sm text-gray-500">
+              Menampilkan{' '}
+              <strong>
+                {Math.max((currentPage - 1) * entriesPerPage + 1, 1)} to{' '}
+                {Math.min(currentPage * entriesPerPage, filteredData.length)}
+              </strong>{' '}
+              of <strong>{filteredData.length}</strong> entries
+            </div>
+            {/* Navigasi pagination */}
+            <div className="flex gap-2">
+              <Button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                className="bg-blue-500 text-white hover:bg-blue-600"
+              >
+                Sebelumnya
+              </Button>
+              {[...Array(totalPages)].map((_, i) => (
+                <Button
+                  key={i}
+                  variant={currentPage === i + 1 ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={
+                    currentPage === i + 1
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-white text-blue-600 border border-blue-600 hover:bg-blue-50'
+                  }
+                >
+                  {i + 1}
+                </Button>
+              ))}
+              <Button
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                className="bg-blue-500 text-white hover:bg-blue-600"
+              >
+                Selanjutnya
+              </Button>
             </div>
           </div>
         </CardContent>
