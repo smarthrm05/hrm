@@ -321,7 +321,7 @@ export const DataKehadiranPage = () => {
           <div className="overflow-x-auto border rounded-lg">
             <Table className="w-full border border-gray-300 border-collapse">
               <TableHeader>
-                <TableRow className="bg-blue-600 text-white">
+                <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
                   <TableHead className="border text-white">No.</TableHead>
                   <TableHead className="border text-white">ID Karyawan</TableHead>
                   <TableHead className="border text-white">Nama Karyawan</TableHead>

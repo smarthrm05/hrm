@@ -58,7 +58,6 @@ interface Karyawan {
   foto: string;
 }
 
-// Mock Data (tidak diubah sama sekali)
 const mockData: Karyawan[] = [
   {
     id: 'K001',
@@ -72,7 +71,21 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 90 hari',
-    foto: 'https://randomuser.me/api/portraits/men/19.jpg   ',
+    foto: 'https://randomuser.me/api/portraits/men/19.jpg ',
+  },
+  {
+    id: 'K001',
+    nama: 'Andi Prasetyo',
+    divisi: 'IT',
+    jabatan: 'Software Engineer',
+    kategori: 'Full Time',
+    tanggalBergabung: '2021-03-15',
+    tanggalKontrak: '2021-03-15',
+    selesaiKontrak: '2024-03-15',
+    statusKerja: 'Aktif',
+    statusAkun: 'Aktif',
+    pengingat: 'Kontrak akan habis dalam 90 hari',
+    foto: 'https://randomuser.me/api/portraits/men/2.jpg ',
   },
   {
     id: 'K002',
@@ -83,10 +96,38 @@ const mockData: Karyawan[] = [
     tanggalBergabung: '2019-07-20',
     tanggalKontrak: '2019-07-20',
     selesaiKontrak: '2024-07-20',
-    statusKerja: 'Aktif',
+    statusKerja: 'Tidak Aktif',
     statusAkun: 'Tidak Aktif',
     pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/13.jpg   ',
+    foto: 'https://randomuser.me/api/portraits/men/13.jpg ',
+  },
+  {
+    id: 'K002',
+    nama: 'Budi Santoso',
+    divisi: 'HRD',
+    jabatan: 'HR Manager',
+    kategori: 'Full Time',
+    tanggalBergabung: '2019-07-20',
+    tanggalKontrak: '2019-07-20',
+    selesaiKontrak: '2024-07-20',
+    statusKerja: 'Tidak Aktif',
+    statusAkun: 'Tidak Aktif',
+    pengingat: '-',
+    foto: 'https://randomuser.me/api/portraits/men/15.jpg ',
+  },
+  {
+    id: 'K002',
+    nama: 'Budi Santoso',
+    divisi: 'HRD',
+    jabatan: 'HR Manager',
+    kategori: 'Full Time',
+    tanggalBergabung: '2019-07-20',
+    tanggalKontrak: '2019-07-20',
+    selesaiKontrak: '2024-07-20',
+    statusKerja: 'Tidak Aktif',
+    statusAkun: 'Tidak Aktif',
+    pengingat: '-',
+    foto: 'https://randomuser.me/api/portraits/men/28.jpg ',
   },
   {
     id: 'K003',
@@ -100,175 +141,77 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/men/11.jpg   ',
+    foto: 'https://randomuser.me/api/portraits/men/11.jpg ',
   },
   {
-    id: 'K004',
-    nama: 'David Fernando',
-    divisi: 'Finance',
-    jabatan: 'Accountant',
-    kategori: 'Full Time',
-    tanggalBergabung: '2020-04-10',
-    tanggalKontrak: '2020-04-10',
-    selesaiKontrak: '2025-04-10',
-    statusKerja: 'Aktif',
-    statusAkun: 'Aktif',
-    pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/16.jpg  ',
-  },
-  {
-    id: 'K005',
-    nama: 'Eka Suryadi',
-    divisi: 'Sales',
-    jabatan: 'Sales Executive',
-    kategori: 'Part Time',
-    tanggalBergabung: '2022-08-12',
-    tanggalKontrak: '2022-08-12',
-    selesaiKontrak: '2024-08-12',
-    statusKerja: 'Aktif',
-    statusAkun: 'Tidak Aktif',
-    pengingat: 'Kontrak akan habis dalam 200 hari',
-    foto: 'https://randomuser.me/api/portraits/men/17.jpg  ',
-  },
-  {
-    id: 'K006',
-    nama: 'Farah Meilina',
-    divisi: 'IT',
-    jabatan: 'Frontend Developer',
-    kategori: 'Full Time',
-    tanggalBergabung: '2021-10-05',
-    tanggalKontrak: '2021-10-05',
-    selesaiKontrak: '2024-10-05',
-    statusKerja: 'Aktif',
-    statusAkun: 'Aktif',
-    pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/25.jpg  ',
-  },
-  {
-    id: 'K007',
-    nama: 'Gilang Ramadhan',
-    divisi: 'R&D',
-    jabatan: 'Research Analyst',
-    kategori: 'Full Time',
-    tanggalBergabung: '2020-01-22',
-    tanggalKontrak: '2020-01-22',
-    selesaiKontrak: '2025-01-22',
-    statusKerja: 'Aktif',
-    statusAkun: 'Aktif',
-    pengingat: 'Kontrak akan habis dalam 400 hari',
-    foto: 'https://randomuser.me/api/portraits/men/5.jpg  ',
-  },
-  {
-    id: 'K008',
-    nama: 'Hana Febrianti',
-    divisi: 'Customer Service',
-    jabatan: 'Customer Support',
-    kategori: 'Internship',
-    tanggalBergabung: '2023-03-10',
-    tanggalKontrak: '2023-03-10',
-    selesaiKontrak: '2024-03-10',
-    statusKerja: 'Aktif',
-    statusAkun: 'Aktif',
-    pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/5.jpg ',
-  },
-  {
-    id: 'K009',
-    nama: 'Indra Perdana',
-    divisi: 'Logistik',
-    jabatan: 'Warehouse Supervisor',
-    kategori: 'Full Time',
-    tanggalBergabung: '2018-11-18',
-    tanggalKontrak: '2018-11-18',
-    selesaiKontrak: '2024-11-18',
-    statusKerja: 'Aktif',
-    statusAkun: 'Tidak Aktif',
-    pengingat: 'Kontrak akan habis dalam 100 hari',
-    foto: 'https://randomuser.me/api/portraits/men/9.jpg ',
-  },
-  {
-    id: 'K010',
-    nama: 'Joko Susilo',
-    divisi: 'IT',
-    jabatan: 'System Administrator',
-    kategori: 'Full Time',
-    tanggalBergabung: '2019-09-05',
-    tanggalKontrak: '2019-09-05',
-    selesaiKontrak: '2024-09-05',
-    statusKerja: 'Aktif',
-    statusAkun: 'Aktif',
-    pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/8.jpg ',
-  },
-  {
-    id: 'K011',
-    nama: 'Kartika Dewi',
-    divisi: 'Finance',
-    jabatan: 'Finance Staff',
-    kategori: 'Full Time',
-    tanggalBergabung: '2021-02-28',
-    tanggalKontrak: '2021-02-28',
-    selesaiKontrak: '2024-02-28',
-    statusKerja: 'Aktif',
-    statusAkun: 'Aktif',
-    pengingat: 'Kontrak akan habis dalam 120 hari',
-    foto: 'https://randomuser.me/api/portraits/men/2.jpg ',
-  },
-  {
-    id: 'K012',
-    nama: 'Lutfi Andriansyah',
+    id: 'K003',
+    nama: 'Cindy Putri',
     divisi: 'Marketing',
-    jabatan: 'Social Media Specialist',
-    kategori: 'Part Time',
-    tanggalBergabung: '2022-05-07',
-    tanggalKontrak: '2022-05-07',
-    selesaiKontrak: '2024-05-07',
-    statusKerja: 'Aktif',
-    statusAkun: 'Aktif',
-    pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/5.jpg ',
-  },
-  {
-    id: 'K013',
-    nama: 'Mira Yulianti',
-    divisi: 'HRD',
-    jabatan: 'Recruitment Officer',
-    kategori: 'Full Time',
-    tanggalBergabung: '2020-12-14',
-    tanggalKontrak: '2020-12-14',
-    selesaiKontrak: '2025-12-14',
-    statusKerja: 'Aktif',
-    statusAkun: 'Aktif',
-    pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/1.jpg ',
-  },
-  {
-    id: 'K014',
-    nama: 'Nanda Praditha',
-    divisi: 'IT',
-    jabatan: 'Backend Developer',
+    jabatan: 'Digital Marketing',
     kategori: 'Internship',
-    tanggalBergabung: '2023-09-01',
-    tanggalKontrak: '2023-09-01',
-    selesaiKontrak: '2024-09-01',
+    tanggalBergabung: '2023-06-01',
+    tanggalKontrak: '2023-06-01',
+    selesaiKontrak: '2024-06-01',
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/men/2.jpg ',
+    foto: 'https://randomuser.me/api/portraits/men/19.jpg ',
   },
   {
-    id: 'K015',
-    nama: 'Omar Faris',
-    divisi: 'Sales',
-    jabatan: 'Area Sales Manager',
-    kategori: 'Full Time',
-    tanggalBergabung: '2017-06-20',
-    tanggalKontrak: '2017-06-20',
-    selesaiKontrak: '2024-06-20',
+    id: 'K003',
+    nama: 'Cindy Putri',
+    divisi: 'Marketing',
+    jabatan: 'Digital Marketing',
+    kategori: 'Internship',
+    tanggalBergabung: '2023-06-01',
+    tanggalKontrak: '2023-06-01',
+    selesaiKontrak: '2024-06-01',
     statusKerja: 'Aktif',
-    statusAkun: 'Tidak Aktif',
-    pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/4.jpg  ',
+    statusAkun: 'Aktif',
+    pengingat: 'Kontrak akan habis dalam 365 hari',
+    foto: 'https://randomuser.me/api/portraits/men/20.jpg ',
+  },
+  {
+    id: 'K003',
+    nama: 'Cindy Putri',
+    divisi: 'Marketing',
+    jabatan: 'Digital Marketing',
+    kategori: 'Internship',
+    tanggalBergabung: '2023-06-01',
+    tanggalKontrak: '2023-06-01',
+    selesaiKontrak: '2024-06-01',
+    statusKerja: 'Aktif',
+    statusAkun: 'Aktif',
+    pengingat: 'Kontrak akan habis dalam 365 hari',
+    foto: 'https://randomuser.me/api/portraits/men/22.jpg ',
+  },
+  {
+    id: 'K003',
+    nama: 'Cindy Putri',
+    divisi: 'Marketing',
+    jabatan: 'Digital Marketing',
+    kategori: 'Internship',
+    tanggalBergabung: '2023-06-01',
+    tanggalKontrak: '2023-06-01',
+    selesaiKontrak: '2024-06-01',
+    statusKerja: 'Aktif',
+    statusAkun: 'Aktif',
+    pengingat: 'Kontrak akan habis dalam 365 hari',
+    foto: 'https://randomuser.me/api/portraits/men/28.jpg ',
+  },
+  {
+    id: 'K003',
+    nama: 'Cindy Putri',
+    divisi: 'Marketing',
+    jabatan: 'Digital Marketing',
+    kategori: 'Internship',
+    tanggalBergabung: '2023-06-01',
+    tanggalKontrak: '2023-06-01',
+    selesaiKontrak: '2024-06-01',
+    statusKerja: 'Aktif',
+    statusAkun: 'Aktif',
+    pengingat: 'Kontrak akan habis dalam 365 hari',
+    foto: 'https://randomuser.me/api/portraits/men/35.jpg ',
   },
 ];
 
@@ -442,6 +385,21 @@ export const DataKaryawanPage = () => {
     });
   };
 
+  // State untuk modal
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
+
+  // Fungsi untuk membuka modal
+  const openModal = (location: string) => {
+    setSelectedLocation(location);
+    setIsOpen(true);
+  };
+
+  // Fungsi untuk menutup modal
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
@@ -480,7 +438,6 @@ export const DataKaryawanPage = () => {
               <Trash className="w-4 h-4" /> Hapus karyawan terpilih
             </Button>
           </div>
-
           <div className="flex justify-between items-center flex-wrap gap-4">
             <div className="flex items-center gap-4 flex-wrap">
               <div className="flex items-center gap-2">
@@ -521,7 +478,6 @@ export const DataKaryawanPage = () => {
               </Button>
             </div>
           </div>
-
           <div className="overflow-auto rounded border border-gray-300">
             <Table className="w-full border border-gray-300 border-collapse">
               <TableHeader>
@@ -589,30 +545,31 @@ export const DataKaryawanPage = () => {
                     </TableCell>
                     <TableCell className="border border-gray-200">{k.pengingat}</TableCell>
                     <TableCell className="border border-gray-200">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="mr-1 bg-blue-100 text-blue-600 hover:bg-blue-200"
-                        title="Lihat Detail"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="mr-1 bg-red-100 text-red-600 hover:bg-red-200"
-                        title="Hapus Data"
-                        onClick={() => handleDeleteSingle(k.id)}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </TableCell>
+                      <div className="flex justify-start space-x-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="bg-blue-600 text-white hover:bg-blue-700"
+                      title="Lihat Detail"
+                    >
+                      <Eye className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="bg-red-600 text-white hover:bg-red-700"
+                      title="Hapus Data"
+                      onClick={() => handleDeleteSingle(k.id)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                    </div>
+                  </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </div>
-
           {/* Pagination */}
           <div className="flex justify-between items-center mt-4">
             <div className="text-sm text-gray-500">
@@ -649,6 +606,35 @@ export const DataKaryawanPage = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Modal untuk menampilkan lokasi */}
+      {isOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded shadow-lg w-1/2">
+            <h2 className="text-xl font-bold mb-4">Detail Lokasi Karyawan</h2>
+            <div className="mb-4">
+              {/* Google Maps */}
+              <iframe
+                src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.597898988999!2d${selectedLocation.split(",")[1]}!3d${selectedLocation.split(",")[0]}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb902cfd15e7%3A0x7b2a993d9a2c1bb1!2sJakarta!5e0!3m2!1sid!2sid!4v1687470000000`}
+                width="100%"
+                height="400px"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={closeModal}
+              className="bg-gray-300 text-gray-800 hover:bg-gray-400"
+            >
+              Tutup
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

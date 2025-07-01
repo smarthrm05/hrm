@@ -14,6 +14,7 @@ import { GroupPage } from "./components/jadwalshift/GroupPage";
 import { JadwalShiftPage } from "./components/jadwalshift/JadwalShiftPage";
 import { KehadiranPage } from "./components/kehadiran/KehadiranPage";
 import { DataKehadiranPage } from "./components/kehadiran/DataKehadiranPage";
+import { RequestAbsenPage } from "./components/RequestAbsenPage";
 import { CutiPage } from "./components/CutiPage";
 import { PinjamanPage } from "./components/PinjamanPage";
 import { ReimbursementPage } from "./components/ReimbursementPage";
@@ -62,6 +63,7 @@ const App = () => (
                   <Route path="data-kehadiran" element={<DataKehadiranPage />} />
                   <Route path="kelola-karyawan" element={<KelolaKaryawanPage />} />
                   <Route path="data-karyawan" element={<DataKaryawanPage />} />
+                  <Route path="request-absen" element={<RequestAbsenPage />} />
                   <Route path="divisi" element={<DivisiPage />} />
                   <Route path="jabatan" element={<JabatanPage />} />
                   <Route path="cuti" element={<CutiPage />} />
