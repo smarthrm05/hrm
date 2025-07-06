@@ -33,10 +33,11 @@ import {
 // Komponen Label Status
 const StatusLabel = ({ status }: { status: string }) => {
   const isAktif = status === 'Aktif';
-  const color = isAktif ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+  const color = isAktif ? 'bg-green-700 text-white' : 'bg-red-700 text-white';
   const Icon = isAktif ? CheckCircle : XCircle;
+
   return (
-    <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full ${color}`}>
+    <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full ${color} whitespace-nowrap max-w-full truncate`}>
       <Icon className="w-3 h-3" />
       {status}
     </span>
@@ -220,6 +221,21 @@ const formatTanggal = (tanggal: string): string => {
   return `${day}-${month}-${year}`;
 };
 
+const ReminderLabel = ({ text }: { text: string }) => {
+  const isReminder = text?.toLowerCase().includes("kontrak akan habis");
+
+  if (!text || text.trim() === '' || text === '-' || !isReminder) {
+    return <span className="text-gray-400 text-sm whitespace-nowrap max-w-full truncate">{text}</span>;
+  }
+
+  return (
+    <span className="inline-block bg-orange-300 text-black text-xs font-semibold px-2 py-1 rounded-full whitespace-nowrap max-w-full truncate">
+      {text}
+    </span>
+  );
+};
+
+
 export const DataKaryawanPage = () => {
   const [data, setData] = useState<Karyawan[]>(mockData);
   const [search, setSearch] = useState('');
@@ -400,6 +416,8 @@ export const DataKaryawanPage = () => {
     setIsOpen(false);
   };
 
+
+
   return (
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
@@ -501,13 +519,13 @@ export const DataKaryawanPage = () => {
                   <TableHead className="text-white border border-gray-200">Selesai Kontrak</TableHead>
                   <TableHead className="text-white border border-gray-200">Status Kerja</TableHead>
                   <TableHead className="text-white border border-gray-200">Status Akun</TableHead>
-                  <TableHead className="text-white border border-gray-200">Pengingat</TableHead>
+                  <TableHead className="text-white border border-gray-200">Pengingat Kontrak</TableHead>
                   <TableHead className="text-white border border-gray-200">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {paginatedData.map((k, idx) => (
-                  <TableRow key={k.id}>
+                  <TableRow key={`${k.id}-${idx}`}>
                     <TableCell className="border border-gray-200">
                       <input
                         type="checkbox"
@@ -543,7 +561,7 @@ export const DataKaryawanPage = () => {
                     <TableCell className="border border-gray-200">
                       <StatusLabel status={k.statusAkun} />
                     </TableCell>
-                    <TableCell className="border border-gray-200">{k.pengingat}</TableCell>
+                    <TableCell className="border border-gray-200"><ReminderLabel text={k.pengingat} /></TableCell>
                     <TableCell className="border border-gray-200">
                       <div className="flex justify-start space-x-2">
                     <Button

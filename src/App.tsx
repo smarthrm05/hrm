@@ -14,6 +14,7 @@ import { GroupPage } from "./components/jadwalshift/GroupPage";
 import { JadwalShiftPage } from "./components/jadwalshift/JadwalShiftPage";
 import { KehadiranPage } from "./components/kehadiran/KehadiranPage";
 import { DataKehadiranPage } from "./components/kehadiran/DataKehadiranPage";
+import { RekapKehadiranPage } from "./components/kehadiran/RekapKehadiranPage";
 import { RequestAbsenPage } from "./components/RequestAbsenPage";
 import { CutiPage } from "./components/CutiPage";
 import { PinjamanPage } from "./components/PinjamanPage";
@@ -36,7 +37,7 @@ import { JabatanPage } from "./components/KelolaKaryawan/JabatanPage";
 // ✅ Auth
 import { AuthProvider } from "@/contexts/AuthContext";
 import { PrivateRoute } from "@/components/PrivateRoute";
-
+import { KontrakKerjaPage } from "./components/KontrakKerjaPage";
 
 const queryClient = new QueryClient();
 
@@ -61,6 +62,7 @@ const App = () => (
                   <Route path="dashboard" element={<div>Selamat datang di Dashboard</div>} />
                   <Route path="kehadiran-page" element={<KehadiranPage />} />
                   <Route path="data-kehadiran" element={<DataKehadiranPage />} />
+                  <Route path="rekap-kehadiran" element={<RekapKehadiranPage />} />
                   <Route path="kelola-karyawan" element={<KelolaKaryawanPage />} />
                   <Route path="data-karyawan" element={<DataKaryawanPage />} />
                   <Route path="request-absen" element={<RequestAbsenPage />} />
@@ -78,6 +80,7 @@ const App = () => (
                   <Route path="pengunduran-diri" element={<PengunduranDiriPage />} />
                   <Route path="keterangan-bekerja" element={<KeteranganBekerjaPage />} />
                   <Route path="paklaring" element={<PaklaringPage />} />
+                  <Route path="kontrak-kerja" element={<KontrakKerjaPage />} />
                   <Route path="surat-peringatan" element={<SuratPeringatanPage />} />
                   <Route path="*" element={<NotFound />} />
                 </Route>

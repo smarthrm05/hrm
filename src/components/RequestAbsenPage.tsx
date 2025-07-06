@@ -28,11 +28,9 @@ import {
   Eye,
   CheckCircle,
   XCircle,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 
-// Interface data request absen
+// Interface data
 interface RequestAbsenData {
   no: number;
   tanggal: Date;
@@ -42,13 +40,11 @@ interface RequestAbsenData {
   nama: string;
   absenMasuk: string;
   lokasiAbsen: string;
-  detailLokasi: string; // Format: "lat,lng"
+  detailLokasi: string;
   shift: string;
   catatan: string;
-  status:
-    | "Menunggu Disetujui"
-    | `Disetujui (Tanggal : ${string}, ${string})`
-    | `Ditolak (Tanggal : ${string}, ${string})`;
+  status: 'Menunggu Disetujui' | 'Disetujui';
+  tanggalDisetujui?: Date;
 }
 
 // Mock Data
@@ -62,7 +58,7 @@ const mockRequestAbsen: RequestAbsenData[] = [
     jabatan: "Staff",
     absenMasuk: "08:10",
     lokasiAbsen: "Kantor Pusat",
-    detailLokasi: "-6.175392, 106.827153", // Jakarta
+    detailLokasi: "-6.175392, 106.827153",
     shift: "Shift 1",
     catatan: "Terlambat karena kemacetan",
     status: "Menunggu Disetujui",
@@ -76,24 +72,11 @@ const mockRequestAbsen: RequestAbsenData[] = [
     jabatan: "Programmer",
     absenMasuk: "08:00",
     lokasiAbsen: "Remote",
-    detailLokasi: "-6.914744, 107.609810", // Bandung
+    detailLokasi: "-6.914744, 107.609810",
     shift: "Shift 1",
     catatan: "Hadir tepat waktu",
-    status: "Disetujui (Tanggal : 22/05/2025, 18:00)",
-  },
-  {
-    no: 3,
-    tanggal: new Date("2024-06-19"),
-    idKaryawan: "EMP005",
-    nama: "Rina Sari",
-    divisi: "HR",
-    jabatan: "Admin",
-    absenMasuk: "08:30",
-    lokasiAbsen: "Kantor Cabang",
-    detailLokasi: "-7.7956, 110.3687", // Yogyakarta
-    shift: "Shift 1",
-    catatan: "Terlambat karena sakit",
-    status: "Ditolak (Tanggal : 23/05/2025, 16:00)",
+    status: "Disetujui",
+    tanggalDisetujui: new Date('2024-06-01T09:30:00'),
   },
 ];
 
@@ -102,11 +85,9 @@ export const RequestAbsenPage = () => {
   const [data] = useState<RequestAbsenData[]>(mockRequestAbsen);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<string>("");
 
-  // Filter data
   const filteredData = data.filter((item) =>
     [item.idKaryawan, item.nama, item.divisi, item.jabatan]
       .join(" ")
@@ -114,21 +95,19 @@ export const RequestAbsenPage = () => {
       .includes(searchTerm.toLowerCase())
   );
 
-  // Pagination
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = filteredData.slice(startIndex, startIndex + itemsPerPage);
 
-  // Helper functions
   const formatDate = (date: Date) => date.toLocaleDateString("id-ID");
   const getStatusBadge = (status: string) => {
     let badgeColor = "";
     if (status.includes("Menunggu")) {
-      badgeColor = "bg-yellow-100 text-yellow-800 hover:bg-yellow-100";
+      badgeColor = "bg-yellow-100 text-yellow-800";
     } else if (status.includes("Disetujui")) {
-      badgeColor = "bg-green-100 text-green-800 hover:bg-green-100";
+      badgeColor = "bg-green-100 text-green-800";
     } else if (status.includes("Ditolak")) {
-      badgeColor = "bg-red-100 text-red-800 hover:bg-red-100";
+      badgeColor = "bg-red-100 text-red-800";
     }
     return <Badge className={badgeColor}>{status}</Badge>;
   };
@@ -189,7 +168,7 @@ export const RequestAbsenPage = () => {
           <div className="overflow-x-auto border rounded-lg">
             <Table className="border border-gray-200">
               <TableHeader>
-                <TableRow className="bg-blue-600 hover:bg-blue-600">
+                <TableRow className="bg-blue-600 text-white">
                   {[
                     "No.",
                     "Tanggal",
@@ -205,7 +184,7 @@ export const RequestAbsenPage = () => {
                     "Status",
                     "Aksi",
                   ].map((title, idx) => (
-                    <TableHead key={idx} className="text-white text-left border">
+                    <TableHead key={idx} className="text-white border">
                       {title}
                     </TableHead>
                   ))}
@@ -214,41 +193,31 @@ export const RequestAbsenPage = () => {
               <TableBody>
                 {paginatedData.map((item) => (
                   <TableRow key={item.no}>
-                    <TableCell className="text-left border">{item.no}</TableCell>
-                    <TableCell className="text-left border">{formatDate(item.tanggal)}</TableCell>
-                    <TableCell className="text-left border">{item.idKaryawan}</TableCell>
-                    <TableCell className="text-left border">{item.divisi}</TableCell>
-                    <TableCell className="text-left border">{item.jabatan}</TableCell>
-                    <TableCell className="text-left border">{item.nama}</TableCell>
-                    <TableCell className="text-left border">{item.absenMasuk}</TableCell>
-                    <TableCell className="text-left border">{item.lokasiAbsen}</TableCell>
-                    <TableCell className="text-left border">{item.detailLokasi}</TableCell>
-                    <TableCell className="text-left border">{item.shift}</TableCell>
-                    <TableCell className="text-left border">{item.catatan}</TableCell>
-                    <TableCell className="text-left border">
-                      {getStatusBadge(item.status)}
-                    </TableCell>
-                    <TableCell className="text-left border">
-                      <div className="flex justify-start space-x-2">
+                    <TableCell>{item.no}</TableCell>
+                    <TableCell>{formatDate(item.tanggal)}</TableCell>
+                    <TableCell>{item.idKaryawan}</TableCell>
+                    <TableCell>{item.divisi}</TableCell>
+                    <TableCell>{item.jabatan}</TableCell>
+                    <TableCell>{item.nama}</TableCell>
+                    <TableCell>{item.absenMasuk}</TableCell>
+                    <TableCell>{item.lokasiAbsen}</TableCell>
+                    <TableCell>{item.detailLokasi}</TableCell>
+                    <TableCell>{item.shift}</TableCell>
+                    <TableCell>{item.catatan}</TableCell>
+                    <TableCell>{getStatusBadge(item.status)}</TableCell>
+                    <TableCell>
+                      <div className="flex gap-1">
                         <Button
                           size="sm"
                           className="bg-blue-600 text-white hover:bg-blue-700"
                           onClick={() => openMapModal(item.detailLokasi)}
                         >
-                          <Eye className="w-4 h-4 mr-1" />
+                          <Eye className="w-4 h-4" />
                         </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="bg-green-600 text-white hover:bg-green-700"
-                        >
+                        <Button size="sm" className="bg-green-600 text-white hover:bg-green-700">
                           <CheckCircle className="w-4 h-4" />
                         </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="bg-red-600 text-white hover:bg-red-700"
-                        >
+                        <Button size="sm" className="bg-red-600 text-white hover:bg-red-700">
                           <XCircle className="w-4 h-4" />
                         </Button>
                       </div>
@@ -259,34 +228,45 @@ export const RequestAbsenPage = () => {
             </Table>
           </div>
 
-          {/* Pagination */}
-          <div className="flex items-center justify-between mt-4">
-            <div className="text-sm text-gray-600">
-              Showing {startIndex + 1} to{" "}
-              {Math.min(startIndex + itemsPerPage, filteredData.length)} of{" "}
-              {filteredData.length} entries
+          {/* Pagination ala DivisiPage */}
+          <div className="flex justify-between items-center mt-4">
+            <div className="text-sm text-gray-500">
+              Menampilkan{' '}
+              <strong>
+                {Math.max((currentPage - 1) * itemsPerPage + 1, 1)} to{' '}
+                {Math.min(currentPage * itemsPerPage, filteredData.length)}
+              </strong>{' '}
+              of <strong>{filteredData.length}</strong> entries
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex gap-2">
               <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
+                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                className="bg-blue-500 text-white hover:bg-blue-600"
               >
-                <ChevronLeft className="w-4 h-4" />
+                Sebelumnya
               </Button>
-              <span className="text-sm">
-                Page {currentPage} of {totalPages}
-              </span>
+              {[...Array(totalPages)].map((_, i) => (
+                <Button
+                  key={i}
+                  variant={currentPage === i + 1 ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={
+                    currentPage === i + 1
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-white text-blue-600 border border-blue-600 hover:bg-blue-50'
+                  }
+                >
+                  {i + 1}
+                </Button>
+              ))}
               <Button
-                variant="outline"
-                size="sm"
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
                 disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                className="bg-blue-500 text-white hover:bg-blue-600"
               >
-                <ChevronRight className="w-4 h-4" />
+                Selanjutnya
               </Button>
             </div>
           </div>
@@ -298,19 +278,17 @@ export const RequestAbsenPage = () => {
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded shadow-lg w-full max-w-3xl">
             <h2 className="text-xl font-bold mb-4">Detail Lokasi Absen</h2>
-            <div className="mb-4">
-              <iframe
-                width="100%"
-                height="400"
-                frameBorder="0"
-                style={{ border: 0 }}
-                src={`https://www.google.com/maps?q=${selectedLocation}&z=15&output=embed`}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
-            <div className="flex justify-end">
+            <iframe
+              width="100%"
+              height="400"
+              frameBorder="0"
+              style={{ border: 0 }}
+              src={`https://www.google.com/maps?q=${selectedLocation}&z=15&output=embed`}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+            <div className="flex justify-end mt-4">
               <Button
                 variant="outline"
                 onClick={closeModal}
