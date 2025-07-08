@@ -14,7 +14,7 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
+  TableRow,x
 } from "@/components/ui/table";
 import {
   Select,
@@ -45,7 +45,7 @@ interface KontrakKerjaData {
   dibuatTanggal: Date;
   dibuatOleh: string;
   status: "Menunggu Disetujui" | "Disetujui" | "Telah Ditandatangani";
-  tanggalStatus?: Date;
+  tanggalDisetujui?: Date;
 }
 
 const mockKontrak: KontrakKerjaData[] = [
@@ -59,7 +59,7 @@ const mockKontrak: KontrakKerjaData[] = [
     dibuatTanggal: new Date("2024-06-15T09:00:00"),
     dibuatOleh: "Admin HR",
     status: "Disetujui",
-    tanggalStatus: new Date("2024-06-20T14:00:00"),
+    tanggalDisetujui: new Date('2024-06-01T09:30:00'),
   },
   {
     no: 2,
@@ -110,10 +110,10 @@ export const KontrakKerjaPage = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-3xl font-bold text-gray-900">Kontrak Kerja</h1>
+      <h1 className="text-3xl font-bold text-gray-900">Kontrak Kerja Karyawan</h1>
       <Card>
         <CardHeader className="bg-blue-50 border-b">
-          <CardTitle className="text-blue-800">Data Kontrak</CardTitle>
+          <CardTitle className="text-blue-800">Data Kontrak Kerja</CardTitle>
         </CardHeader>
         <CardContent className="p-6">
           <div className="flex justify-between items-center flex-wrap gap-4 mb-6">
@@ -124,9 +124,9 @@ export const KontrakKerjaPage = () => {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="5">5</SelectItem>
-                  <SelectItem value="10">10</SelectItem>
-                  <SelectItem value="25">25</SelectItem>
+                  <SelectItem value="5">10</SelectItem>
+                  <SelectItem value="10">20</SelectItem>
+                  <SelectItem value="25">100</SelectItem>
                 </SelectContent>
               </Select>
               <span className="text-sm text-muted-foreground">entries</span>
@@ -146,38 +146,32 @@ export const KontrakKerjaPage = () => {
           </div>
 
           <div className="overflow-x-auto border rounded-lg">
-            <Table className="border border-gray-200">
+            <Table className="w-full border border-gray-300 border-collapse">
               <TableHeader>
-                <TableRow className="bg-blue-600 text-white">
-                  {[
-                    "No",
-                    "Nomor Surat",
-                    "Nama",
-                    "ID Karyawan",
-                    "Tanggal Mulai",
-                    "Tanggal Selesai",
-                    "Dibuat Tanggal",
-                    "Dibuat Oleh",
-                    "Status",
-                    "Aksi",
-                  ].map((title, idx) => (
-                    <TableHead key={idx} className="text-white text-left border">
-                      {title}
-                    </TableHead>
-                  ))}
+                <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
+                   <TableHead className="border text-white whitespace-nowrap">No.</TableHead>
+                   <TableHead className="border text-white whitespace-nowrap">Nomor Surat</TableHead>
+                   <TableHead className="border text-white whitespace-nowrap">Nama Karyawan</TableHead>
+                   <TableHead className="border text-white whitespace-nowrap">ID Karyawan</TableHead>
+                   <TableHead className="border text-white whitespace-nowrap">Tanggal Mulai Kontrak </TableHead>
+                   <TableHead className="border text-white whitespace-nowrap">Tanggal Selesai Kontrak</TableHead>
+                   <TableHead className="border text-white whitespace-nowrap">Dibuat Tanggal</TableHead>
+                   <TableHead className="border text-white whitespace-nowrap">Dibuat Oleh</TableHead>
+                   <TableHead className="border text-white whitespace-nowrap">Status</TableHead>
+                   <TableHead className="border text-white whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {paginatedData.map((item) => (
-                  <TableRow key={item.no}>
-                    <TableCell>{item.no}</TableCell>
-                    <TableCell>{item.nomorSurat}</TableCell>
-                    <TableCell>{item.nama}</TableCell>
-                    <TableCell>{item.idKaryawan}</TableCell>
-                    <TableCell>{formatDate(item.tanggalMulai)}</TableCell>
-                    <TableCell>{formatDate(item.tanggalSelesai)}</TableCell>
-                    <TableCell>{formatDateTime(item.dibuatTanggal)}</TableCell>
-                    <TableCell>{item.dibuatOleh}</TableCell>
+                 <TableRow key={item.no} className="border-b hover:bg-gray-50">
+                    <TableCell className="border">{item.no}</TableCell>
+                    <TableCell className="border">{item.nomorSurat}</TableCell>
+                    <TableCell className="border">{item.nama}</TableCell>
+                    <TableCell className="border">{item.idKaryawan}</TableCell>
+                    <TableCell className="border">{formatDate(item.tanggalMulai)}</TableCell>
+                    <TableCell className="border">{formatDate(item.tanggalSelesai)}</TableCell>
+                    <TableCell className="border">{formatDateTime(item.dibuatTanggal)}</TableCell>
+                    <TableCell className="border">{item.dibuatOleh}</TableCell>
                     <TableCell>
                       <div className="flex flex-col items-start">
                         <Badge
@@ -206,9 +200,6 @@ export const KontrakKerjaPage = () => {
                       <div className="flex space-x-2">
                         <Button size="sm" variant="outline">
                           <Eye className="w-4 h-4" />
-                        </Button>
-                        <Button size="sm" variant="outline" className="text-blue-600">
-                          <Pencil className="w-4 h-4" />
                         </Button>
                         <Button size="sm" variant="outline" className="text-green-600">
                           <Send className="w-4 h-4" />

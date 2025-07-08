@@ -166,45 +166,39 @@ export const RequestAbsenPage = () => {
 
           {/* Table */}
           <div className="overflow-x-auto border rounded-lg">
-            <Table className="border border-gray-200">
+            <Table className="w-full border border-gray-300 border-collapse">
               <TableHeader>
-                <TableRow className="bg-blue-600 text-white">
-                  {[
-                    "No.",
-                    "Tanggal",
-                    "ID Karyawan",
-                    "Divisi",
-                    "Jabatan",
-                    "Nama Karyawan",
-                    "Absen Masuk",
-                    "Lokasi Absen",
-                    "Detail Lokasi",
-                    "Shift",
-                    "Catatan",
-                    "Status",
-                    "Aksi",
-                  ].map((title, idx) => (
-                    <TableHead key={idx} className="text-white border">
-                      {title}
-                    </TableHead>
-                  ))}
+               <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
+                  <TableHead className="border text-white whitespace-nowrap">No.</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Tanggal</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">ID Karyawan</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Nama Karyawan</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Divisi</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Jabatan</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Absen Masuk</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Lokasi Absen</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Detail Lokasi</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Shift</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Catatan</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Status</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {paginatedData.map((item) => (
-                  <TableRow key={item.no}>
-                    <TableCell>{item.no}</TableCell>
-                    <TableCell>{formatDate(item.tanggal)}</TableCell>
-                    <TableCell>{item.idKaryawan}</TableCell>
-                    <TableCell>{item.divisi}</TableCell>
-                    <TableCell>{item.jabatan}</TableCell>
-                    <TableCell>{item.nama}</TableCell>
-                    <TableCell>{item.absenMasuk}</TableCell>
-                    <TableCell>{item.lokasiAbsen}</TableCell>
-                    <TableCell>{item.detailLokasi}</TableCell>
-                    <TableCell>{item.shift}</TableCell>
-                    <TableCell>{item.catatan}</TableCell>
-                    <TableCell>{getStatusBadge(item.status)}</TableCell>
+                   <TableRow key={item.no} className="border">
+                    <TableCell className="border">{item.no}</TableCell>
+                    <TableCell className="border">{formatDate(item.tanggal)}</TableCell>
+                    <TableCell className="border">{item.idKaryawan}</TableCell>
+                    <TableCell className="border">{item.divisi}</TableCell>
+                    <TableCell className="border">{item.jabatan}</TableCell>
+                    <TableCell className="border">{item.nama}</TableCell>
+                    <TableCell className="border">{item.absenMasuk}</TableCell>
+                    <TableCell className="border">{item.lokasiAbsen}</TableCell>
+                    <TableCell className="border">{item.detailLokasi}</TableCell>
+                    <TableCell className="border">{item.shift}</TableCell>
+                    <TableCell className="border">{item.catatan}</TableCell>
+                    <TableCell className="border">{getStatusBadge(item.status)}</TableCell>
                     <TableCell>
                       <div className="flex gap-1">
                         <Button
@@ -228,15 +222,14 @@ export const RequestAbsenPage = () => {
             </Table>
           </div>
 
-          {/* Pagination ala DivisiPage */}
           <div className="flex justify-between items-center mt-4">
             <div className="text-sm text-gray-500">
               Menampilkan{' '}
               <strong>
-                {Math.max((currentPage - 1) * itemsPerPage + 1, 1)} to{' '}
+                {Math.max((currentPage - 1) * itemsPerPage + 1, 1)} sampai{' '}
                 {Math.min(currentPage * itemsPerPage, filteredData.length)}
               </strong>{' '}
-              of <strong>{filteredData.length}</strong> entries
+              dari <strong>{filteredData.length}</strong> data
             </div>
             <div className="flex gap-2">
               <Button

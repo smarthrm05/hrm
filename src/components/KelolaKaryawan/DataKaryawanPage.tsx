@@ -507,20 +507,20 @@ export const DataKaryawanPage = () => {
                       onChange={toggleSelectAll}
                     />
                   </TableHead>
-                  <TableHead className="text-white border border-gray-200">No</TableHead>
-                  <TableHead className="text-white border border-gray-200">Foto</TableHead>
-                  <TableHead className="text-white border border-gray-200">ID Karyawan</TableHead>
-                  <TableHead className="text-white border border-gray-200">Nama Karyawan</TableHead>
-                  <TableHead className="text-white border border-gray-200">Divisi</TableHead>
-                  <TableHead className="text-white border border-gray-200">Jabatan</TableHead>
-                  <TableHead className="text-white border border-gray-200">Tgl Bergabung</TableHead>
-                  <TableHead className="text-white border border-gray-200">Kategori</TableHead>
-                  <TableHead className="text-white border border-gray-200">Tgl Kontrak</TableHead>
-                  <TableHead className="text-white border border-gray-200">Selesai Kontrak</TableHead>
-                  <TableHead className="text-white border border-gray-200">Status Kerja</TableHead>
-                  <TableHead className="text-white border border-gray-200">Status Akun</TableHead>
-                  <TableHead className="text-white border border-gray-200">Pengingat Kontrak</TableHead>
-                  <TableHead className="text-white border border-gray-200">Aksi</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">No</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Foto</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">ID Karyawan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Nama Karyawan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Divisi</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Jabatan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Tgl Bergabung</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Kategori</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Tgl Kontrak</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Selesai Kontrak</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Status Kerja</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Status Akun</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Pengingat Kontrak</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

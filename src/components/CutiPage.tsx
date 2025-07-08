@@ -156,20 +156,20 @@ export const CutiPage = () => {
             <Table>
               <TableHeader>
                 <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
-                  <TableHead className="border text-white">No.</TableHead>
-                  <TableHead className="border text-white">ID</TableHead>
-                  <TableHead className="border text-white">Nama</TableHead>
-                  <TableHead className="border text-white">Divisi</TableHead>
-                  <TableHead className="border text-white">Jabatan</TableHead>
-                  <TableHead className="border text-white">Jenis Cuti</TableHead>
-                  <TableHead className="border text-white">Mulai Tanggal</TableHead>
-                  <TableHead className="border text-white">Sampai Tanggal</TableHead>
-                  <TableHead className="border text-white">Alasan</TableHead>
-                  <TableHead className="border text-white">Periode Cuti</TableHead>
-                  <TableHead className="border text-white">Sisa Cuti</TableHead>
-                  <TableHead className="border text-white">Tanggal Pengajuan</TableHead>
-                  <TableHead className="border text-white">Status</TableHead>
-                  <TableHead className="border text-white">Aksi</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">No.</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">ID</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Nama</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Divisi</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Jabatan</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Jenis Cuti</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Mulai Tanggal</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Sampai Tanggal</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Periode Cuti</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Alasan</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Sisa Cuti</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Tanggal Pengajuan</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Status</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -183,19 +183,30 @@ export const CutiPage = () => {
                     <TableCell className="border">{item.jenisCuti}</TableCell>
                     <TableCell className="border">{formatDate(item.tanggalMulai)}</TableCell>
                     <TableCell className="border">{formatDate(item.tanggalSelesai)}</TableCell>
-                    <TableCell className="border">{item.alasan}</TableCell>
                     <TableCell className="border">{item.periodeCuti}</TableCell>
+                    <TableCell className="border">{item.alasan}</TableCell>
                     <TableCell className="border">{item.sisaCuti}</TableCell>
                     <TableCell className="border">{formatDateTime(item.tanggalPengajuan)}</TableCell>
                     <TableCell className="border">{getStatusBadge(item.status, item.tanggalDisetujui)}</TableCell>
                     <TableCell className="border">
                       <div className="flex space-x-2">
-                        <Button size="sm" variant="outline">
-                          <Eye className="w-4 h-4" />
-                        </Button>
-                        <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
+                        <Button
+                         variant="ghost"
+                         size="sm"
+                         className="bg-blue-600 text-white hover:bg-blue-700"
+                         title="Lihat Detail"
+                         >
+                         <Eye className="w-4 h-4" />
+                         </Button>
+                         <Button
+                         variant="ghost"
+                         size="sm"
+                         className="bg-red-600 text-white hover:bg-red-700"
+                         title="Hapus Data"
+                         onClick={() => handleDeleteSingle(k.id)}
+                         >
+                         <Trash2 className="w-4 h-4" />
+                         </Button>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -204,29 +215,43 @@ export const CutiPage = () => {
             </Table>
           </div>
 
-          <div className="flex items-center justify-between mt-4">
-            <div className="text-sm text-gray-600">
-              Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredData.length)} of {filteredData.length} entries
+          <div className="flex justify-between items-center mt-4">
+            <div className="text-sm text-gray-500">
+              Menampilkan{' '}
+              <strong>
+                {Math.max((currentPage - 1) * itemsPerPage + 1, 1)} sampai{' '}
+                {Math.min(currentPage * itemsPerPage, filteredData.length)}
+              </strong>{' '}
+              dari <strong>{filteredData.length}</strong> data
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex gap-2">
               <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
+                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                className="bg-blue-500 text-white hover:bg-blue-600"
               >
-                <ChevronLeft className="w-4 h-4" />
+                Sebelumnya
               </Button>
-              <span className="text-sm">
-                Page {currentPage} of {totalPages}
-              </span>
+              {[...Array(totalPages)].map((_, i) => (
+                <Button
+                  key={i}
+                  size="sm"
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={
+                    currentPage === i + 1
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-white text-blue-600 border border-blue-600 hover:bg-blue-50'
+                  }
+                >
+                  {i + 1}
+                </Button>
+              ))}
               <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                className="bg-blue-500 text-white hover:bg-blue-600"
               >
-                <ChevronRight className="w-4 h-4" />
+                Selanjutnya
               </Button>
             </div>
           </div>

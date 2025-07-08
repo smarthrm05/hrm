@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Card,
   CardContent,
@@ -12,23 +12,46 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from '@/components/ui/select';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { Edit, Trash2, Plus, Search, Clock } from 'lucide-react';
 
 const shiftData = [
   { id: 1, keterangan: 'Shift Pagi', jam: '08:00 - 15:00' },
   { id: 2, keterangan: 'Shift Siang', jam: '15:00 - 22:00' },
-  { id: 3, keterangan: 'Shift Malam', jam: '22:00 - 06:00' }
+  { id: 3, keterangan: 'Shift Malam', jam: '22:00 - 06:00' },
 ];
 
 export const ShiftPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showEntries, setShowEntries] = useState('10');
+  const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
 
+  // Update jumlah data per halaman jika dropdown berubah
+  useEffect(() => {
+    setEntriesPerPage(Number(showEntries));
+    setCurrentPage(1); // reset ke halaman 1 jika showEntries berubah
+  }, [showEntries]);
+
+  // Filter data berdasarkan pencarian
   const filteredData = shiftData.filter((item) =>
     item.keterangan.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredData.length / entriesPerPage);
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
   );
 
   return (
@@ -43,7 +66,7 @@ export const ShiftPage = () => {
 
         <CardContent className="space-y-4">
           {/* Controls */}
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center flex-wrap gap-4">
             <div className="flex items-center space-x-2">
               <span className="text-sm text-gray-600">Show</span>
               <Select value={showEntries} onValueChange={setShowEntries}>
@@ -76,48 +99,87 @@ export const ShiftPage = () => {
             </div>
           </div>
 
-         {/* Table */}
+          {/* Table */}
           <div className="border rounded-lg overflow-hidden">
             <Table className="w-full border border-gray-300">
               <TableHeader>
-                <TableRow className="bg-blue-600 text-white">
-                  <TableHead className="border border-gray-300 text-white font-semibold">No.</TableHead>
-                  <TableHead className="border border-gray-300 text-white font-semibold">Keterangan Shift</TableHead>
-                  <TableHead className="border border-gray-300 text-white font-semibold">Jam</TableHead>
-                  <TableHead className="border border-gray-300 text-white font-semibold">Aksi</TableHead>
+                <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
+                  <TableHead className="border text-white whitespace-nowrap">No.</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Keterangan Shift</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Jam</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredData.map((item, idx) => (
-                  <TableRow key={item.id} className="hover:bg-gray-50">
-                    <TableCell className="border border-gray-200">{idx + 1}</TableCell>
-                    <TableCell className="border border-gray-200">{item.keterangan}</TableCell>
-                    <TableCell className="border border-gray-200">{item.jam}</TableCell>
-                    <TableCell className="border border-gray-200">
-                      <div className="flex space-x-2">
-                        <Button size="sm" variant="outline" className="text-blue-600 border-blue-600">
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button size="sm" variant="outline" className="text-red-600 border-red-600">
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
+                {paginatedData.length > 0 ? (
+                  paginatedData.map((item, idx) => (
+                    <TableRow key={item.id} className="hover:bg-gray-50">
+                      <TableCell className="border">{(currentPage - 1) * entriesPerPage + idx + 1}</TableCell>
+                      <TableCell className="border">{item.keterangan}</TableCell>
+                      <TableCell className="border">{item.jam}</TableCell>
+                      <TableCell className="border">
+                        <div className="flex space-x-2">
+                          <Button size="sm" variant="outline" className="text-blue-600 border-blue-600">
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button size="sm" variant="outline" className="text-red-600 border-red-600">
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={4} className="text-center py-4 text-gray-500">
+                      Tidak ada data ditemukan.
                     </TableCell>
                   </TableRow>
-                ))}
+                )}
               </TableBody>
             </Table>
           </div>
 
-          {/* Footer */}
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">
-              Showing 1 to {filteredData.length} of {filteredData.length} entries
-            </span>
-            <div className="flex space-x-2">
-              <Button variant="outline" size="sm">Previous</Button>
-              <Button variant="outline" size="sm" className="bg-blue-600 text-white">1</Button>
-              <Button variant="outline" size="sm">Next</Button>
+          {/* Pagination */}
+          <div className="flex justify-between items-center mt-4">
+            <div className="text-sm text-gray-500">
+              Menampilkan{' '}
+              <strong>
+                 {Math.max((currentPage - 1) * entriesPerPage + 1, 1)} sampai {' '}
+                {Math.min(currentPage * entriesPerPage, filteredData.length)}
+              </strong>{' '}
+              dari <strong>{filteredData.length}</strong> data
+            </div>
+            <div className="flex gap-2">
+              <Button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                className="bg-blue-500 text-white hover:bg-blue-600"
+              >
+                Sebelumnya
+              </Button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <Button
+                  key={page}
+                  variant={currentPage === page ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setCurrentPage(page)}
+                  className={
+                    currentPage === page
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-white text-blue-600 border border-blue-600 hover:bg-blue-50'
+                  }
+                >
+                  {page}
+                </Button>
+              ))}
+              <Button
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                className="bg-blue-500 text-white hover:bg-blue-600"
+              >
+                Selanjutnya
+              </Button>
             </div>
           </div>
         </CardContent>

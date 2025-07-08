@@ -322,21 +322,21 @@ export const DataKehadiranPage = () => {
             <Table className="w-full border border-gray-300 border-collapse">
               <TableHeader>
                 <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
-                  <TableHead className="border text-white">No.</TableHead>
-                  <TableHead className="border text-white">ID Karyawan</TableHead>
-                  <TableHead className="border text-white">Nama Karyawan</TableHead>
-                  <TableHead className="border text-white">Karyawan</TableHead>
-                  <TableHead className="border text-white">Divisi</TableHead>
-                  <TableHead className="border text-white">Jabatan</TableHead>
-                  <TableHead className="border text-white">Tanggal</TableHead>
-                  <TableHead className="border text-white">Jam Masuk</TableHead>
-                  <TableHead className="border text-white">Lokasi Absen</TableHead>
-                  <TableHead className="border text-white">Detail Lokasi</TableHead>
-                  <TableHead className="border text-white">Catatan</TableHead>
-                  <TableHead className="border text-white">Jam Pulang</TableHead>
-                  <TableHead className="border text-white">Lokasi Absen</TableHead>
-                  <TableHead className="border text-white">Detail Lokasi</TableHead>
-                  <TableHead className="border text-white">Catatan</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">No.</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">ID Karyawan</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Nama Karyawan</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Karyawan</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Divisi</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Jabatan</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Tanggal</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Jam Masuk</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Lokasi Absen</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Detail Lokasi</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Catatan</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Jam Pulang</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Lokasi Absen</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Detail Lokasi</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Catatan</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -363,40 +363,47 @@ export const DataKehadiranPage = () => {
             </Table>
           </div>
 
-          {/* Pagination */}
-          <div className="flex items-center justify-between mt-4">
-            <div className="text-sm text-gray-600">
-              Menampilkan {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredData.length)} of {filteredData.length} data
-            </div>
-            <div className="flex items-center space-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-              >
-                Sebelumnya
-              </Button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <div className="flex justify-between items-center mt-4">
+              <div className="text-sm text-gray-500">
+                Menampilkan{' '}
+                <strong>
+                  {Math.max((currentPage - 1) * itemsPerPage + 1, 1)} sampai{' '}
+                  {Math.min(currentPage * itemsPerPage, filteredData.length)}
+                </strong>{' '}
+                dari <strong>{filteredData.length}</strong> data
+              </div>
+              <div className="flex gap-2">
                 <Button
-                  key={page}
-                  variant={currentPage === page ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setCurrentPage(page)}
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                  className="bg-blue-500 text-white hover:bg-blue-600"
                 >
-                  {page}
+                  Sebelumnya
                 </Button>
-              ))}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                disabled={currentPage === totalPages}
-              >
-                Selanjutnya
-              </Button>
+                {[...Array(totalPages)].map((_, i) => (
+                  <Button
+                    key={i}
+                    size="sm"
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={
+                      currentPage === i + 1
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-white text-blue-600 border border-blue-600 hover:bg-blue-50'
+                    }
+                  >
+                    {i + 1}
+                  </Button>
+                ))}
+                <Button
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                  className="bg-blue-500 text-white hover:bg-blue-600"
+                >
+                  Selanjutnya
+                </Button>
+              </div>
             </div>
-          </div>
+
         </CardContent>
       </Card>
     </div>

@@ -196,31 +196,38 @@ export const LemburPage = () => {
               <TableBody>
                 {paginatedData.map((item) => (
                   <TableRow key={item.no}>
-                    <TableCell className="text-left border">{item.no}</TableCell>
-                    <TableCell className="text-left border">{item.idKaryawan}</TableCell>
-                    <TableCell className="text-left border">{item.nama}</TableCell>
-                    <TableCell className="text-left border">{item.divisi}</TableCell>
-                    <TableCell className="text-left border">{item.jabatan}</TableCell>
-                    <TableCell className="text-left border">{formatDate(item.tanggalLembur)}</TableCell>
-                    <TableCell className="text-left border">{item.jamMulai}</TableCell>
-                    <TableCell className="text-left border">{item.jamSelesai}</TableCell>
-                    <TableCell className="text-left border">{item.alasan}</TableCell>
-                    <TableCell className="text-left border">{formatDateTime(item.tanggalPengajuan)}</TableCell>
+                    <TableCell className="text-left border whitespace-nowrap">{item.no}</TableCell>
+                    <TableCell className="text-left border whitespace-nowrap">{item.idKaryawan}</TableCell>
+                    <TableCell className="text-left border whitespace-nowrap">{item.nama}</TableCell>
+                    <TableCell className="text-left border whitespace-nowrap">{item.divisi}</TableCell>
+                    <TableCell className="text-left border whitespace-nowrap">{item.jabatan}</TableCell>
+                    <TableCell className="text-left border whitespace-nowrap">{formatDate(item.tanggalLembur)}</TableCell>
+                    <TableCell className="text-left border whitespace-nowrap">{item.jamMulai}</TableCell>
+                    <TableCell className="text-left border whitespace-nowrap">{item.jamSelesai}</TableCell>
+                    <TableCell className="text-left border whitespace-nowrap">{item.alasan}</TableCell>
+                    <TableCell className="text-left border whitespace-nowrap">{formatDateTime(item.tanggalPengajuan)}</TableCell>
                     <TableCell className="text-left border">
                       {getStatusBadge(item.status, item.tanggalDisetujui)}
                     </TableCell>
                     <TableCell className="text-left border">
                       <div className="flex justify-start space-x-2">
-                        <Button size="sm" variant="outline">
-                          <Eye className="w-4 h-4" />
-                        </Button>
                         <Button
-                          size="sm"
-                          variant="outline"
-                          className="text-red-600 hover:text-red-700"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
+                         variant="ghost"
+                         size="sm"
+                         className="bg-blue-600 text-white hover:bg-blue-700"
+                         title="Lihat Detail"
+                         >
+                         <Eye className="w-4 h-4" />
+                         </Button>
+                         <Button
+                         variant="ghost"
+                         size="sm"
+                         className="bg-red-600 text-white hover:bg-red-700"
+                         title="Hapus Data"
+                         onClick={() => handleDeleteSingle(k.id)}
+                         >
+                         <Trash2 className="w-4 h-4" />
+                         </Button>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -229,36 +236,47 @@ export const LemburPage = () => {
             </Table>
           </div>
 
-          <div className="flex items-center justify-between mt-4">
-            <div className="text-sm text-gray-600">
-              Showing {startIndex + 1} to{" "}
-              {Math.min(startIndex + itemsPerPage, filteredData.length)} of{" "}
-              {filteredData.length} entries
+          <div className="flex justify-between items-center mt-4">
+              <div className="text-sm text-gray-500">
+                Menampilkan{' '}
+                <strong>
+                  {Math.max((currentPage - 1) * itemsPerPage + 1, 1)} sampai{' '}
+                  {Math.min(currentPage * itemsPerPage, filteredData.length)}
+                </strong>{' '}
+                dari <strong>{filteredData.length}</strong> data
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                  className="bg-blue-500 text-white hover:bg-blue-600"
+                >
+                  Sebelumnya
+                </Button>
+                {[...Array(totalPages)].map((_, i) => (
+                  <Button
+                    key={i}
+                    size="sm"
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={
+                      currentPage === i + 1
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-white text-blue-600 border border-blue-600 hover:bg-blue-50'
+                    }
+                  >
+                    {i + 1}
+                  </Button>
+                ))}
+                <Button
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                  className="bg-blue-500 text-white hover:bg-blue-600"
+                >
+                  Selanjutnya
+                </Button>
+              </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </Button>
-              <span className="text-sm">
-                Page {currentPage} of {totalPages}
-              </span>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
-                disabled={currentPage === totalPages}
-              >
-                <ChevronRight className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
+
         </CardContent>
       </Card>
     </div>

@@ -146,18 +146,18 @@ export const IzinPage = () => {
             <Table>
             <TableHeader>
             <TableRow className="bg-blue-600 [&>th]:text-white hover:bg-blue-600 pointer-events-none">
-              <TableHead className="border border-gray-300 font-semibold text-sm">No</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm">ID</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm">Nama</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm">Divisi</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm">Jabatan</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm">Tanggal</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm">Jam Keluar</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm">Jam Kembali</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm">Keperluan</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm">Tanggal Pengajuan</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm">Status</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm">Aksi</TableHead>
+              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">No</TableHead>
+              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">ID</TableHead>
+              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Nama</TableHead>
+              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Divisi</TableHead>
+              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Jabatan</TableHead>
+              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Tanggal</TableHead>
+              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Jam Keluar</TableHead>
+              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Jam Kembali</TableHead>
+              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Keperluan</TableHead>
+              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Tanggal Pengajuan</TableHead>
+              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Status</TableHead>
+              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -176,12 +176,23 @@ export const IzinPage = () => {
                 <TableCell className="border border-gray-200">{getStatusBadge(item.status, item.tanggalDisetujui)}</TableCell>
                 <TableCell className="border border-gray-200">
                   <div className="flex space-x-2">
-                    <Button size="sm" variant="outline">
-                      <Eye className="w-4 h-4" />
-                    </Button>
-                    <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
+                    <Button
+                         variant="ghost"
+                         size="sm"
+                         className="bg-blue-600 text-white hover:bg-blue-700"
+                         title="Lihat Detail"
+                         >
+                         <Eye className="w-4 h-4" />
+                         </Button>
+                         <Button
+                         variant="ghost"
+                         size="sm"
+                         className="bg-red-600 text-white hover:bg-red-700"
+                         title="Hapus Data"
+                         onClick={() => handleDeleteSingle(k.id)}
+                         >
+                         <Trash2 className="w-4 h-4" />
+                         </Button>
                   </div>
                 </TableCell>
               </TableRow>
@@ -190,20 +201,47 @@ export const IzinPage = () => {
             </Table>
           </div>
 
-          <div className="flex items-center justify-between mt-4">
-            <div className="text-sm text-gray-600">
-              Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredData.length)} of {filteredData.length} entries
+          <div className="flex justify-between items-center mt-4">
+              <div className="text-sm text-gray-500">
+                Menampilkan{' '}
+                <strong>
+                  {Math.max((currentPage - 1) * itemsPerPage + 1, 1)} to{' '}
+                  {Math.min(currentPage * itemsPerPage, filteredData.length)}
+                </strong>{' '}
+                dari <strong>{filteredData.length}</strong> data
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                  className="bg-blue-500 text-white hover:bg-blue-600"
+                >
+                  Sebelumnya
+                </Button>
+                {[...Array(totalPages)].map((_, i) => (
+                  <Button
+                    key={i}
+                    size="sm"
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={
+                      currentPage === i + 1
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-white text-blue-600 border border-blue-600 hover:bg-blue-50'
+                    }
+                  >
+                    {i + 1}
+                  </Button>
+                ))}
+                <Button
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                  className="bg-blue-500 text-white hover:bg-blue-600"
+                >
+                  Selanjutnya
+                </Button>
+              </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <Button variant="outline" size="sm" onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
-                <ChevronLeft className="w-4 h-4" />
-              </Button>
-              <span className="text-sm">Page {currentPage} of {totalPages}</span>
-              <Button variant="outline" size="sm" onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages}>
-                <ChevronRight className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
+
         </CardContent>
       </Card>
     </div>

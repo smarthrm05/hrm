@@ -140,10 +140,10 @@ export const DivisiPage = () => {
             <div className="text-sm text-gray-500">
               Menampilkan{' '}
               <strong>
-                {Math.max((currentPage - 1) * entriesPerPage + 1, 1)} to{' '}
+                {Math.max((currentPage - 1) * entriesPerPage + 1, 1)} sampai{' '}
                 {Math.min(currentPage * entriesPerPage, filteredData.length)}
               </strong>{' '}
-              of <strong>{filteredData.length}</strong> entries
+              dari <strong>{filteredData.length}</strong> data
             </div>
             {/* Navigasi pagination */}
             <div className="flex gap-2">
