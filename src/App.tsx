@@ -9,6 +9,7 @@ import { HRISApp } from "@/components/HRISApp";
 import NotFound from "./pages/NotFound";
 
 // ✅ Import semua halaman
+import { DashboardPage } from "./components/DashboardPage";
 import { ShiftPage } from "./components/jadwalshift/ShiftPage";
 import { GroupPage } from "./components/jadwalshift/GroupPage";
 import { JadwalShiftPage } from "./components/jadwalshift/JadwalShiftPage";
@@ -32,12 +33,13 @@ import { KelolaKaryawanPage } from "./components/KelolaKaryawan/KelolaKaryawanPa
 import { DataKaryawanPage } from "./components/KelolaKaryawan/DataKaryawanPage";
 import { DivisiPage } from "./components/KelolaKaryawan/DivisiPage";
 import { JabatanPage } from "./components/KelolaKaryawan/JabatanPage";
+import { KontrakKerjaPage } from "./components/KontrakKerjaPage";
+
 
 
 // ✅ Auth
 import { AuthProvider } from "@/contexts/AuthContext";
 import { PrivateRoute } from "@/components/PrivateRoute";
-import { KontrakKerjaPage } from "./components/KontrakKerjaPage";
 
 const queryClient = new QueryClient();
 
@@ -58,8 +60,7 @@ const App = () => (
               {/* ✅ Semua halaman setelah login (dilindungi oleh PrivateRoute) */}
               <Route path="/" element={<PrivateRoute />}>
                 <Route path="" element={<HRISApp />}>
-                  <Route index element={<div>Selamat datang di Dashboard</div>} />
-                  <Route path="dashboard" element={<div>Selamat datang di Dashboard</div>} />
+                  <Route path="dashboard" element={< DashboardPage />} />
                   <Route path="kehadiran-page" element={<KehadiranPage />} />
                   <Route path="data-kehadiran" element={<DataKehadiranPage />} />
                   <Route path="rekap-kehadiran" element={<RekapKehadiranPage />} />
@@ -85,7 +86,6 @@ const App = () => (
                   <Route path="*" element={<NotFound />} />
                 </Route>
               </Route>
-
             </Routes>
           </BrowserRouter>
         </AuthProvider>
