@@ -9,7 +9,7 @@ import { HRISApp } from "@/components/HRISApp";
 import NotFound from "./pages/NotFound";
 
 // ✅ Import semua halaman
-import { DashboardPage } from "./components/DashboardPage";
+import DashboardPage from "./components/DashboardPage";
 import { ShiftPage } from "./components/jadwalshift/ShiftPage";
 import { GroupPage } from "./components/jadwalshift/GroupPage";
 import { JadwalShiftPage } from "./components/jadwalshift/JadwalShiftPage";

@@ -19,10 +19,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import clsx from "clsx";
+import { useAuth } from "@/contexts/AuthContext";
 
-export const DashboardPage = () => {
+function getGreeting() {
+  const hour = new Date().getHours();
+  if (hour < 11) return "Selamat Pagi";
+  if (hour < 15) return "Selamat Siang";
+  if (hour < 18) return "Selamat Sore";
+  return "Selamat Malam";
+}
+
+function formatTanggalIndonesia(date: Date) {
+  return date.toLocaleDateString("id-ID", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+export default function DashboardPage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
+  const { username } = useAuth();
+  const greeting = getGreeting();
+  const today = formatTanggalIndonesia(new Date());
 
   const topStats = [
     { label: "Total Karyawan", value: "10" },
@@ -37,70 +57,70 @@ export const DashboardPage = () => {
   ];
 
   const summaryStats = [
-    { title: "Karyawan", value: "10", icon: Users, color: "indigo" },
-    { title: "Divisi", value: "3", icon: Building2, color: "yellow" },
-    { title: "Admin", value: "1", icon: ShieldCheck, color: "green" },
-    { title: "Pola Kerja", value: "5", icon: Briefcase, color: "orange" },
-    { title: "Lokasi Kehadiran", value: "2", icon: MapPin, color: "red" },
-    { title: "Presensi", value: "470", icon: ClipboardList, color: "blue" },
-    { title: "Izin", value: "3", icon: Coffee, color: "amber" },
-    { title: "Cuti", value: "6", icon: CalendarCheck, color: "purple" },
+    { title: "Karyawan", value: "10", icon: Users },
+    { title: "Divisi", value: "3", icon: Building2 },
+    { title: "Admin", value: "1", icon: ShieldCheck },
+    { title: "Pola Kerja", value: "5", icon: Briefcase },
+    { title: "Lokasi Kehadiran", value: "2", icon: MapPin },
+    { title: "Presensi", value: "470", icon: ClipboardList },
+    { title: "Izin", value: "3", icon: Coffee },
+    { title: "Cuti", value: "6", icon: CalendarCheck },
   ];
 
   return (
-    <div className="bg-[#f9fafc] min-h-screen p-6 space-y-6">
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl font-semibold">Dasbor, Kementerian</h1>
-        <div className="flex items-center gap-4">
-          <Button className="bg-purple-600 text-white hover:bg-purple-700">
-            Jadwalkan Demo
-          </Button>
-          <span className="text-sm font-medium">Halo, Jefri</span>
-        </div>
+    <main className="flex-1 overflow-auto pt-[80px] pb-6 px-4 md:px-6">
+
+      {/* GREETING SECTION */}
+      <div className="bg-white border rounded-md p-4 mb-4 shadow-sm">
+        <h2 className="text-lg font-semibold text-gray-800">
+          {greeting}, {username || "Pengguna"}
+        </h2>
+        <p className="text-sm text-gray-500">
+          Selamat Beraktivitas. {today}
+        </p>
       </div>
 
-      {/* Trial Info */}
-      <div className="bg-white border rounded-md p-4 flex justify-between items-center">
+      {/* TRIAL INFO */}
+      <div className="bg-white border rounded-md p-4 flex justify-between items-center shadow-sm mb-6">
         <p className="text-sm">
-          Selamat mencoba masa <strong>Trial 14 hari</strong>, jika ada pertanyaan{' '}
-          <a href="#" className="text-blue-600 underline">
-            kami siap membantu
-          </a>
-          .
+          Selamat mencoba masa <strong>Trial 14 hari</strong>, jika ada pertanyaan{" "}
+          <a href="#" className="text-blue-600 underline">kami siap membantu</a>.
         </p>
-        <Button className="bg-green-500 hover:bg-green-600 text-white font-semibold">
+        <Button className="bg-green-500 hover:bg-green-600 text-white font-semibold text-sm px-4">
           Upgrade Paket Langganan
         </Button>
       </div>
 
-      {/* Welcome + Calendar */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card className="p-6 space-y-3">
-          <h3 className="text-lg font-semibold text-gray-800">Halo Jefri 👋</h3>
-          <p className="text-sm text-gray-600">
-            Agendakan jadwal meeting dan konsultasi gratis melalui Zoom selama 45 menit
-            untuk mendapatkan penjelasan fitur dan harga terbaik.
-          </p>
-          <Button className="bg-indigo-500 hover:bg-indigo-600 text-white">
-            JADWALKAN SEKARANG
-          </Button>
+      {/* WELCOME + CALENDAR */}
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4 mb-6">
+        <Card className="p-6">
+          <div className="space-y-3">
+            <h2 className="text-lg font-semibold text-gray-800">Halo Jefri 👋</h2>
+            <p className="text-sm text-gray-600">
+              Agendakan jadwal meeting dan konsultasi gratis melalui Zoom Meeting selama 45 menit
+              untuk mendapatkan penjelasan fitur dan harga terbaik.
+            </p>
+            <Button className="bg-indigo-500 hover:bg-indigo-600 text-white text-sm">
+              JADWALKAN SEKARANG
+            </Button>
+          </div>
         </Card>
-        <Card className="p-4">
+
+        <div className="bg-white border rounded-md p-4 shadow-sm">
           <Calendar
             mode="single"
             selected={date}
             onSelect={setDate}
-            className="rounded-md border bg-white"
+            className="rounded-md [&_.rdp-day_selected]:bg-blue-500 [&_.rdp-day_selected]:text-white [&_.rdp-day_today]:border-blue-500"
           />
           <p className="text-xs mt-2 text-center text-red-500 italic">
             * Tanggal merah = Libur Nasional / Cuti Bersama
           </p>
-        </Card>
+        </div>
       </div>
 
-      {/* Filter + Tanggal */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-3">
+      {/* FILTER DIVISI + TANGGAL */}
+      <div className="flex justify-between items-center gap-4 mb-6">
         <Select>
           <SelectTrigger className="w-[160px]">
             <SelectValue placeholder="--Divisi--" />
@@ -111,32 +131,28 @@ export const DashboardPage = () => {
             <SelectItem value="it">IT</SelectItem>
           </SelectContent>
         </Select>
-        <span className="text-sm text-muted-foreground">Kamis, 10 Juli 2025</span>
+        <span className="text-sm text-muted-foreground">{today}</span>
       </div>
 
-      {/* Top Stats */}
-      <Card className="p-4">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
+      {/* TOP STATS */}
+      <Card className="p-4 mb-6">
+        <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-9 text-center gap-4">
           {topStats.map((item) => (
-            <div key={item.label}>
-              <p className="text-sm text-muted-foreground">{item.label}</p>
-              <p className="text-xl font-bold text-indigo-700">{item.value}</p>
+            <div key={item.label} className="space-y-1">
+              <p className="text-xs text-muted-foreground whitespace-nowrap">
+                {item.label}
+              </p>
+              <p className="text-lg font-bold text-indigo-700">{item.value}</p>
             </div>
           ))}
         </div>
       </Card>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {/* SUMMARY */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {summaryStats.map((item) => (
           <Card key={item.title} className="flex items-center gap-4 p-4">
-            <div
-              className={clsx(
-                "p-3 rounded-full",
-                `bg-${item.color}-100`,
-                `text-${item.color}-600`
-              )}
-            >
+            <div className="p-3 rounded-full bg-indigo-100 text-indigo-600">
               <item.icon className="w-6 h-6" />
             </div>
             <div>
@@ -146,8 +162,6 @@ export const DashboardPage = () => {
           </Card>
         ))}
       </div>
-    </div>
+    </main>
   );
-};
-
-export default DashboardPage;
+}
