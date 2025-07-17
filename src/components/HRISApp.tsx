@@ -91,7 +91,7 @@ export const HRISApp = () => {
                     alt="Avatar"
                     className="w-8 h-8 rounded-full object-cover border-2 border-white"
                   />
-                  <span className="text-sm font-medium hidden sm:block">Halo, Jefri</span>
+                  <span className="text-sm font-medium hidden sm:block">Halo, Meida</span>
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent

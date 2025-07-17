@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   CalendarCheck,
   ClipboardList,
@@ -8,10 +8,11 @@ import {
   Briefcase,
   Users,
   Building2,
+  Clock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Calendar } from "@/components/ui/calendar";
+import { Calendar as ReactCalendar } from "@/components/ui/calendar";
 import {
   Select,
   SelectContent,
@@ -44,6 +45,17 @@ export default function DashboardPage() {
   const greeting = getGreeting();
   const today = formatTanggalIndonesia(new Date());
 
+  const [currentTime, setCurrentTime] = useState(new Date());
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+  const timeString = currentTime.toLocaleTimeString("id-ID", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+
   const topStats = [
     { label: "Total Karyawan", value: "10" },
     { label: "Hari Kerja", value: "5" },
@@ -68,15 +80,21 @@ export default function DashboardPage() {
   ];
 
   return (
-    <main className="flex-1 overflow-auto pt-[80px] pb-6 px-4 md:px-6">
+    <main className="flex-1 overflow-auto pb-6 px-4 md:px-6">
+      {/* BREADCRUMB */}
+      <div className="mb-4 text-sm text-gray-600">
+        <span className="text-blue-600 font-medium">Home</span> / <span>Dashboard</span>
+      </div>
 
-      {/* GREETING SECTION */}
-      <div className="bg-white border rounded-md p-4 mb-4 shadow-sm">
-        <h2 className="text-lg font-semibold text-gray-800">
+      {/* GREETING */}
+      <div className="mt-2 mb-4">
+        <h2 className="text-2xl font-bold text-blue-600">
           {greeting}, {username || "Pengguna"}
         </h2>
-        <p className="text-sm text-gray-500">
-          Selamat Beraktivitas. {today}
+        <p className="text-sm text-gray-500 flex items-center gap-1">
+          Selamat Beraktivitas. {today} •
+          <Clock className="w-4 h-4 text-gray-700" />
+          <span className="text-gray-700">{timeString}</span>
         </p>
       </div>
 
@@ -92,34 +110,51 @@ export default function DashboardPage() {
       </div>
 
       {/* WELCOME + CALENDAR */}
-      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4 mb-6">
-        <Card className="p-6">
-          <div className="space-y-3">
-            <h2 className="text-lg font-semibold text-gray-800">Halo Jefri 👋</h2>
-            <p className="text-sm text-gray-600">
+      <div className="grid grid-cols-1 lg:grid-cols-[5fr_2fr] gap-4 mb-6">
+        {/* CARD ILUSTRASI */}
+        <Card className="bg-[rgb(30,64,175)] text-white p-10 flex flex-col lg:flex-row items-center gap-10 h-auto mb-6">
+          <img
+            src="/public/schedule.svg"
+            alt="Ilustrasi Meeting"
+            className="w-36 h-auto"
+          />
+          <div className="flex-1 space-y-4 text-center lg:text-left">
+            <h2 className="text-2xl font-semibold">Halo Meida 👋</h2>
+            <p className="text-base leading-relaxed">
               Agendakan jadwal meeting dan konsultasi gratis melalui Zoom Meeting selama 45 menit
               untuk mendapatkan penjelasan fitur dan harga terbaik.
             </p>
-            <Button className="bg-indigo-500 hover:bg-indigo-600 text-white text-sm">
-              JADWALKAN SEKARANG
-            </Button>
+            <div>
+              <Button className="bg-white hover:bg-gray-100 text-blue-700 font-semibold text-sm">
+                JADWALKAN SEKARANG
+              </Button>
+            </div>
           </div>
         </Card>
 
-        <div className="bg-white border rounded-md p-4 shadow-sm">
-          <Calendar
+        {/* CALENDAR */}
+        <Card className="p-4 shadow-sm flex flex-col justify-between mb-6">
+          <ReactCalendar
             mode="single"
             selected={date}
             onSelect={setDate}
             className="rounded-md [&_.rdp-day_selected]:bg-blue-500 [&_.rdp-day_selected]:text-white [&_.rdp-day_today]:border-blue-500"
+            style={{
+              width: "100%",
+              padding: "8px",
+            }}
+            dayNamesShort={["SEN", "SEL", "RAB", "KAM", "JUM", "SAB", "MIN"]}
+            weekendDays={[6, 7]}
+            showNeighboringMonth={false}
+            showOutsideDays={false}
           />
-          <p className="text-xs mt-2 text-center text-red-500 italic">
-            * Tanggal merah = Libur Nasional / Cuti Bersama
+          <p className="text-xs mt-2 text-right text-gray-600">
+            {today}
           </p>
-        </div>
+        </Card>
       </div>
 
-      {/* FILTER DIVISI + TANGGAL */}
+      {/* FILTER */}
       <div className="flex justify-between items-center gap-4 mb-6">
         <Select>
           <SelectTrigger className="w-[160px]">
@@ -148,7 +183,7 @@ export default function DashboardPage() {
         </div>
       </Card>
 
-      {/* SUMMARY */}
+      {/* SUMMARY STATS */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {summaryStats.map((item) => (
           <Card key={item.title} className="flex items-center gap-4 p-4">
