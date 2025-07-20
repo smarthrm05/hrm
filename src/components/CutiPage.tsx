@@ -7,37 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, Plus, Eye, Trash2, ChevronLeft, ChevronRight, Clock, CheckCircle, XCircle, FileText } from 'lucide-react';
 
-// Komponen Label Status
-const StatusLabel = ({ status }: { status: string }) => {
-  let colorClass = '';
-  let Icon = Clock;
-
-  switch (status) {
-    case 'Menunggu Disetujui':
-      colorClass = 'bg-yellow-100 text-yellow-800';
-      Icon = Clock;
-      break;
-    case 'Disetujui':
-      colorClass = 'bg-green-100 text-green-800';
-      Icon = CheckCircle;
-      break;
-    case 'Ditolak':
-      colorClass = 'bg-red-100 text-red-800';
-      Icon = XCircle;
-      break;
-    default:
-      colorClass = 'bg-gray-100 text-gray-800';
-      Icon = FileText;
-  }
-
-  return (
-    <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full ${colorClass} whitespace-nowrap max-w-full truncate`}>
-      <Icon className="w-3 h-3" />
-      {status}
-    </span>
-  );
-};
-
+// Interface Cuti
 interface CutiData {
   no: number;
   idKaryawan: string;
@@ -50,11 +20,13 @@ interface CutiData {
   alasan: string;
   status: 'Menunggu Disetujui' | 'Disetujui' | 'Ditolak';
   tanggalDisetujui?: Date;
+  tanggalDitolak?: Date;
   tanggalPengajuan: Date;
   periodeCuti: string;
   sisaCuti: number;
 }
 
+// Mock Data Cuti
 const mockData: CutiData[] = [
   {
     no: 1,
@@ -69,7 +41,7 @@ const mockData: CutiData[] = [
     status: 'Menunggu Disetujui',
     periodeCuti: '5 Hari',
     sisaCuti: 10,
-    tanggalPengajuan: new Date('2024-06-15T10:12:00'),
+    tanggalPengajuan: new Date('2024-06-15T10:12:00')
   },
   {
     no: 2,
@@ -85,7 +57,7 @@ const mockData: CutiData[] = [
     tanggalDisetujui: new Date('2024-06-01T09:30:00'),
     periodeCuti: '90 Hari',
     sisaCuti: 0,
-    tanggalPengajuan: new Date('2024-05-25T08:45:00'),
+    tanggalPengajuan: new Date('2024-05-25T08:45:00')
   },
   {
     no: 3,
@@ -100,7 +72,7 @@ const mockData: CutiData[] = [
     status: 'Menunggu Disetujui',
     periodeCuti: '5 Hari',
     sisaCuti: 8,
-    tanggalPengajuan: new Date('2024-07-28T14:20:00'),
+    tanggalPengajuan: new Date('2024-07-28T14:20:00')
   },
   {
     no: 4,
@@ -116,7 +88,7 @@ const mockData: CutiData[] = [
     tanggalDisetujui: new Date('2024-08-25T10:00:00'),
     periodeCuti: '3 Hari',
     sisaCuti: 5,
-    tanggalPengajuan: new Date('2024-08-20T09:15:00'),
+    tanggalPengajuan: new Date('2024-08-20T09:15:00')
   },
   {
     no: 5,
@@ -129,9 +101,10 @@ const mockData: CutiData[] = [
     tanggalSelesai: new Date('2024-08-12'),
     alasan: 'Keluarga sakit',
     status: 'Ditolak',
+    tanggalDitolak: new Date('2024-08-05T16:00:00'),
     periodeCuti: '2 Hari',
     sisaCuti: 3,
-    tanggalPengajuan: new Date('2024-08-05T16:00:00'),
+    tanggalPengajuan: new Date('2024-08-05T16:00:00')
   },
   {
     no: 6,
@@ -147,7 +120,7 @@ const mockData: CutiData[] = [
     tanggalDisetujui: new Date('2024-07-15T11:00:00'),
     periodeCuti: '5 Hari',
     sisaCuti: 2,
-    tanggalPengajuan: new Date('2024-07-10T08:30:00'),
+    tanggalPengajuan: new Date('2024-07-10T08:30:00')
   },
   {
     no: 7,
@@ -160,9 +133,10 @@ const mockData: CutiData[] = [
     tanggalSelesai: new Date('2024-07-18'),
     alasan: 'Pindah rumah',
     status: 'Ditolak',
+    tanggalDitolak: new Date('2024-07-10T10:45:00'),
     periodeCuti: '4 Hari',
     sisaCuti: 1,
-    tanggalPengajuan: new Date('2024-07-10T10:45:00'),
+    tanggalPengajuan: new Date('2024-07-10T10:45:00')
   },
   {
     no: 8,
@@ -175,12 +149,64 @@ const mockData: CutiData[] = [
     tanggalSelesai: new Date('2024-06-20'),
     alasan: 'Liburan ke luar negeri',
     status: 'Ditolak',
+    tanggalDitolak: new Date('2024-06-05T13:00:00'),
     periodeCuti: '6 Hari',
     sisaCuti: 0,
-    tanggalPengajuan: new Date('2024-06-05T13:00:00'),
-  },
+    tanggalPengajuan: new Date('2024-06-05T13:00:00')
+  }
 ];
 
+// Fungsi Format Tanggal dan Waktu
+const formatDateTime = (date: Date) => {
+  return date.toLocaleString('id-ID', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+};
+
+// Komponen Badge Status
+const getStatusBadge = (item: CutiData) => {
+  if (item.status === 'Disetujui') {
+    return (
+      <div className="flex flex-col">
+        <Badge className="bg-green-100 text-green-800 hover:bg-green-100 mb-1">
+          {item.status}
+        </Badge>
+        {item.tanggalDisetujui && (
+          <span className="text-xs text-gray-500">
+            {formatDateTime(item.tanggalDisetujui)}
+          </span>
+        )}
+      </div>
+    );
+  } else if (item.status === 'Ditolak') {
+    return (
+      <div className="flex flex-col">
+        <Badge className="bg-red-100 text-red-800 hover:bg-red-100 mb-1">
+          {item.status}
+        </Badge>
+        {item.tanggalDitolak && (
+          <span className="text-xs text-gray-500">
+            {formatDateTime(item.tanggalDitolak)}
+          </span>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col">
+      <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100 mb-1">
+        {item.status}
+      </Badge>
+    </div>
+  );
+};
+
+// Halaman Utama
 export const CutiPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [data] = useState<CutiData[]>(mockData);
@@ -203,18 +229,8 @@ export const CutiPage = () => {
     return date.toLocaleDateString('id-ID');
   };
 
-  const formatDateTime = (date: Date) => {
-    return date.toLocaleString('id-ID', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
-
-  const getStatusBadge = (status: string, tanggalDisetujui?: Date) => {
-    return <StatusLabel status={status} />;
+  const handleDeleteSingle = (id: string) => {
+    console.log('Hapus data dengan ID:', id);
   };
 
   return (
@@ -225,6 +241,7 @@ export const CutiPage = () => {
 
       {/* Cards Informasi Tambahan */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        {/* Menunggu Disetujui */}
         <Card className="bg-yellow-50 border-yellow-500 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-yellow-700">
@@ -236,10 +253,11 @@ export const CutiPage = () => {
             <div className="text-2xl font-bold text-yellow-700">
               {data.filter(d => d.status === 'Menunggu Disetujui').length}
             </div>
-            <p className="text-xs text-yellow-600">Total pengajuan cuti menunggu</p>
+            <p className="text-xs text-yellow-600">Total pengajuan menunggu</p>
           </CardContent>
         </Card>
 
+        {/* Disetujui */}
         <Card className="bg-green-50 border-green-500 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-green-700">
@@ -255,6 +273,7 @@ export const CutiPage = () => {
           </CardContent>
         </Card>
 
+        {/* Ditolak */}
         <Card className="bg-red-50 border-red-500 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-red-700">
@@ -270,6 +289,7 @@ export const CutiPage = () => {
           </CardContent>
         </Card>
 
+        {/* Total Pengajuan */}
         <Card className="bg-blue-50 border-blue-500 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-blue-700">
@@ -278,9 +298,7 @@ export const CutiPage = () => {
             <FileText className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-700">
-              {data.length}
-            </div>
+            <div className="text-2xl font-bold text-blue-700">{data.length}</div>
             <p className="text-xs text-blue-600">Total semua pengajuan cuti</p>
           </CardContent>
         </Card>
@@ -346,20 +364,20 @@ export const CutiPage = () => {
               <TableBody>
                 {paginatedData.map((item) => (
                   <TableRow key={item.no} className="border">
-                    <TableCell className="border">{item.no}</TableCell>
-                    <TableCell className="border">{item.idKaryawan}</TableCell>
-                    <TableCell className="border">{item.nama}</TableCell>
-                    <TableCell className="border">{item.divisi}</TableCell>
-                    <TableCell className="border">{item.jabatan}</TableCell>
-                    <TableCell className="border">{item.jenisCuti}</TableCell>
-                    <TableCell className="border">{formatDate(item.tanggalMulai)}</TableCell>
-                    <TableCell className="border">{formatDate(item.tanggalSelesai)}</TableCell>
-                    <TableCell className="border">{item.periodeCuti}</TableCell>
-                    <TableCell className="border">{item.alasan}</TableCell>
-                    <TableCell className="border">{item.sisaCuti}</TableCell>
-                    <TableCell className="border">{formatDateTime(item.tanggalPengajuan)}</TableCell>
-                    <TableCell className="border">{getStatusBadge(item.status, item.tanggalDisetujui)}</TableCell>
-                    <TableCell className="border">
+                    <TableCell className="border whitespace-nowrap">{item.no}</TableCell>
+                    <TableCell className="border whitespace-nowrap">{item.idKaryawan}</TableCell>
+                    <TableCell className="border whitespace-nowrap">{item.nama}</TableCell>
+                    <TableCell className="border whitespace-nowrap">{item.divisi}</TableCell>
+                    <TableCell className="border whitespace-nowrap">{item.jabatan}</TableCell>
+                    <TableCell className="border whitespace-nowrap">{item.jenisCuti}</TableCell>
+                    <TableCell className="border whitespace-nowrap">{formatDate(item.tanggalMulai)}</TableCell>
+                    <TableCell className="border whitespace-nowrap">{formatDate(item.tanggalSelesai)}</TableCell>
+                    <TableCell className="border whitespace-nowrap">{item.periodeCuti}</TableCell>
+                    <TableCell className="border whitespace-nowrap">{item.alasan}</TableCell>
+                    <TableCell className="border whitespace-nowrap">{item.sisaCuti}</TableCell>
+                    <TableCell className="border whitespace-nowrap">{formatDateTime(item.tanggalPengajuan)}</TableCell>
+                    <TableCell className="border whitespace-nowrap">{getStatusBadge(item)}</TableCell>
+                    <TableCell className="border whitespace-nowrap">
                       <div className="flex space-x-2">
                         <Button
                           variant="ghost"
@@ -374,6 +392,7 @@ export const CutiPage = () => {
                           size="sm"
                           className="bg-red-600 text-white hover:bg-red-700"
                           title="Hapus Data"
+                          onClick={() => handleDeleteSingle(item.idKaryawan)}
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
