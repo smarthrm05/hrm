@@ -416,13 +416,45 @@ export const DataKaryawanPage = () => {
     setIsOpen(false);
   };
 
-
-
   return (
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-900">Manajemen Karyawan</h1>
       </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Card Karyawan Aktif */}
+        <Card className="bg-green-700 border-green-800 shadow-md">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-semibold text-white">
+              Total Karyawan Aktif 
+            </CardTitle>
+            <CheckCircle className="h-4 w-4 text-white" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">
+              {data.filter(k => k.statusKerja === 'Aktif').length}
+            </div>
+            <p className="text-xs text-white">Karyawan</p>
+          </CardContent>
+        </Card>
+
+        {/* Card Karyawan Tidak Aktif */}
+        <Card className="bg-red-600 border-red-800 shadow-md">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-semibold text-white">
+              Total Karyawan Tidak Aktif 
+            </CardTitle>
+            <XCircle className="h-4 w-4 text-white" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">
+              {data.filter(k => k.statusKerja === 'Tidak Aktif').length}
+            </div>
+            <p className="text-xs text-white">Karyawan</p>
+          </CardContent>
+        </Card>
+      </div>
+
       <Card>
         <CardHeader className="bg-blue-50 border-b mb-4">
           <CardTitle className="text-blue-800">Data Karyawan</CardTitle>
@@ -431,7 +463,7 @@ export const DataKaryawanPage = () => {
           <div className="flex gap-2">
             {/* Tombol Aktifkan */}
             <Button
-              className="bg-green-500 hover:bg-green-600 text-white flex items-center gap-1"
+              className="bg-green-700 hover:bg-green-600 text-white flex items-center gap-1"
               disabled={selectedIds.length === 0}
               onClick={() => updateStatusAkun('Aktif')}
             >

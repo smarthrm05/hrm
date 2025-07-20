@@ -5,7 +5,38 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, Plus, Eye, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, Plus, Eye, Trash2, ChevronLeft, ChevronRight, Clock, CheckCircle, XCircle, FileText } from 'lucide-react';
+
+// Komponen Label Status
+const StatusLabel = ({ status }: { status: string }) => {
+  let colorClass = '';
+  let Icon = Clock;
+
+  switch (status) {
+    case 'Menunggu Disetujui':
+      colorClass = 'bg-yellow-100 text-yellow-800';
+      Icon = Clock;
+      break;
+    case 'Disetujui':
+      colorClass = 'bg-green-100 text-green-800';
+      Icon = CheckCircle;
+      break;
+    case 'Ditolak':
+      colorClass = 'bg-red-100 text-red-800';
+      Icon = XCircle;
+      break;
+    default:
+      colorClass = 'bg-gray-100 text-gray-800';
+      Icon = FileText;
+  }
+
+  return (
+    <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full ${colorClass} whitespace-nowrap max-w-full truncate`}>
+      <Icon className="w-3 h-3" />
+      {status}
+    </span>
+  );
+};
 
 interface CutiData {
   no: number;
@@ -17,7 +48,7 @@ interface CutiData {
   tanggalMulai: Date;
   tanggalSelesai: Date;
   alasan: string;
-  status: 'Menunggu Disetujui' | 'Disetujui';
+  status: 'Menunggu Disetujui' | 'Disetujui' | 'Ditolak';
   tanggalDisetujui?: Date;
   tanggalPengajuan: Date;
   periodeCuti: string;
@@ -38,7 +69,7 @@ const mockData: CutiData[] = [
     status: 'Menunggu Disetujui',
     periodeCuti: '5 Hari',
     sisaCuti: 10,
-    tanggalPengajuan: new Date('2024-06-15T10:12:00')
+    tanggalPengajuan: new Date('2024-06-15T10:12:00'),
   },
   {
     no: 2,
@@ -52,10 +83,102 @@ const mockData: CutiData[] = [
     alasan: 'Kelahiran anak pertama',
     status: 'Disetujui',
     tanggalDisetujui: new Date('2024-06-01T09:30:00'),
-    periodeCuti: '2 Hari',
+    periodeCuti: '90 Hari',
     sisaCuti: 0,
-    tanggalPengajuan: new Date('2024-05-25T08:45:00')
-  }
+    tanggalPengajuan: new Date('2024-05-25T08:45:00'),
+  },
+  {
+    no: 3,
+    idKaryawan: 'EMP003',
+    nama: 'Budi Santoso',
+    divisi: 'Keuangan',
+    jabatan: 'Accountant',
+    jenisCuti: 'Cuti Sakit',
+    tanggalMulai: new Date('2024-08-01'),
+    tanggalSelesai: new Date('2024-08-05'),
+    alasan: 'Sakit perut',
+    status: 'Menunggu Disetujui',
+    periodeCuti: '5 Hari',
+    sisaCuti: 8,
+    tanggalPengajuan: new Date('2024-07-28T14:20:00'),
+  },
+  {
+    no: 4,
+    idKaryawan: 'EMP004',
+    nama: 'Siti Nurfadilah',
+    divisi: 'Marketing',
+    jabatan: 'Marketing Staff',
+    jenisCuti: 'Cuti Tahunan',
+    tanggalMulai: new Date('2024-09-01'),
+    tanggalSelesai: new Date('2024-09-03'),
+    alasan: 'Pernikahan saudara',
+    status: 'Disetujui',
+    tanggalDisetujui: new Date('2024-08-25T10:00:00'),
+    periodeCuti: '3 Hari',
+    sisaCuti: 5,
+    tanggalPengajuan: new Date('2024-08-20T09:15:00'),
+  },
+  {
+    no: 5,
+    idKaryawan: 'EMP005',
+    nama: 'Joko Susilo',
+    divisi: 'IT',
+    jabatan: 'Frontend Developer',
+    jenisCuti: 'Cuti Darurat',
+    tanggalMulai: new Date('2024-08-10'),
+    tanggalSelesai: new Date('2024-08-12'),
+    alasan: 'Keluarga sakit',
+    status: 'Ditolak',
+    periodeCuti: '2 Hari',
+    sisaCuti: 3,
+    tanggalPengajuan: new Date('2024-08-05T16:00:00'),
+  },
+  {
+    no: 6,
+    idKaryawan: 'EMP006',
+    nama: 'Ani Lestari',
+    divisi: 'HR',
+    jabatan: 'Recruitment',
+    jenisCuti: 'Cuti Tahunan',
+    tanggalMulai: new Date('2024-07-20'),
+    tanggalSelesai: new Date('2024-07-25'),
+    alasan: 'Liburan ke Bali',
+    status: 'Disetujui',
+    tanggalDisetujui: new Date('2024-07-15T11:00:00'),
+    periodeCuti: '5 Hari',
+    sisaCuti: 2,
+    tanggalPengajuan: new Date('2024-07-10T08:30:00'),
+  },
+  {
+    no: 7,
+    idKaryawan: 'EMP007',
+    nama: 'Heri Kurniawan',
+    divisi: 'Keuangan',
+    jabatan: 'Staff Keuangan',
+    jenisCuti: 'Cuti Pribadi',
+    tanggalMulai: new Date('2024-07-15'),
+    tanggalSelesai: new Date('2024-07-18'),
+    alasan: 'Pindah rumah',
+    status: 'Ditolak',
+    periodeCuti: '4 Hari',
+    sisaCuti: 1,
+    tanggalPengajuan: new Date('2024-07-10T10:45:00'),
+  },
+  {
+    no: 8,
+    idKaryawan: 'EMP008',
+    nama: 'Lina Suryadi',
+    divisi: 'Marketing',
+    jabatan: 'Marketing Supervisor',
+    jenisCuti: 'Cuti Tahunan',
+    tanggalMulai: new Date('2024-06-15'),
+    tanggalSelesai: new Date('2024-06-20'),
+    alasan: 'Liburan ke luar negeri',
+    status: 'Ditolak',
+    periodeCuti: '6 Hari',
+    sisaCuti: 0,
+    tanggalPengajuan: new Date('2024-06-05T13:00:00'),
+  },
 ];
 
 export const CutiPage = () => {
@@ -91,27 +214,76 @@ export const CutiPage = () => {
   };
 
   const getStatusBadge = (status: string, tanggalDisetujui?: Date) => {
-    if (status === 'Disetujui') {
-      return (
-        <div className="flex flex-col">
-          <Badge className="bg-green-100 text-green-800 hover:bg-green-100 mb-1">{status}</Badge>
-          {tanggalDisetujui && (
-            <span className="text-xs text-gray-500">{formatDateTime(tanggalDisetujui)}</span>
-          )}
-        </div>
-      );
-    }
-    return (
-      <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
-        {status}
-      </Badge>
-    );
+    return <StatusLabel status={status} />;
   };
 
   return (
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-900">Cuti</h1>
+      </div>
+
+      {/* Cards Informasi Tambahan */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <Card className="bg-yellow-50 border-yellow-500 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-yellow-700">
+              Menunggu Disetujui
+            </CardTitle>
+            <Clock className="h-4 w-4 text-yellow-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-yellow-700">
+              {data.filter(d => d.status === 'Menunggu Disetujui').length}
+            </div>
+            <p className="text-xs text-yellow-600">Total pengajuan cuti menunggu</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-green-50 border-green-500 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-green-700">
+              Pengajuan Disetujui
+            </CardTitle>
+            <CheckCircle className="h-4 w-4 text-green-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-700">
+              {data.filter(d => d.status === 'Disetujui').length}
+            </div>
+            <p className="text-xs text-green-600">Total pengajuan disetujui</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-red-50 border-red-500 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-red-700">
+              Pengajuan Ditolak
+            </CardTitle>
+            <XCircle className="h-4 w-4 text-red-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-red-700">
+              {data.filter(d => d.status === 'Ditolak').length}
+            </div>
+            <p className="text-xs text-red-600">Total pengajuan ditolak</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-blue-50 border-blue-500 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-blue-700">
+              Total Pengajuan
+            </CardTitle>
+            <FileText className="h-4 w-4 text-blue-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-blue-700">
+              {data.length}
+            </div>
+            <p className="text-xs text-blue-600">Total semua pengajuan cuti</p>
+          </CardContent>
+        </Card>
       </div>
 
       <Card>
@@ -151,7 +323,6 @@ export const CutiPage = () => {
               Ajukan Cuti
             </Button>
           </div>
-
           <div className="overflow-x-auto border rounded-lg">
             <Table>
               <TableHeader>
@@ -191,22 +362,21 @@ export const CutiPage = () => {
                     <TableCell className="border">
                       <div className="flex space-x-2">
                         <Button
-                         variant="ghost"
-                         size="sm"
-                         className="bg-blue-600 text-white hover:bg-blue-700"
-                         title="Lihat Detail"
-                         >
-                         <Eye className="w-4 h-4" />
-                         </Button>
-                         <Button
-                         variant="ghost"
-                         size="sm"
-                         className="bg-red-600 text-white hover:bg-red-700"
-                         title="Hapus Data"
-                         onClick={() => handleDeleteSingle(k.id)}
-                         >
-                         <Trash2 className="w-4 h-4" />
-                         </Button>
+                          variant="ghost"
+                          size="sm"
+                          className="bg-blue-600 text-white hover:bg-blue-700"
+                          title="Lihat Detail"
+                        >
+                          <Eye className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="bg-red-600 text-white hover:bg-red-700"
+                          title="Hapus Data"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -214,7 +384,6 @@ export const CutiPage = () => {
               </TableBody>
             </Table>
           </div>
-
           <div className="flex justify-between items-center mt-4">
             <div className="text-sm text-gray-500">
               Menampilkan{' '}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Swal from 'sweetalert2'; // ✅ Import SweetAlert2
+import Swal from 'sweetalert2';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,6 +11,7 @@ import {
   Users,
   Phone,
   Mail,
+  MapPin,
 } from 'lucide-react';
 
 export const RegisterPage = () => {
@@ -21,6 +22,8 @@ export const RegisterPage = () => {
     employees: '1',
     phone: '',
     email: '',
+    meetingLocation: 'Online', // default
+    companyAddress: '',
   });
 
   const handleChange = (field: string, value: string) => {
@@ -29,8 +32,6 @@ export const RegisterPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // ✅ Tampilkan SweetAlert2 setelah submit
     Swal.fire({
       icon: 'success',
       title: '<span style="color: white;">Berhasil Mendaftar!</span>',
@@ -134,6 +135,44 @@ export const RegisterPage = () => {
                 form.email,
                 (e) => handleChange('email', e.target.value),
                 'email'
+              )}
+
+              {/* Lokasi Meeting */}
+              <div>
+                <Label className="text-sm mb-1 block">Pilih Lokasi Meeting</Label>
+                <div className="flex gap-4">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="meetingLocation"
+                      value="Online"
+                      checked={form.meetingLocation === 'Online'}
+                      onChange={() => handleChange('meetingLocation', 'Online')}
+                    />
+                    Online
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="meetingLocation"
+                      value="Offline"
+                      checked={form.meetingLocation === 'Offline'}
+                      onChange={() => handleChange('meetingLocation', 'Offline')}
+                    />
+                    Offline
+                  </label>
+                </div>
+              </div>
+
+              {/* Alamat Perusahaan (hanya jika Offline) */}
+              {form.meetingLocation === 'Offline' && (
+                renderField(
+                  'Alamat Perusahaan',
+                  'Jl. Contoh No.123, Jakarta',
+                  <MapPin className="w-4 h-4 text-gray-400" />,
+                  form.companyAddress,
+                  (e) => handleChange('companyAddress', e.target.value)
+                )
               )}
 
               <Button
