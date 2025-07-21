@@ -17,11 +17,11 @@ import { KehadiranPage } from "./components/kehadiran/KehadiranPage";
 import { DataKehadiranPage } from "./components/kehadiran/DataKehadiranPage";
 import { RekapKehadiranPage } from "./components/kehadiran/RekapKehadiranPage";
 import { RequestAbsenPage } from "./components/RequestAbsenPage";
-import { CutiPage } from "./components/CutiPage";
+import { DataCutiPage } from "./components/Cuti/DataCutiPage";
 import { PinjamanPage } from "./components/PinjamanPage";
 import { ReimbursementPage } from "./components/ReimbursementPage";
-import { LemburPage } from "./components/LemburPage";
-import { IzinPage } from "./components/IzinPage";
+import { DataLemburPage } from "./components/Lembur/DataLemburPage";
+import { DataIzinPage } from "./components/Izin/DataIzinPage";
 import { POPage } from "./components/POPage";
 import { PengunduranDiriPage } from './components/PengunduranDiriPage';
 import { KeteranganBekerjaPage } from './components/KeteranganBekerjaPage';
@@ -53,7 +53,6 @@ const App = () => (
           <BrowserRouter>
             <Routes>
 
-              {/* ✅ Halaman bebas akses */}
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<LoginForm />} />
 
@@ -69,9 +68,9 @@ const App = () => (
                   <Route path="request-absen" element={<RequestAbsenPage />} />
                   <Route path="divisi" element={<DivisiPage />} />
                   <Route path="jabatan" element={<JabatanPage />} />
-                  <Route path="cuti" element={<CutiPage />} />
-                  <Route path="izin" element={<IzinPage />} />
-                  <Route path="lembur" element={<LemburPage />} />
+                  <Route path="data-cuti" element={<DataCutiPage />} />
+                  <Route path="data-izin" element={<DataIzinPage />} />
+                  <Route path="data-lembur" element={<DataLemburPage />} />
                   <Route path="shift" element={<ShiftPage />} />
                   <Route path="group" element={<GroupPage />} />
                   <Route path="jadwal-shift" element={<JadwalShiftPage />} />

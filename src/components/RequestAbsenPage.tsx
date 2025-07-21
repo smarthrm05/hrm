@@ -122,6 +122,7 @@ export const RequestAbsenPage = () => {
   return (
     <div className="p-6 space-y-6">
       <h1 className="text-3xl font-bold text-gray-900">Request Absen</h1>
+      
 
       <Card>
         <CardHeader className="bg-blue-50 border-b">

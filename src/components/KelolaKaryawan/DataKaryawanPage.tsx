@@ -565,36 +565,36 @@ export const DataKaryawanPage = () => {
                         onChange={() => toggleSelectRow(k.id)}
                       />
                     </TableCell>
-                    <TableCell className="border border-gray-200">
+                    <TableCell className="border border-gray-200 whitespace-nowrap">
                       {(currentPage - 1) * entriesPerPage + idx + 1}
                     </TableCell>
-                    <TableCell className="border border-gray-200">
+                    <TableCell className="border border-gray-200 whitespace-nowrap">
                       <img
                         src={k.foto}
                         alt={k.nama}
                         className="rounded-full w-8 h-8 object-cover"
                       />
                     </TableCell>
-                    <TableCell className="border border-gray-200">{k.id}</TableCell>
-                    <TableCell className="border border-gray-200">{k.nama}</TableCell>
-                    <TableCell className="border border-gray-200">{k.divisi}</TableCell>
-                    <TableCell className="border border-gray-200">{k.jabatan}</TableCell>
-                    <TableCell className="border border-gray-200">
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{k.id}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{k.nama}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{k.divisi}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{k.jabatan}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">
                       {formatTanggal(k.tanggalBergabung)}
                     </TableCell>
-                    <TableCell className="border border-gray-200">{k.kategori}</TableCell>
-                    <TableCell className="border border-gray-200">
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{k.kategori}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">
                       {formatTanggal(k.tanggalKontrak)}
                     </TableCell>
-                    <TableCell className="border border-gray-200">
+                    <TableCell className="border border-gray-200 whitespace-nowrap">
                       {formatTanggal(k.selesaiKontrak)}
                     </TableCell>
-                    <TableCell className="border border-gray-200">{k.statusKerja}</TableCell>
-                    <TableCell className="border border-gray-200">
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{k.statusKerja}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap"> 
                       <StatusLabel status={k.statusAkun} />
                     </TableCell>
-                    <TableCell className="border border-gray-200"><ReminderLabel text={k.pengingat} /></TableCell>
-                    <TableCell className="border border-gray-200">
+                    <TableCell className="border border-gray-200 whitespace-nowrap"><ReminderLabel text={k.pengingat} /></TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">
                       <div className="flex justify-start space-x-2">
                     <Button
                       variant="ghost"

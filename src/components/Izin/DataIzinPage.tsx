@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, Plus, Eye, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, Plus, Eye, Trash2, ChevronLeft, ChevronRight, Clock, CheckCircle, XCircle, FileText } from 'lucide-react';
 
 interface IzinData {
   no: number;
@@ -52,7 +52,7 @@ const mockData: IzinData[] = [
   }
 ];
 
-export const IzinPage = () => {
+export const DataIzinPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [data] = useState<IzinData[]>(mockData);
   const [currentPage, setCurrentPage] = useState(1);
@@ -102,6 +102,70 @@ export const IzinPage = () => {
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-900">Izin </h1>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        {/* Menunggu Disetujui */}
+        <Card className="bg-yellow-500 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-white">
+              Menunggu Disetujui
+            </CardTitle>
+            <Clock className="h-4 w-4 text-white" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">
+              {data.filter(d => d.status === 'Menunggu Disetujui').length}
+            </div>
+            <p className="text-xs text-white">Pengajuan </p>
+          </CardContent>
+        </Card>
+
+        {/* Disetujui */}
+        <Card className="bg-green-700 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-white">
+              Total Pengajuan Disetujui
+            </CardTitle>
+            <CheckCircle className="h-4 w-4 text-white" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">
+              {data.filter(d => d.status === 'Disetujui').length}
+            </div>
+            <p className="text-xs text-white">Pengajuan</p>
+          </CardContent>
+        </Card>
+
+        {/* Ditolak */}
+        <Card className="bg-red-600 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-white">
+              Total Pengajuan Ditolak
+            </CardTitle>
+            <XCircle className="h-4 w-4 text-white" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">
+              {data.filter(d => d.status === 'Ditolak').length}
+            </div>
+            <p className="text-xs text-white">Pengajuan</p>
+          </CardContent>
+        </Card>
+
+        {/* Total Pengajuan */}
+        <Card className="bg-blue-600 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-white">
+              Total Pengajuan Izin
+            </CardTitle>
+            <FileText className="h-4 w-4 text-white" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">{data.length}</div>
+            <p className="text-xs text-white">Pengajuan</p>
+          </CardContent>
+        </Card>
       </div>
 
       <Card>

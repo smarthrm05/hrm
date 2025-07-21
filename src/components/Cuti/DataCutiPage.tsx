@@ -207,7 +207,7 @@ const getStatusBadge = (item: CutiData) => {
 };
 
 // Halaman Utama
-export const CutiPage = () => {
+export const DataCutiPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [data] = useState<CutiData[]>(mockData);
   const [currentPage, setCurrentPage] = useState(1);
@@ -239,67 +239,66 @@ export const CutiPage = () => {
         <h1 className="text-3xl font-bold text-gray-900">Cuti</h1>
       </div>
 
-      {/* Cards Informasi Tambahan */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {/* Menunggu Disetujui */}
-        <Card className="bg-yellow-50 border-yellow-500 shadow-sm">
+        <Card className="bg-yellow-500 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-yellow-700">
+            <CardTitle className="text-sm font-medium text-white">
               Menunggu Disetujui
             </CardTitle>
-            <Clock className="h-4 w-4 text-yellow-600" />
+            <Clock className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-yellow-700">
+            <div className="text-2xl font-bold text-white">
               {data.filter(d => d.status === 'Menunggu Disetujui').length}
             </div>
-            <p className="text-xs text-yellow-600">Total pengajuan menunggu</p>
+            <p className="text-xs text-white">Pengajuan </p>
           </CardContent>
         </Card>
 
         {/* Disetujui */}
-        <Card className="bg-green-50 border-green-500 shadow-sm">
+        <Card className="bg-green-700 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-green-700">
-              Pengajuan Disetujui
+            <CardTitle className="text-sm font-medium text-white">
+              Total Pengajuan Disetujui
             </CardTitle>
-            <CheckCircle className="h-4 w-4 text-green-600" />
+            <CheckCircle className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-700">
+            <div className="text-2xl font-bold text-white">
               {data.filter(d => d.status === 'Disetujui').length}
             </div>
-            <p className="text-xs text-green-600">Total pengajuan disetujui</p>
+            <p className="text-xs text-white">Pengajuan</p>
           </CardContent>
         </Card>
 
         {/* Ditolak */}
-        <Card className="bg-red-50 border-red-500 shadow-sm">
+        <Card className="bg-red-600 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-red-700">
-              Pengajuan Ditolak
+            <CardTitle className="text-sm font-medium text-white">
+              Total Pengajuan Ditolak
             </CardTitle>
-            <XCircle className="h-4 w-4 text-red-600" />
+            <XCircle className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-red-700">
+            <div className="text-2xl font-bold text-white">
               {data.filter(d => d.status === 'Ditolak').length}
             </div>
-            <p className="text-xs text-red-600">Total pengajuan ditolak</p>
+            <p className="text-xs text-white">Pengajuan</p>
           </CardContent>
         </Card>
 
         {/* Total Pengajuan */}
-        <Card className="bg-blue-50 border-blue-500 shadow-sm">
+        <Card className="bg-blue-600 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-blue-700">
-              Total Pengajuan
+            <CardTitle className="text-sm font-medium text-white">
+              Total Pengajuan Cuti
             </CardTitle>
-            <FileText className="h-4 w-4 text-blue-600" />
+            <FileText className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-700">{data.length}</div>
-            <p className="text-xs text-blue-600">Total semua pengajuan cuti</p>
+            <div className="text-2xl font-bold text-white">{data.length}</div>
+            <p className="text-xs text-white">Pengajuan</p>
           </CardContent>
         </Card>
       </div>

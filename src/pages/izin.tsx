@@ -1,4 +1,4 @@
-import { IzinPage } from "@/components/IzinPage";
+import { IzinPage } from "@/components/Izin/DataIzinPage";
 
 const Izin = () => {
   return <IzinPage />;

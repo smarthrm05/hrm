@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, Plus, Eye, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, Plus, Eye, Trash2, ChevronLeft, ChevronRight, Clock, CheckCircle, XCircle, FileText } from 'lucide-react';
 
 interface PinjamanData {
   no: number;
@@ -18,8 +18,10 @@ interface PinjamanData {
   termin: string;
   tanggalPengajuan: Date;
   catatan: string;
-  status: 'Menunggu Disetujui' | 'Disetujui';
+  status: 'Menunggu Disetujui' | 'Disetujui' | 'Ditolak';
   tanggalDisetujui?: Date;
+  tanggalDitolak?: Date;
+
 }
 
 const mockData: PinjamanData[] = [
@@ -49,6 +51,20 @@ const mockData: PinjamanData[] = [
     catatan: 'Potong gaji bulanan',
     status: 'Disetujui',
     tanggalDisetujui: new Date('2024-01-12T10:15:00')
+  },
+  {
+    no: 3,
+    idKaryawan: 'EMP002',
+    namaKaryawan: 'Siti Nurhaliza',
+    divisi: 'HR',
+    jabatan: 'HR Manager',
+    jumlahPinjaman: 3000000,
+    keteranganPinjaman: 'Pinjaman pendidikan anak',
+    termin: '6 bulan',
+    tanggalPengajuan: new Date('2024-01-10T14:20:00'),
+    catatan: 'Potong gaji bulanan',
+    status: 'Ditolak',
+    tanggalDitolak: new Date('2024-01-22T11:45:00')
   }
 ];
 
@@ -79,33 +95,54 @@ export const PinjamanPage = () => {
     return date.toLocaleDateString('id-ID') + ' ' + date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
   };
 
-  const getStatusBadge = (status: string, tanggalDisetujui?: Date) => {
-    if (status === 'Disetujui') {
-      return (
-        <div className="flex flex-col">
-          <Badge className="bg-green-100 text-green-800 hover:bg-green-100 mb-1">
-            {status}
-          </Badge>
-          {tanggalDisetujui && (
-            <span className="text-xs text-gray-500">
-              {formatDateTime(tanggalDisetujui)}
-            </span>
-          )}
-        </div>
-      );
-    }
+  const getStatusBadge = (
+  status: string,
+  tanggalDisetujui?: Date,
+  tanggalDitolak?: Date
+) => {
+  if (status === 'Disetujui') {
     return (
-      <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
-        {status}
-      </Badge>
+      <div className="flex flex-col">
+        <Badge className="bg-green-100 text-green-800 hover:bg-green-100 mb-1">
+          {status}
+        </Badge>
+        {tanggalDisetujui && (
+          <span className="text-xs text-gray-500">
+            {formatDateTime(tanggalDisetujui)}
+          </span>
+        )}
+      </div>
     );
-  };
+  }
+
+  if (status === 'Ditolak') {
+    return (
+      <div className="flex flex-col">
+        <Badge className="bg-red-100 text-red-800 hover:bg-red-100 mb-1">
+          {status}
+        </Badge>
+        {tanggalDitolak && (
+          <span className="text-xs text-gray-500">
+            {formatDateTime(tanggalDitolak)}
+          </span>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
+      {status}
+    </Badge>
+  );
+};
 
   return (
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-900">Pinjaman Karyawan</h1>
       </div>
+      
 
       <Card>
         <CardHeader className="bg-blue-50 border-b">
@@ -149,12 +186,12 @@ export const PinjamanPage = () => {
             <Table>
               <TableHeader>
                 <TableRow className="bg-blue-600 hover:bg-blue-600">
-                  <TableHead className="text-white border-r border-blue-500">No.</TableHead>
-                  <TableHead className="text-white border-r border-blue-500">ID Karyawan</TableHead>
-                  <TableHead className="text-white border-r border-blue-500">Nama Karyawan</TableHead>
-                  <TableHead className="text-white border-r border-blue-500">Divisi</TableHead>
-                  <TableHead className="text-white border-r border-blue-500">Jabatan</TableHead>
-                  <TableHead className="text-white border-r border-blue-500">Jumlah Pinjaman</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">No.</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">ID Karyawan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Nama Karyawan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Divisi</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Jabatan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Jumlah Pinjaman</TableHead>
                   <TableHead className="text-white border-r border-blue-500">Keterangan</TableHead>
                   <TableHead className="text-white border-r border-blue-500">Termin</TableHead>
                   <TableHead className="text-white border-r border-blue-500">Tanggal Pengajuan</TableHead>
@@ -166,17 +203,17 @@ export const PinjamanPage = () => {
               <TableBody>
                 {paginatedData.map((item) => (
                   <TableRow key={item.no} className="border-b hover:bg-gray-50">
-                    <TableCell className="border-r">{item.no}</TableCell>
-                    <TableCell className="font-medium border-r">{item.idKaryawan}</TableCell>
-                    <TableCell className="border-r">{item.namaKaryawan}</TableCell>
-                    <TableCell className="border-r">{item.divisi}</TableCell>
-                    <TableCell className="border-r">{item.jabatan}</TableCell>
-                    <TableCell className="font-semibold border-r">{formatCurrency(item.jumlahPinjaman)}</TableCell>
-                    <TableCell className="max-w-xs truncate border-r">{item.keteranganPinjaman}</TableCell>
-                    <TableCell className="border-r">{item.termin}</TableCell>
-                    <TableCell className="border-r text-sm">{formatDateTime(item.tanggalPengajuan)}</TableCell>
-                    <TableCell className="max-w-xs truncate border-r">{item.catatan}</TableCell>
-                    <TableCell className="border-r">{getStatusBadge(item.status, item.tanggalDisetujui)}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.no}</TableCell>
+                    <TableCell className="font-medium border-r whitespace-nowrap">{item.idKaryawan}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrapp">{item.namaKaryawan}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.divisi}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.jabatan}</TableCell>
+                    <TableCell className="font-semibold border-r whitespace-nowrap">{formatCurrency(item.jumlahPinjaman)}</TableCell>
+                    <TableCell className="max-w-xs truncate border-r whitespace-nowrap">{item.keteranganPinjaman}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.termin}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{formatDateTime(item.tanggalPengajuan)}</TableCell>
+                    <TableCell className="max-w-xs truncate border-r whitespace-nowrap">{item.catatan}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap"> {getStatusBadge(item.status, item.tanggalDisetujui, item.tanggalDitolak)}</TableCell>
                     <TableCell>
                       <div className="flex space-x-2">
                         <Button

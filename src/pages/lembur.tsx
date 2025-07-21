@@ -1,4 +1,4 @@
-import { LemburPage } from "@/components/LemburPage";
+import { LemburPage } from "@/components/Lembur/DataLemburPage";
 
 const Lembur = () => {
   return <LemburPage />;

@@ -1,4 +1,4 @@
-import { CutiPage } from "@/components/CutiPage";
+import { CutiPage } from "@/components/Cuti/DataCutiPage";
 
 const Cuti = () => {
   return <CutiPage />;
