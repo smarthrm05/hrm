@@ -105,7 +105,9 @@ export const DataLemburPage = () => {
     <div className="p-6 space-y-6">
       <h1 className="text-3xl font-bold text-gray-900">Lembur</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        </div>
         
+       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Menunggu Disetujui */}
         <Card className="bg-yellow-500 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -158,7 +160,7 @@ export const DataLemburPage = () => {
         <Card className="bg-blue-600 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-white">
-              Total Pengajuan Cuti
+              Total Pengajuan Lembur
             </CardTitle>
             <FileText className="h-4 w-4 text-white" />
           </CardHeader>
@@ -246,9 +248,7 @@ export const DataLemburPage = () => {
                     <TableCell className="text-left border whitespace-nowrap">{item.jamSelesai}</TableCell>
                     <TableCell className="text-left border whitespace-nowrap">{item.alasan}</TableCell>
                     <TableCell className="text-left border whitespace-nowrap">{formatDateTime(item.tanggalPengajuan)}</TableCell>
-                    <TableCell className="text-left border">
-                      {getStatusBadge(item.status, item.tanggalDisetujui)}
-                    </TableCell>
+                    <TableCell className="text-left border whitespace-nowrap">{getStatusBadge(item.status, item.tanggalDisetujui)}</TableCell>
                     <TableCell className="text-left border">
                       <div className="flex justify-start space-x-2">
                         <Button

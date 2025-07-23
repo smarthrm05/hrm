@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, Plus, Eye, Trash2, ChevronLeft, ChevronRight, Paperclip } from 'lucide-react';
+import { Search, Plus, Eye, Trash2, ChevronLeft, ChevronRight, Paperclip, Clock, CheckCircle, XCircle, FileText } from 'lucide-react';
 
 interface ReimbursementData {
   no: number;
@@ -17,8 +17,9 @@ interface ReimbursementData {
   lampiran: string;
   tanggalPengajuan: Date;
   catatan: string;
-  status: 'Menunggu Disetujui' | 'Disetujui';
+  status: 'Menunggu Disetujui' | 'Disetujui' | 'Ditolak';
   tanggalDisetujui?: Date;
+  tanggalDitolak?: Date;
 }
 
 const mockData: ReimbursementData[] = [
@@ -59,6 +60,19 @@ const mockData: ReimbursementData[] = [
     catatan: 'Untuk keperluan WFH bulan Januari',
     status: 'Disetujui',
     tanggalDisetujui: new Date('2024-01-19T11:30:00')
+  },
+  {
+    no: 4,
+    idKaryawan: 'EMP004',
+    divisi: 'Marketing',
+    jabatan: 'Marketing Executive',
+    keterangan: 'Biaya iklan sosial media',
+    total: 300000,
+    lampiran: 'receipt_ads.pdf',
+    tanggalPengajuan: new Date('2024-01-20T11:00:00'),
+    catatan: 'Promosi produk baru',
+    status: 'Ditolak',
+    tanggalDitolak: new Date('2024-01-22T11:45:00') 
   }
 ];
 
@@ -90,27 +104,47 @@ export const ReimbursementPage = () => {
     return date.toLocaleDateString('id-ID') + ' ' + date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
   };
 
-  const getStatusBadge = (status: string, tanggalDisetujui?: Date) => {
-    if (status === 'Disetujui') {
-      return (
-        <div className="flex flex-col">
-          <Badge className="bg-green-100 text-green-800 hover:bg-green-100 mb-1">
-            {status}
-          </Badge>
-          {tanggalDisetujui && (
-            <span className="text-xs text-gray-500">
-              {formatDateTime(tanggalDisetujui)}
-            </span>
-          )}
-        </div>
-      );
-    }
+  const getStatusBadge = (
+  status: string,
+  tanggalDisetujui?: Date,
+  tanggalDitolak?: Date
+) => {
+  if (status === 'Disetujui') {
     return (
-      <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
-        {status}
-      </Badge>
+      <div className="flex flex-col">
+        <Badge className="bg-green-100 text-green-800 hover:bg-green-100 mb-1">
+          {status}
+        </Badge>
+        {tanggalDisetujui && (
+          <span className="text-xs text-gray-500">
+            {formatDateTime(tanggalDisetujui)}
+          </span>
+        )}
+      </div>
     );
-  };
+  }
+
+  if (status === 'Ditolak') {
+    return (
+      <div className="flex flex-col">
+        <Badge className="bg-red-100 text-red-800 hover:bg-red-100 mb-1">
+          {status}
+        </Badge>
+        {tanggalDitolak && (
+          <span className="text-xs text-gray-500">
+            {formatDateTime(tanggalDitolak)}
+          </span>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
+      {status}
+    </Badge>
+  );
+};
 
   return (
     <div className="p-6 space-y-6">
@@ -118,6 +152,70 @@ export const ReimbursementPage = () => {
         <h1 className="text-3xl font-bold text-gray-900">Reimbursement</h1>
       </div>
 
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Menunggu Disetujui */}
+        <Card className="bg-yellow-500 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-white">
+              Menunggu Disetujui
+            </CardTitle>
+            <Clock className="h-4 w-4 text-white" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">
+              {data.filter(d => d.status === 'Menunggu Disetujui').length}
+            </div>
+            <p className="text-xs text-white">Pengajuan </p>
+          </CardContent>
+        </Card>
+
+        {/* Disetujui */}
+        <Card className="bg-green-700 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-white">
+              Total Pengajuan Disetujui
+            </CardTitle>
+            <CheckCircle className="h-4 w-4 text-white" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">
+              {data.filter(d => d.status === 'Disetujui').length}
+            </div>
+            <p className="text-xs text-white">Pengajuan</p>
+          </CardContent>
+        </Card>
+
+        {/* Ditolak */}
+        <Card className="bg-red-600 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-white">
+              Total Pengajuan Ditolak
+            </CardTitle>
+            <XCircle className="h-4 w-4 text-white" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">
+              {data.filter(d => d.status === 'Ditolak').length}
+            </div>
+            <p className="text-xs text-white">Pengajuan</p>
+          </CardContent>
+        </Card>
+
+        {/* Total Pengajuan */}
+        <Card className="bg-blue-600 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-white">
+              Total Pengajuan Reimbursement
+            </CardTitle>
+            <FileText className="h-4 w-4 text-white" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">{data.length}</div>
+            <p className="text-xs text-white">Pengajuan</p>
+          </CardContent>
+        </Card>
+      </div>
+          
       <Card>
         <CardHeader className="bg-blue-50 border-b">
           <CardTitle className="text-blue-800">Data Pengajuan</CardTitle>
@@ -160,28 +258,28 @@ export const ReimbursementPage = () => {
             <Table>
               <TableHeader>
                 <TableRow className="bg-blue-600 hover:bg-blue-600">
-                  <TableHead className="border text-white">No.</TableHead>
-                  <TableHead className="border text-white">ID Karyawan</TableHead>
-                  <TableHead className="border text-white">Divisi</TableHead>
-                  <TableHead className="border text-white">Jabatan</TableHead>
-                  <TableHead className="border text-white">Keterangan</TableHead>
-                  <TableHead className="border text-white">Total</TableHead>
-                  <TableHead className="border text-white">Lampiran</TableHead>
-                  <TableHead className="border text-white">Tanggal Pengajuan</TableHead>
-                  <TableHead className="border text-white">Catatan</TableHead>
-                  <TableHead className="border text-white">Status</TableHead>
-                  <TableHead className="text-white">Aksi</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">No.</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">ID Karyawan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Divisi</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Jabatan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Keterangan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Total</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Lampiran</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Tanggal Pengajuan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Catatan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Status</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {paginatedData.map((item) => (
                   <TableRow key={item.no} className="border-b hover:bg-gray-50">
-                    <TableCell className="border-r">{item.no}</TableCell>
-                    <TableCell className="font-medium border-r">{item.idKaryawan}</TableCell>
-                    <TableCell className="border-r">{item.divisi}</TableCell>
-                    <TableCell className="border-r">{item.jabatan}</TableCell>
-                    <TableCell className="max-w-xs truncate border-r">{item.keterangan}</TableCell>
-                    <TableCell className="font-semibold border-r">{formatCurrency(item.total)}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.no}</TableCell>
+                    <TableCell className="font-medium border-r whitespace-nowrap">{item.idKaryawan}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.divisi}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.jabatan}</TableCell>
+                    <TableCell className="max-w-xs truncate border-r whitespace-nowrap">{item.keterangan}</TableCell>
+                    <TableCell className="font-semibold border-r whitespace-nowrap">{formatCurrency(item.total)}</TableCell>
                     <TableCell className="border-r">
                       <div className="flex items-center space-x-1">
                         <Paperclip className="w-4 h-4 text-gray-500" />
@@ -190,9 +288,9 @@ export const ReimbursementPage = () => {
                         </span>
                       </div>
                     </TableCell>
-                    <TableCell className="border-r text-sm">{formatDateTime(item.tanggalPengajuan)}</TableCell>
-                    <TableCell className="max-w-xs truncate border-r">{item.catatan}</TableCell>
-                    <TableCell className="border-r">{getStatusBadge(item.status, item.tanggalDisetujui)}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{formatDateTime(item.tanggalPengajuan)}</TableCell>
+                    <TableCell className="max-w-xs truncate border-r whitespace-nowrap">{item.catatan}</TableCell>
+                    <TableCell className="border-r whitespace-nowrap">{getStatusBadge(item.status, item.tanggalDisetujui, item.tanggalDitolak)}</TableCell>
                     <TableCell>
                       <div className="flex space-x-2">
                         <Button

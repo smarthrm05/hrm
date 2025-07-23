@@ -143,7 +143,70 @@ export const PinjamanPage = () => {
         <h1 className="text-3xl font-bold text-gray-900">Pinjaman Karyawan</h1>
       </div>
       
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Menunggu Disetujui */}
+        <Card className="bg-yellow-500 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-white">
+              Menunggu Disetujui
+            </CardTitle>
+            <Clock className="h-4 w-4 text-white" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">
+              {data.filter(d => d.status === 'Menunggu Disetujui').length}
+            </div>
+            <p className="text-xs text-white">Pengajuan </p>
+          </CardContent>
+        </Card>
 
+        {/* Disetujui */}
+        <Card className="bg-green-700 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-white">
+              Total Pengajuan Disetujui
+            </CardTitle>
+            <CheckCircle className="h-4 w-4 text-white" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">
+              {data.filter(d => d.status === 'Disetujui').length}
+            </div>
+            <p className="text-xs text-white">Pengajuan</p>
+          </CardContent>
+        </Card>
+
+        {/* Ditolak */}
+        <Card className="bg-red-600 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-white">
+              Total Pengajuan Ditolak
+            </CardTitle>
+            <XCircle className="h-4 w-4 text-white" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">
+              {data.filter(d => d.status === 'Ditolak').length}
+            </div>
+            <p className="text-xs text-white">Pengajuan</p>
+          </CardContent>
+        </Card>
+
+        {/* Total Pengajuan */}
+        <Card className="bg-blue-600 shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-white">
+              Total Pengajuan Pinjaman
+            </CardTitle>
+            <FileText className="h-4 w-4 text-white" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">{data.length}</div>
+            <p className="text-xs text-white">Pengajuan</p>
+          </CardContent>
+        </Card>
+      </div>
+      
       <Card>
         <CardHeader className="bg-blue-50 border-b">
           <CardTitle className="text-blue-800">Data Pengajuan</CardTitle>
@@ -192,19 +255,19 @@ export const PinjamanPage = () => {
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Divisi</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Jabatan</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Jumlah Pinjaman</TableHead>
-                  <TableHead className="text-white border-r border-blue-500">Keterangan</TableHead>
-                  <TableHead className="text-white border-r border-blue-500">Termin</TableHead>
-                  <TableHead className="text-white border-r border-blue-500">Tanggal Pengajuan</TableHead>
-                  <TableHead className="text-white border-r border-blue-500">Catatan</TableHead>
-                  <TableHead className="text-white border-r border-blue-500">Status</TableHead>
-                  <TableHead className="text-white">Aksi</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Keterangan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Termin</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Tanggal Pengajuan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Catatan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Status</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {paginatedData.map((item) => (
                   <TableRow key={item.no} className="border-b hover:bg-gray-50">
                     <TableCell className="border border-gray-200 whitespace-nowrap">{item.no}</TableCell>
-                    <TableCell className="font-medium border-r whitespace-nowrap">{item.idKaryawan}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.idKaryawan}</TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrapp">{item.namaKaryawan}</TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">{item.divisi}</TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">{item.jabatan}</TableCell>

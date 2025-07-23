@@ -210,34 +210,34 @@ export const DataIzinPage = () => {
             <Table>
             <TableHeader>
             <TableRow className="bg-blue-600 [&>th]:text-white hover:bg-blue-600 pointer-events-none">
-              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">No</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">ID</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Nama</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Divisi</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Jabatan</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Tanggal</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Jam Keluar</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Jam Kembali</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Keperluan</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Tanggal Pengajuan</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Status</TableHead>
-              <TableHead className="border border-gray-300 font-semibold text-sm  whitespace-nowrap">Aksi</TableHead>
+              <TableHead className="text-white border border-gray-200 whitespace-nowrap">No</TableHead>
+              <TableHead className="text-white border border-gray-200 whitespace-nowrap">ID</TableHead>
+              <TableHead className="text-white border border-gray-200 whitespace-nowrap">Nama</TableHead>
+              <TableHead className="text-white border border-gray-200 whitespace-nowrap">Divisi</TableHead>
+              <TableHead className="text-white border border-gray-200 whitespace-nowrap">Jabatan</TableHead>
+              <TableHead className="text-white border border-gray-200 whitespace-nowrap">Tanggal</TableHead>
+              <TableHead className="text-white border border-gray-200 whitespace-nowrap">Jam Keluar</TableHead>
+              <TableHead className="text-white border border-gray-200 whitespace-nowrap">Jam Kembali</TableHead>
+              <TableHead className="text-white border border-gray-200 whitespace-nowrap">Keperluan</TableHead>
+              <TableHead className="text-white border border-gray-200 whitespace-nowrap">Tanggal Pengajuan</TableHead>
+              <TableHead className="text-white border border-gray-200 whitespace-nowrap">Status</TableHead>
+              <TableHead className="text-white border border-gray-200 whitespace-nowrap">Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {paginatedData.map((item) => (
               <TableRow key={item.no}>
-                <TableCell className="border border-gray-200">{item.no}</TableCell>
-                <TableCell className="border border-gray-200">{item.idKaryawan}</TableCell>
-                <TableCell className="border border-gray-200">{item.nama}</TableCell>
-                <TableCell className="border border-gray-200">{item.divisi}</TableCell>
-                <TableCell className="border border-gray-200">{item.jabatan}</TableCell>
-                <TableCell className="border border-gray-200">{formatDate(item.tanggal)}</TableCell>
-                <TableCell className="border border-gray-200">{item.jamKeluar}</TableCell>
-                <TableCell className="border border-gray-200">{item.jamKembali}</TableCell>
-                <TableCell className="border border-gray-200">{item.keperluan}</TableCell>
-                <TableCell className="border border-gray-200">{formatDateTime(item.tanggalPengajuan)}</TableCell>
-                <TableCell className="border border-gray-200">{getStatusBadge(item.status, item.tanggalDisetujui)}</TableCell>
+                <TableCell className="border border-gray-200 whitespace-nowrap">{item.no}</TableCell>
+                <TableCell className="border border-gray-200 whitespace-nowrap">{item.idKaryawan}</TableCell>
+                <TableCell className="border border-gray-200 whitespace-nowrap">{item.nama}</TableCell>
+                <TableCell className="border border-gray-200 whitespace-nowrap">{item.divisi}</TableCell>
+                <TableCell className="border border-gray-200 whitespace-nowrap">{item.jabatan}</TableCell>
+                <TableCell className="border border-gray-200 whitespace-nowrap">{formatDate(item.tanggal)}</TableCell>
+                <TableCell className="border border-gray-200 whitespace-nowrap">{item.jamKeluar}</TableCell>
+                <TableCell className="border border-gray-200 whitespace-nowrap">{item.jamKembali}</TableCell>
+                <TableCell className="max-w-xs truncate border-r whitespace-nowrap">{item.keperluan}</TableCell>
+                <TableCell className="border border-gray-200 whitespace-nowrap">{formatDateTime(item.tanggalPengajuan)}</TableCell>
+                <TableCell className="border border-gray-200 whitespace-nowrap">{getStatusBadge(item.status, item.tanggalDisetujui)}</TableCell>
                 <TableCell className="border border-gray-200">
                   <div className="flex space-x-2">
                     <Button

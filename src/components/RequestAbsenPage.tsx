@@ -188,18 +188,18 @@ export const RequestAbsenPage = () => {
               <TableBody>
                 {paginatedData.map((item) => (
                    <TableRow key={item.no} className="border">
-                    <TableCell className="border">{item.no}</TableCell>
-                    <TableCell className="border">{formatDate(item.tanggal)}</TableCell>
-                    <TableCell className="border">{item.idKaryawan}</TableCell>
-                    <TableCell className="border">{item.divisi}</TableCell>
-                    <TableCell className="border">{item.jabatan}</TableCell>
-                    <TableCell className="border">{item.nama}</TableCell>
-                    <TableCell className="border">{item.absenMasuk}</TableCell>
-                    <TableCell className="border">{item.lokasiAbsen}</TableCell>
-                    <TableCell className="border">{item.detailLokasi}</TableCell>
-                    <TableCell className="border">{item.shift}</TableCell>
-                    <TableCell className="border">{item.catatan}</TableCell>
-                    <TableCell className="border">{getStatusBadge(item.status)}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.no}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{formatDate(item.tanggal)}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.idKaryawan}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.divisi}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.jabatan}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.nama}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.absenMasuk}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.lokasiAbsen}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.detailLokasi}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.shift}</TableCell>
+                    <TableCell className="max-w-xs truncate border-r whitespace-nowrap">{item.catatan}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{getStatusBadge(item.status)}</TableCell>
                     <TableCell>
                       <div className="flex gap-1">
                         <Button
