@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card,CardContent,CardHeader,CardTitle,} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
+import { Select, SelectContent, SelectItem,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';

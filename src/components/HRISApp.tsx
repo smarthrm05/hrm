@@ -2,7 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { Bell } from "lucide-react";
+import { Bell, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { APP_CONFIG } from "@/config"; 
 
 export const HRISApp = () => {
   const { isAuthenticated, logout } = useAuth();
@@ -45,9 +46,8 @@ export const HRISApp = () => {
 
       {/* MAIN CONTENT */}
       <div className="flex-1 flex flex-col overflow-hidden">
-
         {/* HEADER */}
-        <header className="sticky top-0 z-30 bg-blue-600 text-white px-4 py-3 shadow flex items-center justify-between">
+        <header className="sticky top-0 z-30 bg-white px-4 py-3 shadow flex items-center justify-between">
           <div className="flex items-center gap-2">
             {/* Hamburger untuk mobile */}
             <button
@@ -55,7 +55,7 @@ export const HRISApp = () => {
               onClick={() => setIsMobileMenuMenuOpen(true)}
             >
               <svg
-                className="w-6 h-6"
+                className="w-6 h-6 text-gray-700"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -68,20 +68,27 @@ export const HRISApp = () => {
                 />
               </svg>
             </button>
-            <h1 className="text-lg font-semibold capitalize">
-              {location.pathname === "/"
-                ? "Dashboard"
-                : location.pathname.split("/").pop()?.replace(/-/g, " ")}
+
+            {/* Nama PT + ikon */}
+             <Building2 size={28} color="#0073ec" />
+            <h1
+              className="font-extrabold text-2xl leading-none"
+              style={{ color: "#0073ec" }}
+            >
+              {APP_CONFIG.companyName}
             </h1>
           </div>
 
           {/* KANAN ATAS */}
           <div className="flex items-center gap-4">
-            <Button className="bg-white text-blue-600 hover:bg-gray-100 text-sm rounded-md px-3 py-1.5">
+            <Button
+              className="text-white text-sm rounded-md px-3 py-1.5 hover:opacity-90"
+              style={{ backgroundColor: "#0073ec" }}
+            >
               Jadwalkan Demo
             </Button>
 
-            <Bell className="w-5 h-5 cursor-pointer" />
+            <Bell className="w-5 h-5 cursor-pointer text-gray-700" />
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -91,7 +98,9 @@ export const HRISApp = () => {
                     alt="Avatar"
                     className="w-8 h-8 rounded-full object-cover border-2 border-white"
                   />
-                  <span className="text-sm font-medium hidden sm:block">Halo, Meida</span>
+                  <span className="text-sm font-medium hidden sm:block text-gray-700">
+                    Halo, Meida
+                  </span>
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent

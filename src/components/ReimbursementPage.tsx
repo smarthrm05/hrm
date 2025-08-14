@@ -257,7 +257,7 @@ export const ReimbursementPage = () => {
           <div className="overflow-x-auto border rounded-lg">
             <Table>
               <TableHeader>
-                <TableRow className="bg-blue-600 hover:bg-blue-600">
+                <TableRow className="bg-blue-900 hover:bg-blue-600">
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">No.</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">ID Karyawan</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Divisi</TableHead>

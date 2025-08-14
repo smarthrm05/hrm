@@ -3,12 +3,8 @@ import Swal from 'sweetalert2';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow
-} from '@/components/ui/table';
-import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue
-} from '@/components/ui/select';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, Plus, Eye, Trash2, ChevronLeft, ChevronRight, Download } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
@@ -182,11 +178,11 @@ export const PaklaringPage = () => {
             <Table className="w-full border border-gray-300 border-collapse">
               <TableHeader>
                 <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
-                  <TableHead className="border text-white">No</TableHead>
-                  <TableHead className="border text-white">No Surat</TableHead>
-                  <TableHead className="border text-white">ID Karyawan</TableHead>
-                  <TableHead className="border text-white">Nama Karyawan</TableHead>
-                  <TableHead className="border text-white">Awal Bergabung</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap ">No</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">No Surat</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">ID Karyawan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Nama Karyawan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Awal Bergabung</TableHead>
                   <TableHead className="border text-white">Tanggal Kontrak</TableHead>
                   <TableHead className="border text-white">Selesai Kontrak</TableHead>
                   <TableHead className="border text-white">Keterangan</TableHead>

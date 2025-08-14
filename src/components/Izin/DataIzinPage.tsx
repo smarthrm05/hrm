@@ -209,7 +209,7 @@ export const DataIzinPage = () => {
           <div className="overflow-x-auto border rounded-lg">
             <Table>
             <TableHeader>
-            <TableRow className="bg-blue-600 [&>th]:text-white hover:bg-blue-600 pointer-events-none">
+           <TableRow className="bg-[#2794EB] [&>th]:text-white hover:bg-[#2794EB] pointer-events-none">
               <TableHead className="text-white border border-gray-200 whitespace-nowrap">No</TableHead>
               <TableHead className="text-white border border-gray-200 whitespace-nowrap">ID</TableHead>
               <TableHead className="text-white border border-gray-200 whitespace-nowrap">Nama</TableHead>
@@ -308,6 +308,9 @@ export const DataIzinPage = () => {
 
         </CardContent>
       </Card>
+      <footer className="mt-10 text-xs text-left">
+        © 2025 PT Proven Force Indonesia, All Rights Reserved.
+      </footer>
     </div>
   );
 };

@@ -319,6 +319,9 @@ export const DataLemburPage = () => {
 
         </CardContent>
       </Card>
+      <footer className="mt-10 text-xs text-left">
+        © 2025 PT Proven Force Indonesia, All Rights Reserved.
+      </footer>
     </div>
   );
 };

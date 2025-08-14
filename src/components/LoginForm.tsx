@@ -21,7 +21,7 @@ import {
   UserCircle,
 } from 'lucide-react';
 import Swal from 'sweetalert2';
-import { useAuth } from '@/contexts/AuthContext'; // ✅ Import AuthContext
+import { useAuth } from '@/contexts/AuthContext'; 
 
 export const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -31,7 +31,7 @@ export const LoginForm = () => {
   const [role, setRole] = useState<'management' | 'employee'>('management');
 
   const navigate = useNavigate();
-  const { login } = useAuth(); // ✅ Ambil fungsi login dari context
+  const { login } = useAuth(); 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,18 +41,18 @@ export const LoginForm = () => {
         title: '<span style="color: white">Berhasil Masuk!</span>',
         text: 'Selamat Datang di SMART HRM',
         icon: 'success',
-        background: '#1166d8',
+        background: '#2794EB',
         color: 'white',
         confirmButtonColor: '#ffffff',
-        confirmButtonText: '<span style="color: #1166d8; font-weight: bold;">OK</span>',
+        confirmButtonText: '<span style="color: #2794EB; font-weight: bold;">OK</span>',
         customClass: {
           popup: 'rounded-xl',
           title: 'text-xl',
           confirmButton: 'text-sm px-6 py-2 rounded-lg',
         },
       }).then(() => {
-        login(username, password); // ✅ Simpan token dummy dan status login
-        navigate('/dashboard'); // ✅ Pindah ke dashboard
+        login(username, password); 
+        navigate('/dashboard'); 
       });
     } else {
       Swal.fire({
@@ -73,7 +73,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#1166d8] relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-[#2794EB] relative overflow-hidden">
       <img
         src="/wave3.png"
         alt="Gelombang"
@@ -81,14 +81,14 @@ export const LoginForm = () => {
       />
 
       <div className="absolute top-[calc(50%-330px)] z-20">
-        <div className="bg-[#1166d8] rounded-full p-4 shadow-lg mx-auto border-2 border-white">
+        <div className="bg-[#2794EB] rounded-full p-4 shadow-lg mx-auto border-2 border-white">
           <Users className="text-white h-8 w-8 stroke-[2]" />
         </div>
       </div>
 
       <Card className="w-full max-w-md shadow-2xl backdrop-blur-lg bg-white/95 border-0 relative z-10">
         <CardHeader className="space-y-1 text-center pb-8 pt-14">
-          <CardTitle className="text-4xl font-bold text-[#1166d8]">
+          <CardTitle className="text-4xl font-bold text-[#2794EB]">
             SMART HRM
           </CardTitle>
           <CardDescription className="text-gray-600 text-lg font-medium">

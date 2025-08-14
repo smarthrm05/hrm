@@ -9,7 +9,6 @@ import {
   Users,
   Building2,
   Clock,
-  X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -124,7 +123,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <main className="flex-1 overflow-auto pb-6 px-4 md:px-6">
+    <main className="flex-1 overflow-auto pb-6 px-4 md:px-6 flex flex-col min-h-screen">
       <div className="mb-4 text-sm text-gray-600">
         <span className="text-blue-600 font-medium">Home</span> / <span>Dashboard</span>
       </div>
@@ -232,6 +231,11 @@ export default function DashboardPage() {
           </Card>
         ))}
       </div>
+
+      {/* Footer */}
+      <footer className="mt-auto text-center text-xs text-gray-500 border-t pt-4">
+        © 2025 Proven Force Indonesia, All Rights Reserved.
+      </footer>
     </main>
   );
 }

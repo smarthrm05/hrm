@@ -191,7 +191,7 @@ export const Sidebar = ({ onLogout, currentPath, onCloseMobileMenu }: SidebarPro
   };
 
   return (
-    <div className="w-64 bg-[#1166d8] text-white h-screen flex flex-col shadow-lg">
+    <div className="w-64 bg-[#0073ec] text-white h-screen flex flex-col shadow-lg">
       {/* Header */}
       <div className="p-6 border-b border-blue-800">
         <h1 className="text-2xl font-bold">SMART HRM</h1>
