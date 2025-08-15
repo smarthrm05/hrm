@@ -5,11 +5,24 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, Plus, Eye, Trash2, ChevronLeft, ChevronRight, Paperclip, Clock, CheckCircle, XCircle, FileText } from 'lucide-react';
+import { 
+  Search, 
+  Plus, 
+  Eye, 
+  Trash2, 
+  CheckCircle, 
+  XCircle, 
+  Paperclip, 
+  Clock, 
+  FileText,
+  DollarSign,
+  UserCheck
+} from 'lucide-react';
 
 interface ReimbursementData {
   no: number;
   idKaryawan: string;
+  namaKaryawan: string;
   divisi: string;
   jabatan: string;
   keterangan: string;
@@ -20,12 +33,24 @@ interface ReimbursementData {
   status: 'Menunggu Disetujui' | 'Disetujui' | 'Ditolak';
   tanggalDisetujui?: Date;
   tanggalDitolak?: Date;
+  disetujuiOleh?: string;
+  ditolakOleh?: string;
+  diverifikasiOleh?: string; // HRD
+  statusPembayaran: 'Menunggu Dibayar' | 'Telah Dibayar';
+  tanggalDibayar?: Date;
 }
 
+// Simulasi user login
+const currentUser = 'Rommy Gani'; // Atasan
+const hrdUser = 'Staf HRD';   // HRD
+const financeUser = 'Agung Wijaya'; // Finance
+
+// Data dummy
 const mockData: ReimbursementData[] = [
   {
     no: 1,
     idKaryawan: 'EMP001',
+    namaKaryawan: 'Andi Pratama',
     divisi: 'IT',
     jabatan: 'Developer',
     keterangan: 'Biaya transportasi meeting client',
@@ -33,11 +58,13 @@ const mockData: ReimbursementData[] = [
     lampiran: 'receipt_transport.pdf',
     tanggalPengajuan: new Date('2024-01-15T10:30:00'),
     catatan: 'Meeting dengan client di Jakarta',
-    status: 'Menunggu Disetujui'
+    status: 'Menunggu Disetujui',
+    statusPembayaran: 'Menunggu Dibayar'
   },
   {
     no: 2,
     idKaryawan: 'EMP002',
+    namaKaryawan: 'Siti Rahayu',
     divisi: 'HR',
     jabatan: 'HR Manager',
     keterangan: 'Biaya makan siang training karyawan',
@@ -46,11 +73,16 @@ const mockData: ReimbursementData[] = [
     tanggalPengajuan: new Date('2024-01-12T14:20:00'),
     catatan: 'Training untuk 25 karyawan',
     status: 'Disetujui',
-    tanggalDisetujui: new Date('2024-01-14T09:15:00')
+    tanggalDisetujui: new Date('2024-01-14T09:15:00'),
+    disetujuiOleh: 'Rommy Gani',
+    diverifikasiOleh: hrdUser,
+    statusPembayaran: 'Telah Dibayar',
+    tanggalDibayar: new Date('2024-01-15T10:00:00')
   },
   {
     no: 3,
     idKaryawan: 'EMP003',
+    namaKaryawan: 'Budi Santoso',
     divisi: 'Finance',
     jabatan: 'Finance Staff',
     keterangan: 'Biaya pulsa dan internet',
@@ -59,11 +91,15 @@ const mockData: ReimbursementData[] = [
     tanggalPengajuan: new Date('2024-01-18T16:45:00'),
     catatan: 'Untuk keperluan WFH bulan Januari',
     status: 'Disetujui',
-    tanggalDisetujui: new Date('2024-01-19T11:30:00')
+    tanggalDisetujui: new Date('2024-01-19T11:30:00'),
+    disetujuiOleh: 'Rommy Gani',
+    diverifikasiOleh: hrdUser,
+    statusPembayaran: 'Menunggu Dibayar'
   },
   {
     no: 4,
     idKaryawan: 'EMP004',
+    namaKaryawan: 'Dewi Lestari',
     divisi: 'Marketing',
     jabatan: 'Marketing Executive',
     keterangan: 'Biaya iklan sosial media',
@@ -72,18 +108,39 @@ const mockData: ReimbursementData[] = [
     tanggalPengajuan: new Date('2024-01-20T11:00:00'),
     catatan: 'Promosi produk baru',
     status: 'Ditolak',
-    tanggalDitolak: new Date('2024-01-22T11:45:00') 
+    tanggalDitolak: new Date('2024-01-22T11:45:00'),
+    ditolakOleh: 'Rommy Gani',
+    statusPembayaran: 'Menunggu Dibayar'
+  },
+  {
+    no: 5,
+    idKaryawan: 'EMP005',
+    namaKaryawan: 'Agung Wijaya',
+    divisi: 'IT',
+    jabatan: 'System Analyst',
+    keterangan: 'Biaya pembelian software lisensi',
+    total: 1200000,
+    lampiran: 'invoice_software.pdf',
+    tanggalPengajuan: new Date('2024-01-10T09:00:00'),
+    catatan: 'Lisensi untuk 1 tahun',
+    status: 'Disetujui',
+    tanggalDisetujui: new Date('2024-01-11T14:20:00'),
+    disetujuiOleh: 'Rommy Gani',
+    diverifikasiOleh: hrdUser,
+    statusPembayaran: 'Telah Dibayar',
+    tanggalDibayar: new Date('2024-01-12T13:30:00')
   }
 ];
 
 export const ReimbursementPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [data] = useState<ReimbursementData[]>(mockData);
+  const [data, setData] = useState<ReimbursementData[]>(mockData);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const filteredData = data.filter(item => 
     item.idKaryawan.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.namaKaryawan.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.divisi.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.jabatan.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.keterangan.toLowerCase().includes(searchTerm.toLowerCase())
@@ -104,47 +161,66 @@ export const ReimbursementPage = () => {
     return date.toLocaleDateString('id-ID') + ' ' + date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
   };
 
-  const getStatusBadge = (
-  status: string,
-  tanggalDisetujui?: Date,
-  tanggalDitolak?: Date
-) => {
-  if (status === 'Disetujui') {
-    return (
-      <div className="flex flex-col">
-        <Badge className="bg-green-100 text-green-800 hover:bg-green-100 mb-1">
-          {status}
-        </Badge>
-        {tanggalDisetujui && (
-          <span className="text-xs text-gray-500">
-            {formatDateTime(tanggalDisetujui)}
-          </span>
-        )}
-      </div>
+  const handleApprove = (no: number) => {
+    setData(prev =>
+      prev.map(item =>
+        item.no === no
+          ? {
+              ...item,
+              status: 'Disetujui' as const,
+              tanggalDisetujui: new Date(),
+              tanggalDitolak: undefined,
+              disetujuiOleh: currentUser,
+              ditolakOleh: undefined,
+              diverifikasiOleh: hrdUser, // HRD otomatis verifikasi setelah disetujui
+              statusPembayaran: 'Menunggu Dibayar'
+            }
+          : item
+      )
     );
-  }
+    setCurrentPage(1);
+  };
 
-  if (status === 'Ditolak') {
-    return (
-      <div className="flex flex-col">
-        <Badge className="bg-red-100 text-red-800 hover:bg-red-100 mb-1">
-          {status}
-        </Badge>
-        {tanggalDitolak && (
-          <span className="text-xs text-gray-500">
-            {formatDateTime(tanggalDitolak)}
-          </span>
-        )}
-      </div>
+  const handleReject = (no: number) => {
+    setData(prev =>
+      prev.map(item =>
+        item.no === no
+          ? {
+              ...item,
+              status: 'Ditolak' as const,
+              tanggalDitolak: new Date(),
+              tanggalDisetujui: undefined,
+              ditolakOleh: currentUser,
+              disetujuiOleh: undefined,
+              diverifikasiOleh: hrdUser,
+              statusPembayaran: 'Menunggu Dibayar'
+            }
+          : item
+      )
     );
-  }
+    setCurrentPage(1);
+  };
 
-  return (
-    <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
-      {status}
-    </Badge>
-  );
-};
+  const handleMarkAsPaid = (no: number) => {
+    setData(prev =>
+      prev.map(item =>
+        item.no === no
+          ? {
+              ...item,
+              statusPembayaran: 'Telah Dibayar',
+              tanggalDibayar: new Date()
+            }
+          : item
+      )
+    );
+  };
+
+  const handleDeleteSingle = (idKaryawan: string) => {
+    if (confirm(`Yakin ingin menghapus pengajuan dari karyawan ${idKaryawan}?`)) {
+      setData(prev => prev.filter(item => item.idKaryawan !== idKaryawan));
+      setCurrentPage(prev => Math.max(1, Math.ceil((filteredData.length - 1) / itemsPerPage)));
+    }
+  };
 
   return (
     <div className="p-6 space-y-6">
@@ -152,8 +228,8 @@ export const ReimbursementPage = () => {
         <h1 className="text-3xl font-bold text-gray-900">Reimbursement</h1>
       </div>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Menunggu Disetujui */}
+      {/* Statistik Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="bg-yellow-500 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-white">
@@ -165,11 +241,10 @@ export const ReimbursementPage = () => {
             <div className="text-2xl font-bold text-white">
               {data.filter(d => d.status === 'Menunggu Disetujui').length}
             </div>
-            <p className="text-xs text-white">Pengajuan </p>
+            <p className="text-xs text-white">Pengajuan</p>
           </CardContent>
         </Card>
 
-        {/* Disetujui */}
         <Card className="bg-green-700 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-white">
@@ -185,7 +260,6 @@ export const ReimbursementPage = () => {
           </CardContent>
         </Card>
 
-        {/* Ditolak */}
         <Card className="bg-red-600 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-white">
@@ -201,7 +275,6 @@ export const ReimbursementPage = () => {
           </CardContent>
         </Card>
 
-        {/* Total Pengajuan */}
         <Card className="bg-blue-600 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-white">
@@ -241,7 +314,7 @@ export const ReimbursementPage = () => {
               <div className="relative w-80">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <Input
-                  placeholder="Cari berdasarkan ID, divisi, jabatan, atau keterangan..."
+                  placeholder="Cari berdasarkan ID, nama, divisi, dll..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10"
@@ -260,6 +333,7 @@ export const ReimbursementPage = () => {
                 <TableRow className="bg-blue-900 hover:bg-blue-600">
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">No.</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">ID Karyawan</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Nama Karyawan</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Divisi</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Jabatan</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Keterangan</TableHead>
@@ -268,6 +342,8 @@ export const ReimbursementPage = () => {
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Tanggal Pengajuan</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Catatan</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Status</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Diverifikasi Oleh</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Pembayaran</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
@@ -276,6 +352,7 @@ export const ReimbursementPage = () => {
                   <TableRow key={item.no} className="border-b hover:bg-gray-50">
                     <TableCell className="border border-gray-200 whitespace-nowrap">{item.no}</TableCell>
                     <TableCell className="font-medium border-r whitespace-nowrap">{item.idKaryawan}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap font-medium">{item.namaKaryawan}</TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">{item.divisi}</TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">{item.jabatan}</TableCell>
                     <TableCell className="max-w-xs truncate border-r whitespace-nowrap">{item.keterangan}</TableCell>
@@ -290,26 +367,125 @@ export const ReimbursementPage = () => {
                     </TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">{formatDateTime(item.tanggalPengajuan)}</TableCell>
                     <TableCell className="max-w-xs truncate border-r whitespace-nowrap">{item.catatan}</TableCell>
-                    <TableCell className="border-r whitespace-nowrap">{getStatusBadge(item.status, item.tanggalDisetujui, item.tanggalDitolak)}</TableCell>
+
+                    {/* Status */}
+                    <TableCell className="border-r whitespace-nowrap">
+                      {item.status === 'Disetujui' && item.disetujuiOleh && (
+                        <div className="flex flex-col">
+                          <Badge className="bg-green-100 text-green-800 hover:bg-green-100 mb-1 font-medium">
+                            Disetujui oleh {item.disetujuiOleh}
+                          </Badge>
+                          <span className="text-xs text-gray-500">
+                            {formatDateTime(item.tanggalDisetujui!)}
+                          </span>
+                        </div>
+                      )}
+                      {item.status === 'Ditolak' && item.ditolakOleh && (
+                        <div className="flex flex-col">
+                          <Badge className="bg-red-100 text-red-800 hover:bg-red-100 mb-1 font-medium">
+                            Ditolak oleh {item.ditolakOleh}
+                          </Badge>
+                          <span className="text-xs text-black mt-1">
+                            <strong className="font-bold">Catatan</strong> : Terlalu banyak reimbursement
+                          </span>
+                          <span className="text-xs text-gray-500 mt-1">
+                            {formatDateTime(item.tanggalDitolak!)}
+                          </span>
+                        </div>
+                      )}
+                      {item.status === 'Menunggu Disetujui' && (
+                        <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
+                          Menunggu Disetujui
+                        </Badge>
+                      )}
+                    </TableCell>
+
+                    {/* Diverifikasi Oleh (HRD) */}
+                    <TableCell className="border-r whitespace-nowrap">
+                      {item.diverifikasiOleh ? (
+                        <div className="flex items-center space-x-1">
+                          <UserCheck className="w-3 h-3 text-blue-500" />
+                          <span className="text-sm text-gray-700">{item.diverifikasiOleh}</span>
+                        </div>
+                      ) : (
+                        <span className="text-sm text-gray-400">-</span>
+                      )}
+                    </TableCell>
+
+                    {/* Pembayaran */}
+                    <TableCell className="border-r whitespace-nowrap">
+                      {item.statusPembayaran === 'Telah Dibayar' ? (
+                        <div className="flex flex-col">
+                          <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100 mb-1 text-xs font-medium flex items-center gap-1">
+                            <DollarSign className="w-3 h-3" />
+                            Telah Dibayar
+                          </Badge>
+                          {item.tanggalDibayar && (
+                            <span className="text-xs text-gray-500">
+                              {formatDateTime(item.tanggalDibayar)}
+                            </span>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="flex flex-col">
+                          <span className="text-sm text-yellow-600 font-medium">Menunggu Dibayar</span>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="mt-1 bg-green-600 text-white hover:bg-green-700 text-xs h-7"
+                            onClick={() => handleMarkAsPaid(item.no)}
+                          >
+                            Bayar Sekarang
+                          </Button>
+                        </div>
+                      )}
+                    </TableCell>
+
+                    {/* Aksi */}
                     <TableCell>
                       <div className="flex space-x-2">
                         <Button
-                         variant="ghost"
-                         size="sm"
-                         className="bg-blue-600 text-white hover:bg-blue-700"
-                         title="Lihat Detail"
-                         >
-                         <Eye className="w-4 h-4" />
-                         </Button>
-                         <Button
-                         variant="ghost"
-                         size="sm"
-                         className="bg-red-600 text-white hover:bg-red-700"
-                         title="Hapus Data"
-                         onClick={() => handleDeleteSingle(k.id)}
-                         >
-                         <Trash2 className="w-4 h-4" />
-                         </Button>
+                          variant="ghost"
+                          size="sm"
+                          className="bg-blue-600 text-white hover:bg-blue-700"
+                          title="Lihat Detail"
+                        >
+                          <Eye className="w-4 h-4" />
+                        </Button>
+
+                        {item.status === 'Menunggu Disetujui' && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="bg-green-600 text-white hover:bg-green-700"
+                            title="Setujui Pengajuan"
+                            onClick={() => handleApprove(item.no)}
+                          >
+                            <CheckCircle className="w-4 h-4" />
+                          </Button>
+                        )}
+
+                        {item.status === 'Menunggu Disetujui' && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="bg-red-600 text-white hover:bg-red-700"
+                            title="Tolak Pengajuan"
+                            onClick={() => handleReject(item.no)}
+                          >
+                            <XCircle className="w-4 h-4" />
+                          </Button>
+                        )}
+
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="bg-red-600 text-white hover:bg-red-700"
+                          title="Hapus Data"
+                          onClick={() => handleDeleteSingle(item.idKaryawan)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -318,7 +494,6 @@ export const ReimbursementPage = () => {
             </Table>
           </div>
 
-          
           <div className="flex justify-between items-center mt-4">
             <div className="text-sm text-gray-500">
               Menampilkan{' '}
@@ -329,7 +504,6 @@ export const ReimbursementPage = () => {
               dari <strong>{filteredData.length}</strong> data
             </div>
 
-            {/* Navigasi pagination */}
             <div className="flex gap-2">
               <Button
                 disabled={currentPage === 1}
@@ -362,8 +536,8 @@ export const ReimbursementPage = () => {
               </Button>
             </div>
           </div>
-          </CardContent>
-          </Card>
-          </div>
-          );
-          };
+        </CardContent>
+      </Card>
+    </div>
+  );
+};

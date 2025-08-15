@@ -48,7 +48,9 @@ const menuItems = [
     icon: Clock,
     submenu: [
       { id: 'data-kehadiran', label: 'Data Kehadiran' },
+      { id: 'manajemen-shift', label: 'Manajemen Shift' },
       { id: 'rekap-kehadiran', label: 'Rekap Kehadiran' }
+       
     ]
   },
   { id: 'request-absen', label: 'Request Absen', icon: MapPinCheck },
