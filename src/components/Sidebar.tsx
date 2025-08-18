@@ -21,13 +21,14 @@ import {
   ChevronRight,
   ShoppingCart,
   Mail,
-  MapPinCheck
+  MapPinCheck,
+  Menu,
+  ArrowLeft, // 👈 tambah icon panah
 } from 'lucide-react';
 
 interface SidebarProps {
   onLogout: () => void;
   currentPath: string;
-  onCloseMobileMenu?: () => void;
 }
 
 const menuItems = [
@@ -39,8 +40,8 @@ const menuItems = [
     submenu: [
       { id: 'divisi', label: 'Divisi' },
       { id: 'jabatan', label: 'Jabatan' },
-      { id: 'data-karyawan', label: 'Data Karyawan' }
-    ]
+      { id: 'data-karyawan', label: 'Data Karyawan' },
+    ],
   },
   {
     id: 'kehadiran',
@@ -48,10 +49,8 @@ const menuItems = [
     icon: Clock,
     submenu: [
       { id: 'data-kehadiran', label: 'Data Kehadiran' },
-      { id: 'manajemen-shift', label: 'Manajemen Shift' },
-      { id: 'rekap-kehadiran', label: 'Rekap Kehadiran' }
-       
-    ]
+      { id: 'rekap-kehadiran', label: 'Rekap Kehadiran' },
+    ],
   },
   { id: 'request-absen', label: 'Request Absen', icon: MapPinCheck },
   {
@@ -61,8 +60,8 @@ const menuItems = [
     submenu: [
       { id: 'data-cuti', label: 'Data Cuti' },
       { id: 'rekap-cuti', label: 'Rekap Cuti' },
-      { id: 'kategori-cuti', label: 'Kategori Cuti' }
-    ]
+      { id: 'kategori-cuti', label: 'Kategori Cuti' },
+    ],
   },
   {
     id: 'izin',
@@ -70,8 +69,8 @@ const menuItems = [
     icon: FileText,
     submenu: [
       { id: 'data-izin', label: 'Data Izin' },
-      { id: 'rekap-izin', label: 'Rekap Izin' }
-    ]
+      { id: 'rekap-izin', label: 'Rekap Izin' },
+    ],
   },
   {
     id: 'lembur',
@@ -79,8 +78,8 @@ const menuItems = [
     icon: CalendarClock,
     submenu: [
       { id: 'data-lembur', label: 'Data Lembur' },
-      { id: 'rekap-lembur', label: 'Rekap Lembur' }
-    ]
+      { id: 'rekap-lembur', label: 'Rekap Lembur' },
+    ],
   },
   {
     id: 'penggajian',
@@ -88,8 +87,8 @@ const menuItems = [
     icon: DollarSign,
     submenu: [
       { id: 'hitung-gaji', label: 'Hitung Gaji' },
-      { id: 'rekap-gaji', label: 'Rekap Gaji' }
-    ]
+      { id: 'rekap-gaji', label: 'Rekap Gaji' },
+    ],
   },
   {
     id: 'jadwal-shift',
@@ -99,8 +98,8 @@ const menuItems = [
       { id: 'shift', label: 'Shift' },
       { id: 'group', label: 'Group' },
       { id: 'atur-shift', label: 'Atur Shift' },
-      { id: 'rekap-jadwal', label: 'Rekap Jadwal' }
-    ]
+      { id: 'rekap-jadwal', label: 'Rekap Jadwal' },
+    ],
   },
   { id: 'pinjaman', label: 'Pinjaman', icon: CreditCard },
   { id: 'reimbursement', label: 'Reimbursement', icon: Receipt },
@@ -111,16 +110,16 @@ const menuItems = [
   { id: 'keterangan-bekerja', label: 'Surat Keterangan Bekerja', icon: Mail },
   { id: 'po', label: 'PO', icon: ShoppingCart },
   { id: 'kpi', label: 'KPI', icon: BarChart3 },
-  { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings }
+  { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings },
 ];
 
-export const Sidebar = ({ onLogout, currentPath, onCloseMobileMenu }: SidebarProps) => {
+export const Sidebar = ({ onLogout, currentPath }: SidebarProps) => {
   const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>({});
+  const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
 
   const handleNavigate = (path: string) => {
     navigate(`/${path}`);
-    if (onCloseMobileMenu) onCloseMobileMenu();
   };
 
   const toggleDropdown = (id: string) => {
@@ -130,7 +129,7 @@ export const Sidebar = ({ onLogout, currentPath, onCloseMobileMenu }: SidebarPro
   const renderMenuItem = (item: typeof menuItems[number]) => {
     const Icon = item.icon;
     const isActive = currentPath === item.id;
-    const isOpen = openDropdowns[item.id] ?? false;
+    const isOpenDropdown = openDropdowns[item.id] ?? false;
 
     if (item.submenu) {
       return (
@@ -144,34 +143,36 @@ export const Sidebar = ({ onLogout, currentPath, onCloseMobileMenu }: SidebarPro
           >
             <div className="flex items-center gap-3">
               <Icon className="h-5 w-5" />
-              {item.label}
+              {isOpen && <span>{item.label}</span>}
             </div>
-            {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+            {isOpen && (isOpenDropdown ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />)}
           </Button>
 
-          <div
-            className={cn(
-              'transition-all duration-300 ease-in-out overflow-hidden',
-              isOpen ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0'
-            )}
-          >
-            <div className="ml-6 bg-white rounded-xl py-2 px-3 space-y-1 shadow-md">
-              {item.submenu.map((sub) => (
-                <button
-                  key={sub.id}
-                  onClick={() => handleNavigate(sub.id)}
-                  className={cn(
-                    'block w-full text-left px-3 py-1.5 rounded-md text-sm transition-all',
-                    currentPath === sub.id
-                      ? 'bg-white text-blue-900 font-semibold'
-                      : 'text-gray-800 hover:bg-gray-100'
-                  )}
-                >
-                  {sub.label}
-                </button>
-              ))}
+          {isOpen && (
+            <div
+              className={cn(
+                'transition-all duration-300 ease-in-out overflow-hidden',
+                isOpenDropdown ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0'
+              )}
+            >
+              <div className="ml-6 bg-white rounded-xl py-2 px-3 space-y-1 shadow-md">
+                {item.submenu.map((sub) => (
+                  <button
+                    key={sub.id}
+                    onClick={() => handleNavigate(sub.id)}
+                    className={cn(
+                      'block w-full text-left px-3 py-1.5 rounded-md text-sm transition-all',
+                      currentPath === sub.id
+                        ? 'bg-white text-blue-900 font-semibold'
+                        : 'text-gray-800 hover:bg-gray-100'
+                    )}
+                  >
+                    {sub.label}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       );
     }
@@ -180,6 +181,7 @@ export const Sidebar = ({ onLogout, currentPath, onCloseMobileMenu }: SidebarPro
       <Button
         key={item.id}
         variant="ghost"
+        title={!isOpen ? item.label : undefined}
         className={cn(
           'w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 justify-start',
           isActive ? 'bg-white text-blue-900' : 'text-white hover:bg-blue-800'
@@ -187,23 +189,34 @@ export const Sidebar = ({ onLogout, currentPath, onCloseMobileMenu }: SidebarPro
         onClick={() => handleNavigate(item.id)}
       >
         <Icon className="h-5 w-5" />
-        <span className="truncate">{item.label}</span>
+        {isOpen && <span className="truncate">{item.label}</span>}
       </Button>
     );
   };
 
   return (
-    <div className="w-64 bg-[#0073ec] text-white h-screen flex flex-col shadow-lg">
-      {/* Header */}
-      <div className="p-6 border-b border-blue-800">
-        <h1 className="text-2xl font-bold">SMART HRM</h1>
+    <div
+      className={cn(
+        'bg-[#0073ec] text-white h-screen flex flex-col shadow-lg transition-all duration-300 fixed md:static top-0 left-0 z-40',
+        isOpen ? 'w-64' : 'w-16',
+      )}
+    >
+      {/* Header dengan 1 tombol kontrol */}
+      <div className="p-4 border-b border-blue-800 flex items-center justify-between">
+        {isOpen && <h1 className="text-xl font-bold">SMART HRM</h1>}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="text-white hover:bg-blue-700"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? <ArrowLeft className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </Button>
       </div>
 
       {/* Menu */}
       <div className="flex-1 overflow-y-auto">
-        <nav className="px-3 py-4 space-y-1">
-          {menuItems.map(renderMenuItem)}
-        </nav>
+        <nav className="px-3 py-4 space-y-1">{menuItems.map(renderMenuItem)}</nav>
       </div>
 
       {/* Logout */}
@@ -214,7 +227,7 @@ export const Sidebar = ({ onLogout, currentPath, onCloseMobileMenu }: SidebarPro
           onClick={onLogout}
         >
           <LogOut className="h-5 w-5" />
-          Log out
+          {isOpen && 'Log out'}
         </Button>
       </div>
     </div>
