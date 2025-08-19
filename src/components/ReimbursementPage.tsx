@@ -17,7 +17,8 @@ import {
   FileText,
   DollarSign,
   UserCheck,
-  X
+  X,
+  Download // 👈 tambahkan ini
 } from 'lucide-react';
 
 const currentUser = {
@@ -151,11 +152,9 @@ export const ReimbursementPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false); // Kontrol tampilan & animasi
+  const [isModalVisible, setIsModalVisible] = useState(false); 
 
-  // Items untuk detail pengeluaran
   const [items, setItems] = useState<Item[]>([
     { id: Date.now(), tanggal: new Date(), keterangan: '', kategori: '', jumlah: 0 }
   ]);
@@ -170,6 +169,28 @@ export const ReimbursementPage = () => {
     nomorRekening: '',
     bank: ''
   });
+
+  // --- 🔹 TAMBAHAN: State untuk modal lampiran ---
+  const [isAttachmentModalOpen, setIsAttachmentModalOpen] = useState(false);
+  const [selectedAttachment, setSelectedAttachment] = useState<string | null>(null);
+  const [attachmentUrl, setAttachmentUrl] = useState<string | null>(null);
+
+  // Fungsi viewAttachment 
+  const viewAttachment = (filename: string) => {
+    let fileUrl = '';
+
+    if (filename.endsWith('.pdf')) {
+      fileUrl = 'https://pdfobject.com/pdf/sample.pdf';
+    } else if (filename.match(/\.(jpg|jpeg|png)$/i)) {
+      fileUrl = 'https://picsum.photos/800/600';
+    } else {
+      fileUrl = 'https://pdfobject.com/pdf/sample.pdf';
+    }
+
+    setSelectedAttachment(filename);
+    setAttachmentUrl(fileUrl);
+    setIsAttachmentModalOpen(true);
+  };
 
   // Format Currency
   const formatCurrency = (amount: number) => {
@@ -431,7 +452,11 @@ export const ReimbursementPage = () => {
                     <TableCell className="border-r">
                       <div className="flex items-center space-x-1">
                         <Paperclip className="w-4 h-4 text-gray-500" />
-                        <span className="text-sm text-blue-600 hover:underline cursor-pointer truncate max-w-24">
+                        <span
+                          className="text-sm text-blue-600 hover:underline cursor-pointer truncate max-w-24 font-medium"
+                          onClick={() => viewAttachment(item.lampiran)}
+                          title="Klik untuk lihat lampiran"
+                        >
                           {item.lampiran}
                         </span>
                       </div>
@@ -625,6 +650,7 @@ export const ReimbursementPage = () => {
         </CardContent>
       </Card>
 
+      {/* Modal Ajukan Reimbursement */}
       {isModalOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 transition-opacity duration-300 ease-out"
@@ -869,6 +895,67 @@ export const ReimbursementPage = () => {
                 </Button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* 🔹 MODAL VIEW LAMPIRAN */}
+      {isAttachmentModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={() => setIsAttachmentModalOpen(false)}
+        >
+          <div
+            className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-screen overflow-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center p-6 border-b">
+              <h2 className="text-xl font-bold text-gray-900">
+                Lampiran: {selectedAttachment}
+              </h2>
+              <button
+                onClick={() => setIsAttachmentModalOpen(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <div className="p-6">
+              {selectedAttachment?.endsWith('.pdf') ? (
+                <iframe
+                  src={`${attachmentUrl}#toolbar=1&zoom=100`}
+                  className="w-full h-96 border rounded"
+                  title="PDF Viewer"
+                />
+              ) : (
+                <img
+                  src={attachmentUrl || ''}
+                  alt="Lampiran"
+                  className="w-full h-auto rounded border"
+                />
+              )}
+            </div>
+            <div className="p-6 border-t flex justify-between">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  const link = document.createElement('a');
+                  link.href = attachmentUrl!;
+                  link.download = selectedAttachment!;
+                  link.click();
+                }}
+                className="flex items-center gap-1"
+              >
+                <Download className="w-4 h-4" />
+                Download
+              </Button>
+              <Button
+                variant="default"
+                onClick={() => setIsAttachmentModalOpen(false)}
+              >
+                Tutup
+              </Button>
+            </div>
           </div>
         </div>
       )}
