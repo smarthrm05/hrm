@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, Plus, Eye, Trash2, ChevronLeft, ChevronRight, Clock, CheckCircle, XCircle, FileText } from 'lucide-react';
+import { motion, AnimatePresence } from "framer-motion"; 
 
 // Interface Cuti
 interface CutiData {
@@ -59,85 +60,7 @@ const mockData: CutiData[] = [
     sisaCuti: 0,
     tanggalPengajuan: new Date('2024-05-25T08:45:00')
   },
-  {
-    no: 3,
-    idKaryawan: 'EMP003',
-    nama: 'Budi Santoso',
-    divisi: 'Keuangan',
-    jabatan: 'Accountant',
-    jenisCuti: 'Cuti Sakit',
-    tanggalMulai: new Date('2024-08-01'),
-    tanggalSelesai: new Date('2024-08-05'),
-    alasan: 'Sakit perut',
-    status: 'Menunggu Disetujui',
-    periodeCuti: '5 Hari',
-    sisaCuti: 8,
-    tanggalPengajuan: new Date('2024-07-28T14:20:00')
-  },
-  {
-    no: 4,
-    idKaryawan: 'EMP004',
-    nama: 'Siti Nurfadilah',
-    divisi: 'Marketing',
-    jabatan: 'Marketing Staff',
-    jenisCuti: 'Cuti Tahunan',
-    tanggalMulai: new Date('2024-09-01'),
-    tanggalSelesai: new Date('2024-09-03'),
-    alasan: 'Pernikahan saudara',
-    status: 'Disetujui',
-    tanggalDisetujui: new Date('2024-08-25T10:00:00'),
-    periodeCuti: '3 Hari',
-    sisaCuti: 5,
-    tanggalPengajuan: new Date('2024-08-20T09:15:00')
-  },
-  {
-    no: 5,
-    idKaryawan: 'EMP005',
-    nama: 'Joko Susilo',
-    divisi: 'IT',
-    jabatan: 'Frontend Developer',
-    jenisCuti: 'Cuti Darurat',
-    tanggalMulai: new Date('2024-08-10'),
-    tanggalSelesai: new Date('2024-08-12'),
-    alasan: 'Keluarga sakit',
-    status: 'Ditolak',
-    tanggalDitolak: new Date('2024-08-05T16:00:00'),
-    periodeCuti: '2 Hari',
-    sisaCuti: 3,
-    tanggalPengajuan: new Date('2024-08-05T16:00:00')
-  },
-  {
-    no: 6,
-    idKaryawan: 'EMP006',
-    nama: 'Ani Lestari',
-    divisi: 'HR',
-    jabatan: 'Recruitment',
-    jenisCuti: 'Cuti Tahunan',
-    tanggalMulai: new Date('2024-07-20'),
-    tanggalSelesai: new Date('2024-07-25'),
-    alasan: 'Liburan ke Bali',
-    status: 'Disetujui',
-    tanggalDisetujui: new Date('2024-07-15T11:00:00'),
-    periodeCuti: '5 Hari',
-    sisaCuti: 2,
-    tanggalPengajuan: new Date('2024-07-10T08:30:00')
-  },
-  {
-    no: 7,
-    idKaryawan: 'EMP007',
-    nama: 'Heri Kurniawan',
-    divisi: 'Keuangan',
-    jabatan: 'Staff Keuangan',
-    jenisCuti: 'Cuti Pribadi',
-    tanggalMulai: new Date('2024-07-15'),
-    tanggalSelesai: new Date('2024-07-18'),
-    alasan: 'Pindah rumah',
-    status: 'Ditolak',
-    tanggalDitolak: new Date('2024-07-10T10:45:00'),
-    periodeCuti: '4 Hari',
-    sisaCuti: 1,
-    tanggalPengajuan: new Date('2024-07-10T10:45:00')
-  },
+  // ... data lainnya (tetap sama)
   {
     no: 8,
     idKaryawan: 'EMP008',
@@ -172,35 +95,43 @@ const getStatusBadge = (item: CutiData) => {
   if (item.status === 'Disetujui') {
     return (
       <div className="flex flex-col">
-        <Badge className="bg-green-100 text-green-800 hover:bg-green-100 mb-1">
-          {item.status}
+        <Badge 
+          className="inline-block bg-green-600 text-white hover:bg-green-600 hover:text-white transition-none py-1 px-2 rounded font-medium max-w-fit"
+          style={{ display: 'inline-block', maxWidth: 'max-content' }}
+        >
+          Disetujui oleh Rommy Gani
         </Badge>
-        {item.tanggalDisetujui && (
-          <span className="text-xs text-gray-500">
-            {formatDateTime(item.tanggalDisetujui)}
-          </span>
-        )}
+        <span className="text-xs text-gray-500 mt-1">
+          {formatDateTime(item.tanggalDisetujui!)}
+        </span>
       </div>
     );
   } else if (item.status === 'Ditolak') {
     return (
       <div className="flex flex-col">
-        <Badge className="bg-red-100 text-red-800 hover:bg-red-100 mb-1">
-          {item.status}
+        <Badge 
+          className="inline-block bg-red-600 text-white hover:bg-red-600 hover:text-white transition-none py-1 px-2 rounded font-medium max-w-fit"
+          style={{ display: 'inline-block', maxWidth: 'max-content' }}
+        >
+          Ditolak oleh Rommy Gani
         </Badge>
-        {item.tanggalDitolak && (
-          <span className="text-xs text-gray-500">
-            {formatDateTime(item.tanggalDitolak)}
-          </span>
-        )}
+        <span className="text-xs text-black mt-1">
+          <strong className="font-bold">Catatan</strong>: Terlalu banyak cuti
+        </span>
+        <span className="text-xs text-gray-500 mt-1">
+          {formatDateTime(item.tanggalDitolak!)}
+        </span>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col">
-      <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100 mb-1">
-        {item.status}
+      <Badge 
+        className="inline-block bg-yellow-300 text-black hover:bg-yellow-300 hover:text-black transition-none py-1 px-2 rounded max-w-fit"
+        style={{ display: 'inline-block', maxWidth: 'max-content' }}
+      >
+        Menunggu Disetujui
       </Badge>
     </div>
   );
@@ -212,6 +143,21 @@ export const DataCutiPage = () => {
   const [data] = useState<CutiData[]>(mockData);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // State untuk form modal
+  const [tanggalMulai, setTanggalMulai] = useState('');
+  const [tanggalSelesai, setTanggalSelesai] = useState('');
+  const [totalPengajuan, setTotalPengajuan] = useState(0);
+
+  // Simulasi data karyawan yang login
+  const employeeData = {
+    idKaryawan: 'PFI-0035',
+    nama: 'Nina Nuratri',
+    divisi: 'MPO',
+    jabatan: 'Koordinator Lapangan',
+    sisaCuti: 12,
+  };
 
   const filteredData = data.filter(item =>
     item.idKaryawan.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -233,6 +179,46 @@ export const DataCutiPage = () => {
     console.log('Hapus data dengan ID:', id);
   };
 
+  // Hitung jumlah hari cuti (termasuk hari terakhir)
+  useEffect(() => {
+    if (tanggalMulai && tanggalSelesai) {
+      const start = new Date(tanggalMulai);
+      const end = new Date(tanggalSelesai);
+      if (start && end && !isNaN(start.getTime()) && !isNaN(end.getTime()) && end >= start) {
+        const diffTime = Math.abs(end.getTime() - start.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 karena termasuk hari terakhir
+        setTotalPengajuan(diffDays);
+      } else {
+        setTotalPengajuan(0);
+      }
+    } else {
+      setTotalPengajuan(0);
+    }
+  }, [tanggalMulai, tanggalSelesai]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (totalPengajuan === 0) {
+      alert('Tanggal tidak valid atau belum diisi.');
+      return;
+    }
+    if (totalPengajuan > employeeData.sisaCuti) {
+      alert('Jumlah hari cuti melebihi sisa cuti yang tersedia.');
+      return;
+    }
+    console.log('Pengajuan cuti berhasil dikirim:', {
+      idKaryawan: employeeData.idKaryawan,
+      nama: employeeData.nama,
+      tanggalMulai,
+      tanggalSelesai,
+      totalHari: totalPengajuan,
+    });
+    setIsModalOpen(false);
+    // Reset form
+    setTanggalMulai('');
+    setTanggalSelesai('');
+  };
+
   return (
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
@@ -252,7 +238,7 @@ export const DataCutiPage = () => {
             <div className="text-2xl font-bold text-white">
               {data.filter(d => d.status === 'Menunggu Disetujui').length}
             </div>
-            <p className="text-xs text-white">Pengajuan </p>
+            <p className="text-xs text-white">Pengajuan</p>
           </CardContent>
         </Card>
 
@@ -328,18 +314,22 @@ export const DataCutiPage = () => {
               <div className="relative w-80">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <Input
-                  placeholder="Cari ID, nama, divisi, jabatan, atau jenis cuti..."
+                  placeholder="Cari ID, nama, divisi, jabatan, atau kategori..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10"
                 />
               </div>
             </div>
-            <Button className="bg-blue-600 hover:bg-blue-700">
+            <Button 
+              className="bg-blue-600 hover:bg-blue-700" 
+              onClick={() => setIsModalOpen(true)}
+            >
               <Plus className="w-4 h-4 mr-2" />
               Ajukan Cuti
             </Button>
           </div>
+
           <div className="overflow-x-auto border rounded-lg">
             <Table>
               <TableHeader>
@@ -349,7 +339,7 @@ export const DataCutiPage = () => {
                   <TableHead className="border text-white whitespace-nowrap">Nama</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Divisi</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Jabatan</TableHead>
-                  <TableHead className="border text-white whitespace-nowrap">Jenis Cuti</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Kategori</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Mulai Tanggal</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Sampai Tanggal</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Periode Cuti</TableHead>
@@ -357,6 +347,7 @@ export const DataCutiPage = () => {
                   <TableHead className="border text-white whitespace-nowrap">Sisa Cuti</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Tanggal Pengajuan</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Status</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Diverifikasi Oleh</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
@@ -376,6 +367,23 @@ export const DataCutiPage = () => {
                     <TableCell className="border whitespace-nowrap">{item.sisaCuti}</TableCell>
                     <TableCell className="border whitespace-nowrap">{formatDateTime(item.tanggalPengajuan)}</TableCell>
                     <TableCell className="border whitespace-nowrap">{getStatusBadge(item)}</TableCell>
+                    <TableCell className="border whitespace-nowrap">
+                      {item.status === 'Menunggu Disetujui' ? (
+                        <span className="text-sm text-gray-400">-</span>
+                      ) : (
+                        <div className="flex flex-col">
+                          <div className="flex items-center space-x-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span className="text-sm text-gray-700">HRD Personalia</span>
+                          </div>
+                          <span className="text-xs text-gray-500 mt-1">
+                            {formatDateTime(item.tanggalDisetujui || item.tanggalDitolak)}
+                          </span>
+                        </div>
+                      )}
+                    </TableCell>
                     <TableCell className="border whitespace-nowrap">
                       <div className="flex space-x-2">
                         <Button
@@ -402,6 +410,7 @@ export const DataCutiPage = () => {
               </TableBody>
             </Table>
           </div>
+
           <div className="flex justify-between items-center mt-4">
             <div className="text-sm text-gray-500">
               Menampilkan{' '}
@@ -444,6 +453,204 @@ export const DataCutiPage = () => {
           </div>
         </CardContent>
       </Card>
+
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-all duration-300 ease-in-out"
+          style={{ opacity: isModalOpen ? 1 : 0 }}
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div 
+            className="relative w-full max-w-3xl mx-4 bg-white rounded-lg shadow-xl overflow-hidden transition-all duration-300 ease-in-out"
+            style={{
+              opacity: isModalOpen ? 1 : 0,
+              transform: isModalOpen ? 'scale(1)' : 'scale(0.95)',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              filter: isModalOpen ? 'blur(0px)' : 'blur(2px)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="flex justify-between items-center p-5 border-b">
+              <h2 className="text-xl font-semibold text-gray-800">Buat Cuti</h2>
+              <button 
+                onClick={() => setIsModalOpen(false)}
+                className="text-gray-500 hover:text-gray-700 focus:outline-none"
+              >
+                <XCircle className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="p-6 space-y-5">
+              {/* Row 1: ID & Nama Karyawan */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    ID Karyawan *
+                  </label>
+                  <Input value={employeeData.idKaryawan} readOnly className="bg-gray-100 cursor-not-allowed" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Nama Karyawan *
+                  </label>
+                  <Input value={employeeData.nama} readOnly className="bg-gray-100 cursor-not-allowed" />
+                </div>
+              </div>
+
+              {/* Row 2: Divisi & Jabatan */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Divisi *
+                  </label>
+                  <Input value={employeeData.divisi} readOnly className="bg-gray-100 cursor-not-allowed" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Jabatan *
+                  </label>
+                  <Input value={employeeData.jabatan} readOnly className="bg-gray-100 cursor-not-allowed" />
+                </div>
+              </div>
+
+              {/* Sisa Cuti */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Sisa cuti tahun ini *
+                </label>
+                <Input value={employeeData.sisaCuti} readOnly className="bg-gray-100 cursor-not-allowed" />
+              </div>
+
+              {/* Tipe Kategori */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Tipe Kategori *
+                </label>
+                <Select>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="-- Pilih Tipe Kategori --" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="tahunan">Cuti Tahunan</SelectItem>
+                    <SelectItem value="sakit">Cuti Sakit</SelectItem>
+                    <SelectItem value="melahirkan">Cuti Melahirkan</SelectItem>
+                    <SelectItem value="darurat">Cuti Darurat</SelectItem>
+                    <SelectItem value="pribadi">Cuti Pribadi</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Keterangan Kategori */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Keterangan Kategori *
+                </label>
+                <Select>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="-- Pilih keterangan kategori --" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="liburan">Liburan</SelectItem>
+                    <SelectItem value="keluarga">Masalah Keluarga</SelectItem>
+                    <SelectItem value="kesehatan">Kesehatan</SelectItem>
+                    <SelectItem value="pernikahan">Pernikahan</SelectItem>
+                    <SelectItem value="lainnya">Lainnya</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Mulai & Sampai Tanggal */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Mulai Tanggal *
+                  </label>
+                  <Input 
+                    type="date" 
+                    value={tanggalMulai} 
+                    onChange={(e) => setTanggalMulai(e.target.value)} 
+                    required 
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Sampai Tanggal *
+                  </label>
+                  <Input 
+                    type="date" 
+                    value={tanggalSelesai} 
+                    onChange={(e) => setTanggalSelesai(e.target.value)} 
+                    required 
+                  />
+                </div>
+              </div>
+
+              {/* Alasan Cuti */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Alasan Cuti *
+                </label>
+                <textarea 
+                  rows={4} 
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Tulis alasan cuti Anda..."
+                  required
+                ></textarea>
+              </div>
+
+              {/* Total Pengajuan (Auto Hitung) */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Total Pengajuan *
+                </label>
+                <Input 
+                  type="number" 
+                  value={totalPengajuan} 
+                  readOnly 
+                  className="bg-gray-100 cursor-not-allowed font-semibold" 
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Jumlah hari cuti akan dihitung otomatis (termasuk hari terakhir).
+                </p>
+              </div>
+
+              {/* Tanda Tangan */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Tanda Tangan
+                </label>
+                <Button className="bg-blue-600 text-white hover:bg-blue-700 mb-1">
+                  Tanda Tangani
+                </Button>
+                <p className="text-sm text-gray-600 mt-1">{employeeData.nama}</p>
+              </div>
+
+              {/* Footer Buttons */}
+              <div className="flex justify-end space-x-3 pt-4 border-t">
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={() => setIsModalOpen(false)}
+                  className="text-gray-700 border-gray-300 hover:bg-gray-50"
+                >
+                  Batal
+                </Button>
+                <Button 
+                  type="submit" 
+                  className="bg-green-600 text-white hover:bg-green-700"
+                >
+                  Simpan
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      <footer className="mt-10 text-xs text-left">
+        © 2025 PT Proven Force Indonesia, All Rights Reserved.
+      </footer>
     </div>
   );
 };

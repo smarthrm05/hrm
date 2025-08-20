@@ -214,16 +214,16 @@ export const DataLemburPage = () => {
           <div className="overflow-x-auto border rounded-lg">
             <Table className="border border-gray-200">
               <TableHeader>
-                <TableRow className="bg-blue-600 hover:bg-blue-600">
-                  {[
-                    "No.",
-                    "ID",
-                    "Nama",
-                    "Divisi",
-                    "Jabatan",
-                    "Tanggal Lembur",
-                    "Jam Mulai",
-                    "Jam Selesai",
+                <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
+                   <TableHead className="border text-white whitespace-nowrap">No.</TableHead>
+                   <TableHead className="border text-white whitespace-nowrap">ID</TableHead>
+                   <TableHead className="border text-white whitespace-nowrap">Nama</TableHead>
+                   <TableHead className="border text-white whitespace-nowrap">Divisi</TableHead>
+                   <TableHead className="border text-white whitespace-nowrap">Jabatan</TableHead>
+                   <TableHead className="border text-white whitespace-nowrap">Tanggal Lembur</TableHead>
+                   <TableHead className="border text-white whitespace-nowrap">Jam Mulai</TableHead> 
+                   <TableHead className="border text-white whitespace-nowrap">Jam Selesai</TableHead> 
+                   <TableHead className="border text-white whitespace-nowrap">Alasan Lembur</TableHead>
                     "Alasan Lembur",
                     "Tanggal Pengajuan",
                     "Status",
