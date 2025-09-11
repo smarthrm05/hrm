@@ -531,7 +531,7 @@ export const DataKaryawanPage = () => {
           <div className="overflow-auto rounded border border-gray-300">
             <Table className="w-full border border-gray-300 border-collapse">
               <TableHeader>
-                <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
+                <TableRow className="bg-[#196de3] hover:bg-[#196de3] text-white">
                   <TableHead className="text-white border border-gray-200">
                     <input
                       type="checkbox"
