@@ -52,8 +52,8 @@ interface ReimbursementData {
   tanggalDitolak?: Date;
   disetujuiOleh?: string;
   ditolakOleh?: string;
-  diverifikasiOleh?: string;
-  tanggalDiverifikasi?: Date;
+  diketahuiOleh?: string;
+  tanggalDiketahui?: Date;
   statusPembayaran: 'Menunggu Dibayar' | 'Telah Dibayar';
   tanggalDibayar?: Date;
 }
@@ -87,8 +87,8 @@ const mockData: ReimbursementData[] = [
     status: 'Disetujui',
     tanggalDisetujui: new Date('2024-01-14T09:15:00'),
     disetujuiOleh: 'Rommy Gani',
-    diverifikasiOleh: 'HRD Personalia',
-    tanggalDiverifikasi: new Date('2024-01-14T10:00:00'),
+    diketahuiOleh: 'HRD Personalia',
+    tanggalDiketahui: new Date('2024-01-14T10:00:00'),
     statusPembayaran: 'Telah Dibayar',
     tanggalDibayar: new Date('2024-01-15T10:00:00')
   },
@@ -106,8 +106,8 @@ const mockData: ReimbursementData[] = [
     status: 'Disetujui',
     tanggalDisetujui: new Date('2024-01-19T11:30:00'),
     disetujuiOleh: 'Rommy Gani',
-    diverifikasiOleh: 'HRD Personalia',
-    tanggalDiverifikasi: new Date('2024-01-19T12:00:00'),
+    diketahuiOleh: 'HRD Personalia',
+    tanggalDiketahui: new Date('2024-01-19T12:00:00'),
     statusPembayaran: 'Menunggu Dibayar'
   },
   {
@@ -140,8 +140,8 @@ const mockData: ReimbursementData[] = [
     status: 'Disetujui',
     tanggalDisetujui: new Date('2024-01-11T14:20:00'),
     disetujuiOleh: 'Rommy Gani',
-    diverifikasiOleh: 'HRD Personalia',
-    tanggalDiverifikasi: new Date('2024-01-11T15:00:00'),
+    diketahuiOleh: 'HRD Personalia',
+    tanggalDiketahui: new Date('2024-01-11T15:00:00'),
     statusPembayaran: 'Menunggu Dibayar'
   }
 ];
@@ -218,7 +218,7 @@ export const ReimbursementPage = () => {
               tanggalDitolak: undefined,
               disetujuiOleh: 'Rommy Gani',
               ditolakOleh: undefined,
-              diverifikasiOleh: 'HRD Personalia',
+              diketahuiOleh: 'HRD Personalia',
               tanggalDiverifikasi: new Date(),
               statusPembayaran: 'Menunggu Dibayar'
             }
@@ -239,7 +239,7 @@ export const ReimbursementPage = () => {
               tanggalDisetujui: undefined,
               ditolakOleh: 'Rommy Gani',
               disetujuiOleh: undefined,
-              diverifikasiOleh: 'HRD Personalia',
+              diketahuiOleh: 'HRD Personalia',
               tanggalDiverifikasi: new Date(),
               statusPembayaran: 'Menunggu Dibayar'
             }
@@ -434,7 +434,7 @@ export const ReimbursementPage = () => {
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Tanggal Pengajuan</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Catatan</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Status</TableHead>
-                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Diverifikasi Oleh</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Diketahui Oleh</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Pembayaran</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
@@ -509,14 +509,14 @@ export const ReimbursementPage = () => {
 
                     {/* Diverifikasi Oleh (HRD) */}
                     <TableCell className="border-r whitespace-nowrap">
-                      {item.diverifikasiOleh ? (
+                      {item.diketahuiOleh ? (
                         <div className="flex flex-col">
                           <div className="flex items-center space-x-1">
                             <UserCheck className="w-3 h-3 text-blue-500" />
-                            <span className="text-sm text-gray-700">{item.diverifikasiOleh}</span>
+                            <span className="text-sm text-gray-700">{item.diketahuiOleh}</span>
                           </div>
                           <span className="text-xs text-gray-500 mt-1">
-                            {formatDateTime(item.tanggalDiverifikasi!)}
+                            {formatDateTime(item.tanggalDiketahui!)}
                           </span>
                         </div>
                       ) : (

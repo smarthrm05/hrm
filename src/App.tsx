@@ -8,7 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { HRISApp } from "@/components/HRISApp";
 import NotFound from "./pages/NotFound";
 
-// ✅ Import semua halaman
+// Import semua halaman
 import DashboardPage from "./components/DashboardPage";
 import { ShiftPage } from "./components/jadwalshift/ShiftPage";
 import { GroupPage } from "./components/jadwalshift/GroupPage";
@@ -28,6 +28,8 @@ import { KeteranganBekerjaPage } from './components/KeteranganBekerjaPage';
 import { PaklaringPage } from './components/PaklaringPage';
 import { RegisterPage } from "./components/RegisterPage";
 import { LoginForm } from "./components/LoginForm";
+import { ForgotPassword } from "./components/ForgotPassword";
+import { ResetPassword } from "./components/ResetPassword";
 import { SuratPeringatanPage } from "./components/SuratPeringatanPage";
 import { KelolaKaryawanPage } from "./components/KelolaKaryawan/KelolaKaryawanPage";
 import { DataKaryawanPage } from "./components/KelolaKaryawan/DataKaryawanPage";
@@ -35,9 +37,7 @@ import { DivisiPage } from "./components/KelolaKaryawan/DivisiPage";
 import { JabatanPage } from "./components/KelolaKaryawan/JabatanPage";
 import { KontrakKerjaPage } from "./components/KontrakKerjaPage";
 
-
-
-// ✅ Auth
+// Auth
 import { AuthProvider } from "@/contexts/AuthContext";
 import { PrivateRoute } from "@/components/PrivateRoute";
 
@@ -55,8 +55,8 @@ const App = () => (
 
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<LoginForm />} />
-
-              {/* ✅ Semua halaman setelah login (dilindungi oleh PrivateRoute) */}
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/" element={<PrivateRoute />}>
                 <Route path="" element={<HRISApp />}>
                   <Route path="dashboard" element={< DashboardPage />} />

@@ -425,7 +425,7 @@ export const DataCutiPage = () => {
                   <TableHead className="border text-white whitespace-nowrap">Sisa Cuti</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Tanggal Pengajuan</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Status</TableHead>
-                  <TableHead className="border text-white whitespace-nowrap">Diverifikasi Oleh</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Diketahui Oleh</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
               </TableHeader>

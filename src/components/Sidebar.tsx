@@ -23,7 +23,7 @@ import {
   Mail,
   MapPinCheck,
   Menu,
-  ArrowLeft, // 👈 tambah icon panah
+  ArrowLeft, 
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -197,7 +197,7 @@ export const Sidebar = ({ onLogout, currentPath }: SidebarProps) => {
   return (
     <div
       className={cn(
-        'bg-[#0073ec] text-white h-screen flex flex-col shadow-lg transition-all duration-300 fixed md:static top-0 left-0 z-40',
+        'bg-[#2794eb] text-white h-screen flex flex-col shadow-lg transition-all duration-300 fixed md:static top-0 left-0 z-40',
         isOpen ? 'w-64' : 'w-16',
       )}
     >

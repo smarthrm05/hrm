@@ -70,10 +70,10 @@ export const HRISApp = () => {
             </button>
 
             {/* Nama PT + ikon */}
-             <Building2 size={28} color="#0073ec" />
+             <Building2 size={28} color="#2794eb" />
             <h1
               className="font-extrabold text-2xl leading-none"
-              style={{ color: "#0073ec" }}
+              style={{ color: "#2794eb" }}
             >
               {APP_CONFIG.companyName}
             </h1>
@@ -83,7 +83,7 @@ export const HRISApp = () => {
           <div className="flex items-center gap-4">
             <Button
               className="text-white text-sm rounded-md px-3 py-1.5 hover:opacity-90"
-              style={{ backgroundColor: "#0073ec" }}
+              style={{ backgroundColor: "#2794eb" }}
             >
               Jadwalkan Demo
             </Button>

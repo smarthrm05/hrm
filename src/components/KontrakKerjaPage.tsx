@@ -140,7 +140,7 @@ export const KontrakKerjaPage = () => {
   const handleDeleteSingle = (id: number) => {
     Swal.fire({
       title: 'Apakah Anda yakin?',
-      text: 'Data Kontrak Kerja ini akan dihapus permanen!',
+      text: 'Data Kontrak Kerja ini akan dihapus permanen',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Ya, Hapus!',
@@ -329,7 +329,7 @@ export const KontrakKerjaPage = () => {
               </div>
             </div>
             <Button className="bg-blue-600 text-white hover:bg-blue-700">
-              <FileText className="w-4 h-4 mr-2" /> Tambah Kontrak
+              <FileText className="w-4 h-4 mr-2" /> Buat Kontrak
             </Button>
           </div>
           <div className="overflow-x-auto border rounded-lg">
@@ -362,15 +362,11 @@ export const KontrakKerjaPage = () => {
                       <TableCell className="border border-gray-200 whitespace-nowrap">{item.nama}</TableCell>
                       <TableCell className="border border-gray-200 whitespace-nowrap">{formatDate(item.tanggalMulai)}</TableCell>
                       <TableCell className="border border-gray-200 whitespace-nowrap">{formatDate(item.tanggalSelesai)}</TableCell>
-                      {/* Kolom baru */}
                       <TableCell className="border border-gray-200 whitespace-nowrap">
                         {calculateDuration(item.tanggalMulai, item.tanggalSelesai)}
                       </TableCell>
                       <TableCell className="border border-gray-200 whitespace-nowrap">
-                        {/* Karena data tidak menyertakan tipe kontrak, kita gunakan nilai statis */}
-                        {/* Di aplikasi nyata, ini akan menjadi item.tipeKontrak */}
                         Kontrak Baru
-                        {/* Contoh jika ada properti: {item.tipeKontrak || "Kontrak Baru"} */}
                       </TableCell>
                       {/* --- */}
                       <TableCell className="border border-gray-200 whitespace-nowrap">{formatDateTime(item.dibuatTanggal)}</TableCell>
