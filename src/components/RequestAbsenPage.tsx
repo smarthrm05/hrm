@@ -30,7 +30,7 @@ import {
   XCircle,
 } from "lucide-react";
 
-// Interface data
+// Interface data - Diperbarui: Tambahkan namaApprover
 interface RequestAbsenData {
   no: number;
   tanggal: Date;
@@ -40,14 +40,15 @@ interface RequestAbsenData {
   nama: string;
   absenMasuk: string;
   lokasiAbsen: string;
-  detailLokasi: string;
+  detailLokasi: string; // Sekarang berisi nama jalan
   shift: string;
   catatan: string;
   status: 'Menunggu Disetujui' | 'Disetujui';
   tanggalDisetujui?: Date;
+  namaApprover?: string; // Nama orang yang menyetujui
 }
 
-// Mock Data
+// Mock Data - Diperbarui: Ubah detailLokasi, tambah data dummy, tambah namaApprover
 const mockRequestAbsen: RequestAbsenData[] = [
   {
     no: 1,
@@ -58,7 +59,7 @@ const mockRequestAbsen: RequestAbsenData[] = [
     jabatan: "Staff",
     absenMasuk: "08:10",
     lokasiAbsen: "Kantor Pusat",
-    detailLokasi: "-6.175392, 106.827153",
+    detailLokasi: "Jalan Sudirman No. 123, Jakarta Pusat", // Nama jalan
     shift: "Shift 1",
     catatan: "Terlambat karena kemacetan",
     status: "Menunggu Disetujui",
@@ -72,11 +73,57 @@ const mockRequestAbsen: RequestAbsenData[] = [
     jabatan: "Programmer",
     absenMasuk: "08:00",
     lokasiAbsen: "Remote",
-    detailLokasi: "-6.914744, 107.609810",
+    detailLokasi: "Jalan Diponegoro No. 45, Bandung", // Nama jalan
     shift: "Shift 1",
     catatan: "Hadir tepat waktu",
     status: "Disetujui",
     tanggalDisetujui: new Date('2024-06-01T09:30:00'),
+    namaApprover: "Rommy Gani", // Nama approver
+  },
+  // Data Dummy Baru
+  {
+    no: 3,
+    tanggal: new Date("2024-06-19"),
+    idKaryawan: "EMP005",
+    nama: "Andi Pratama",
+    divisi: "Marketing",
+    jabatan: "Manager",
+    absenMasuk: "07:55",
+    lokasiAbsen: "Kantor Cabang Surabaya",
+    detailLokasi: "Jalan Basuki Rahmat No. 78, Surabaya", // Nama jalan
+    shift: "Shift 1",
+    catatan: "Datang lebih awal",
+    status: "Menunggu Disetujui",
+  },
+  {
+    no: 4,
+    tanggal: new Date("2024-06-17"),
+    idKaryawan: "EMP006",
+    nama: "Dewi Lestari",
+    divisi: "HRD",
+    jabatan: "Staff",
+    absenMasuk: "08:15",
+    lokasiAbsen: "Kantor Pusat",
+    detailLokasi: "Jalan Thamrin No. 200, Jakarta Pusat", // Nama jalan
+    shift: "Shift 1",
+    catatan: "Terlambat 15 menit",
+    status: "Disetujui",
+    tanggalDisetujui: new Date('2024-06-02T10:00:00'),
+    namaApprover: "Budi Santoso", // Nama approver
+  },
+  {
+    no: 5,
+    tanggal: new Date("2024-06-21"),
+    idKaryawan: "EMP007",
+    nama: "Rizky Aditya",
+    divisi: "IT",
+    jabatan: "Analyst",
+    absenMasuk: "08:05",
+    lokasiAbsen: "Remote",
+    detailLokasi: "Jalan Raya Bogor No. 34, Depok", // Nama jalan
+    shift: "Shift 1",
+    catatan: "Work from home",
+    status: "Menunggu Disetujui",
   },
 ];
 
@@ -100,16 +147,47 @@ export const RequestAbsenPage = () => {
   const paginatedData = filteredData.slice(startIndex, startIndex + itemsPerPage);
 
   const formatDate = (date: Date) => date.toLocaleDateString("id-ID");
-  const getStatusBadge = (status: string) => {
-    let badgeColor = "";
-    if (status.includes("Menunggu")) {
-      badgeColor = "bg-yellow-100 text-yellow-800";
-    } else if (status.includes("Disetujui")) {
-      badgeColor = "bg-green-100 text-green-800";
-    } else if (status.includes("Ditolak")) {
-      badgeColor = "bg-red-100 text-red-800";
+  const formatDateTime = (date: Date) => {
+    return date.toLocaleString("id-ID", {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
+  };
+
+  // Fungsi getStatusBadge diperbarui untuk menyerupai halaman Reimbursement
+  const getStatusBadge = (status: string, namaApprover?: string, tanggalDisetujui?: Date) => {
+    if (status === "Menunggu Disetujui") {
+      return (
+        <div className="flex flex-col">
+          <Badge 
+            className="inline-block bg-yellow-300 text-black hover:bg-yellow-300 hover:text-black transition-none py-1 px-2 rounded max-w-fit"
+            style={{ display: 'inline-block', maxWidth: 'max-content' }}
+          >
+            Menunggu Disetujui
+          </Badge>
+        </div>
+      );
+    } else if (status === "Disetujui" && namaApprover && tanggalDisetujui) {
+      return (
+        <div className="flex flex-col">
+          <Badge 
+            className="inline-block bg-green-600 text-white hover:bg-green-600 hover:text-white transition-none py-1 px-2 rounded font-medium max-w-fit"
+            style={{ display: 'inline-block', maxWidth: 'max-content' }}
+          >
+            Disetujui oleh {namaApprover}
+          </Badge>
+          <span className="text-xs text-gray-500 mt-1">
+            {formatDateTime(tanggalDisetujui)}
+          </span>
+        </div>
+      );
     }
-    return <Badge className={badgeColor}>{status}</Badge>;
+    // Default fallback
+    return <Badge className="bg-gray-100 text-gray-800">{status}</Badge>;
   };
 
   const openMapModal = (location: string) => {
@@ -122,7 +200,6 @@ export const RequestAbsenPage = () => {
   return (
     <div className="p-6 space-y-6">
       <h1 className="text-3xl font-bold text-gray-900">Request Absen</h1>
-      
 
       <Card>
         <CardHeader className="bg-blue-50 border-b">
@@ -169,7 +246,7 @@ export const RequestAbsenPage = () => {
           <div className="overflow-x-auto border rounded-lg">
             <Table className="w-full border border-gray-300 border-collapse">
               <TableHeader>
-               <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
+                <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
                   <TableHead className="border text-white whitespace-nowrap">No.</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Tanggal</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">ID Karyawan</TableHead>
@@ -182,24 +259,26 @@ export const RequestAbsenPage = () => {
                   <TableHead className="border text-white whitespace-nowrap">Shift</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Catatan</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Status</TableHead>
-                  <TableHead className="border text-white whitespace-nowrap">Aksi</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Aksi</TableHead> {/* Kolom Aksi tetap ada */}
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {paginatedData.map((item) => (
-                   <TableRow key={item.no} className="border">
+                  <TableRow key={item.no} className="border">
                     <TableCell className="border border-gray-200 whitespace-nowrap">{item.no}</TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">{formatDate(item.tanggal)}</TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">{item.idKaryawan}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.nama}</TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">{item.divisi}</TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">{item.jabatan}</TableCell>
-                    <TableCell className="border border-gray-200 whitespace-nowrap">{item.nama}</TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">{item.absenMasuk}</TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">{item.lokasiAbsen}</TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">{item.detailLokasi}</TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">{item.shift}</TableCell>
                     <TableCell className="max-w-xs truncate border-r whitespace-nowrap">{item.catatan}</TableCell>
-                    <TableCell className="border border-gray-200 whitespace-nowrap">{getStatusBadge(item.status)}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">
+                      {getStatusBadge(item.status, item.namaApprover, item.tanggalDisetujui)}
+                    </TableCell>
                     <TableCell>
                       <div className="flex gap-1">
                         <Button
