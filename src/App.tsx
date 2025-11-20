@@ -32,8 +32,8 @@ import { ForgotPassword } from "./components/ForgotPassword";
 import { ResetPassword } from "./components/ResetPassword";
 import { SuratPeringatanPage } from "./components/SuratPeringatanPage";
 import { KelolaKaryawanPage } from "./components/KelolaKaryawan/KelolaKaryawanPage";
-import { DataKaryawanPage } from './pages/DataKaryawanPage';
-import { TambahKaryawanPage } from './pages/TambahKaryawanPage';
+import { DataKaryawanPage } from '@/pages/Karyawan/DataKaryawanPage';
+import TambahKaryawanPage from './pages/Karyawan/TambahKaryawanPage';
 import { DivisiPage } from "./components/KelolaKaryawan/DivisiPage";
 import { JabatanPage } from "./components/KelolaKaryawan/JabatanPage";
 import { KontrakKerjaPage } from "./components/KontrakKerjaPage";
@@ -65,8 +65,8 @@ const App = () => (
                   <Route path="data-kehadiran" element={<DataKehadiranPage />} />
                   <Route path="rekap-kehadiran" element={<RekapKehadiranPage />} />
                   <Route path="kelola-karyawan" element={<KelolaKaryawanPage />} />
-                  <Route path="/data-karyawan" element={<DataKaryawanPage />} />
-                  <Route path="/tambah-karyawan" element={<TambahKaryawanPage />} />
+                  <Route path="data-karyawan" element={<DataKaryawanPage />} />
+                  <Route path="tambah-karyawan" element={<TambahKaryawanPage />} />
                   <Route path="request-absen" element={<RequestAbsenPage />} />
                   <Route path="divisi" element={<DivisiPage />} />
                   <Route path="jabatan" element={<JabatanPage />} />

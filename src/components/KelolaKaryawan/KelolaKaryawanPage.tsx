@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DataKaryawanPage } from '@/pages/DataKaryawanPage';
+import { DataKaryawanPage } from '@/pages/Karyawan/DataKaryawanPage';
 import { DivisiPage } from '@/components/KelolaKaryawan/DivisiPage';
 import { JabatanPage } from '@/components/KelolaKaryawan/JabatanPage';
 import { Button } from '@/components/ui/button';
