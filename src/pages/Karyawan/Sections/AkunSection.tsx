@@ -1,101 +1,62 @@
-import { useState } from "react";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { User, Briefcase, FileText, CreditCard, Phone, Car } from "lucide-react";
-import AkunSection from "./Sections/AkunSection";
-import DataPribadiSection from "./Sections/DataPribadiSection";
-import KepegawaianSection from "./Sections/DataKepegawaianSection";
-import DokumenSection from "./Sections/DokumenSection";
-import BankSection from "./Sections/BankSection";
-import KontakSection from "./Sections/KontakSection";
-import KendaraanSection from "./Sections/KendaraanSection";
-import { Button } from "@/components/ui/button";
+import React from "react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-const TambahKaryawanPage = () => {
-  const [formData, setFormData] = useState<any>({});
+interface AkunSectionProps {
+  formData: any;
+  updateForm: (key: string, value: any) => void;
+}
 
-  const updateForm = (key: string, value: any) => {
-    setFormData((prev: any) => ({ ...prev, [key]: value }));
-  };
-
-  const handleSubmit = () => {
-    console.log("DATA KARYAWAN:", formData);
-  };
-
+const AkunSection: React.FC<AkunSectionProps> = ({ formData, updateForm }) => {
   return (
-    <div className="bg-white p-5 rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-5">Tambah Karyawan</h1>
+    <div className="grid grid-cols-2 gap-6 bg-white p-4 rounded-md">
 
-      <Tabs defaultValue="akun" className="w-full">
-        <TabsList className="grid grid-cols-7 w-full bg-blue-100 rounded-md">
-
-          {/* INFORMASI AKUN */}
-          <TabsTrigger value="akun" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
-            <User className="w-4 h-4 mr-2" /> Informasi Akun
-          </TabsTrigger>
-
-          {/* DATA PRIBADI */}
-          <TabsTrigger value="data-pribadi" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
-            <User className="w-4 h-4 mr-2" /> Data Pribadi
-          </TabsTrigger>
-
-          <TabsTrigger value="kepegawaian" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
-            <Briefcase className="w-4 h-4 mr-2" /> Kepegawaian
-          </TabsTrigger>
-
-          <TabsTrigger value="dokumen" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
-            <FileText className="w-4 h-4 mr-2" /> Dokumen
-          </TabsTrigger>
-
-          <TabsTrigger value="bank" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
-            <CreditCard className="w-4 h-4 mr-2" /> Informasi Bank
-          </TabsTrigger>
-
-          <TabsTrigger value="kontak" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
-            <Phone className="w-4 h-4 mr-2" /> Kontak Darurat
-          </TabsTrigger>
-
-          <TabsTrigger value="kendaraan" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
-            <Car className="w-4 h-4 mr-2" /> Kendaraan
-          </TabsTrigger>
-        </TabsList>
-
-        {/* INFORMASI AKUN */}
-        <TabsContent value="akun">
-          <AkunSection formData={formData} updateForm={updateForm} />
-        </TabsContent>
-
-        <TabsContent value="data-pribadi">
-          <DataPribadiSection formData={formData} updateForm={updateForm} />
-        </TabsContent>
-
-        <TabsContent value="kepegawaian">
-          <KepegawaianSection formData={formData} updateForm={updateForm} />
-        </TabsContent>
-
-        <TabsContent value="dokumen">
-          <DokumenSection formData={formData} updateForm={updateForm} />
-        </TabsContent>
-
-        <TabsContent value="bank">
-          <BankSection formData={formData} updateForm={updateForm} />
-        </TabsContent>
-
-        <TabsContent value="kontak">
-          <KontakSection formData={formData} updateForm={updateForm} />
-        </TabsContent>
-
-        <TabsContent value="kendaraan">
-          <KendaraanSection formData={formData} updateForm={updateForm} />
-        </TabsContent>
-      </Tabs>
-
-      <div className="mt-5 flex justify-end">
-        <Button onClick={handleSubmit} className="bg-blue-600 text-white hover:bg-blue-700">
-          Simpan Data
-        </Button>
+      {/* Username */}
+      <div className="flex flex-col">
+        <Label className="font-semibold mb-1">Username *</Label>
+        <Input
+          type="text"
+          placeholder="Masukkan username"
+          value={formData.username || ""}
+          onChange={(e) => updateForm("username", e.target.value)}
+        />
       </div>
+
+      {/* Email */}
+      <div className="flex flex-col">
+        <Label className="font-semibold mb-1">Email *</Label>
+        <Input
+          type="email"
+          placeholder="contoh@mail.com"
+          value={formData.email || ""}
+          onChange={(e) => updateForm("email", e.target.value)}
+        />
+      </div>
+
+      {/* Password */}
+      <div className="flex flex-col">
+        <Label className="font-semibold mb-1">Password *</Label>
+        <Input
+          type="password"
+          placeholder="********"
+          value={formData.password || ""}
+          onChange={(e) => updateForm("password", e.target.value)}
+        />
+      </div>
+
+      {/* Role */}
+      <div className="flex flex-col">
+        <Label className="font-semibold mb-1">Role *</Label>
+        <Input
+          type="text"
+          placeholder="Administrator / Staff / User"
+          value={formData.role || ""}
+          onChange={(e) => updateForm("role", e.target.value)}
+        />
+      </div>
+
     </div>
   );
 };
 
-export default TambahKaryawanPage;
+export default AkunSection;

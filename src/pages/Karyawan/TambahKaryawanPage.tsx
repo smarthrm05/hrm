@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { User, Briefcase, FileText, CreditCard, Phone, Car } from "lucide-react";
-import AkunSection from "./Sections/AkunSection";
 import DataPribadiSection from "./Sections/DataPribadiSection";
 import KepegawaianSection from "./Sections/DataKepegawaianSection";
 import DokumenSection from "./Sections/DokumenSection";
 import BankSection from "./Sections/BankSection";
 import KontakSection from "./Sections/KontakSection";
 import KendaraanSection from "./Sections/KendaraanSection";
+import AkunSection from "./Sections/AkunSection";
 import { Button } from "@/components/ui/button";
 
 const TambahKaryawanPage = () => {
