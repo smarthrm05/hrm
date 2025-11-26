@@ -40,7 +40,9 @@ const menuItems = [
     submenu: [
       { id: 'divisi', label: 'Divisi' },
       { id: 'jabatan', label: 'Jabatan' },
+      { id: 'bagian', label: 'Bagian' },
       { id: 'data-karyawan', label: 'Data Karyawan' },
+      
     ],
   },
   {

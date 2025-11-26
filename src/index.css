@@ -131,3 +131,23 @@
 .markdown-preview ol {
   @apply my-4 ml-6;
 }
+
+.form-field {
+  @apply w-full border border-gray-200 bg-[#f9fbfd]
+  px-3 py-2 h-[42px] rounded-md text-[14px]
+  focus:ring-0 focus:border-gray-300 shadow-none;
+}
+
+.form-label {
+  @apply font-semibold text-[14px];
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  padding-right: 20px;   
+  margin-left: 520px;     
+  cursor: pointer;
+}
+
+input[type="date"] {
+  padding-right: 50px;  
+}
