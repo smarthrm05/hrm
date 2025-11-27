@@ -36,6 +36,7 @@ import { DataKaryawanPage } from '@/pages/Karyawan/DataKaryawanPage';
 import TambahKaryawanPage from './pages/Karyawan/TambahKaryawanPage';
 import { DivisiPage } from "./components/KelolaKaryawan/DivisiPage";
 import { JabatanPage } from "./components/KelolaKaryawan/JabatanPage";
+import { BagianPage } from "./components/KelolaKaryawan/BagianPage";
 import { KontrakKerjaPage } from "./components/KontrakKerjaPage";
 
 // Auth
@@ -70,6 +71,7 @@ const App = () => (
                   <Route path="request-absen" element={<RequestAbsenPage />} />
                   <Route path="divisi" element={<DivisiPage />} />
                   <Route path="jabatan" element={<JabatanPage />} />
+                  <Route path="bagian" element={<BagianPage />} />
                   <Route path="data-cuti" element={<DataCutiPage />} />
                   <Route path="data-izin" element={<DataIzinPage />} />
                   <Route path="data-lembur" element={<DataLemburPage />} />

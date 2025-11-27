@@ -1,4 +1,3 @@
-// src/pages/Karyawan/Sections/AkunSection.tsx
 import React from "react";
 import { User } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -13,15 +12,13 @@ interface AkunSectionProps {
 const AkunSection: React.FC<AkunSectionProps> = ({ formData, updateForm }) => {
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-      {/* Header Biru #2794EB */}
       <div className="flex items-center space-x-2 p-3 bg-[#2794EB] text-white rounded-t-lg">
         <User className="w-5 h-5" />
         <h3 className="font-semibold">Informasi Akun</h3>
       </div>
-
-      {/* Konten Form */}
       <div className="p-4">
         <div className="grid grid-cols-2 gap-6">
+          
           {/* USERNAME */}
           <div className="flex flex-col gap-2">
             <Label className="font-semibold text-sm">Username *</Label>

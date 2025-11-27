@@ -1,4 +1,3 @@
-// src/pages/Karyawan/Sections/BankSection.tsx
 import React, { useEffect, useState } from "react";
 import { CreditCard } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -7,7 +6,6 @@ const BankSection = ({ formData, updateForm }: any) => {
   const [banks, setBanks] = useState<any[]>([]);
   const [selectedBank, setSelectedBank] = useState<any>(null);
 
-  // Fetch Bank List
   useEffect(() => {
     fetch("https://api.saas.dana.id")
       .then((res) => res.json())
@@ -33,7 +31,6 @@ const BankSection = ({ formData, updateForm }: any) => {
     return raw.replace(/(\d{4})(?=\d)/g, "$1-");
   };
 
-  // Cari bank yang dipilih berdasarkan formData
   useEffect(() => {
     if (formData.bank?.kode) {
       const bank = banks.find((b: any) => b.code === formData.bank.kode);
@@ -43,13 +40,10 @@ const BankSection = ({ formData, updateForm }: any) => {
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-      {/* Header Biru #2794EB */}
       <div className="flex items-center space-x-2 p-3 bg-[#2794EB] text-white rounded-t-lg">
         <CreditCard className="w-5 h-5" />
         <h3 className="font-semibold">Detail Akun Bank</h3>
       </div>
-
-      {/* Konten Form */}
       <div className="p-4">
         <div className="grid grid-cols-2 gap-6">
 
@@ -82,7 +76,6 @@ const BankSection = ({ formData, updateForm }: any) => {
             />
           </div>
 
-          {/* Seleksi Bank — Pakai Select UI Component */}
           <div className="flex flex-col gap-2">
             <label className="font-medium text-sm text-gray-700">Bank</label>
             <div className="flex items-center gap-3">

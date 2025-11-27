@@ -6,6 +6,7 @@ import DokumenSection from "./Sections/DokumenSection";
 import BankSection from "./Sections/BankSection";
 import KontakSection from "./Sections/KontakSection";
 import KendaraanSection from "./Sections/KendaraanSection";
+import InformasiGajiSection from "./Sections/InformasiGajiSection"; 
 import { Button } from "@/components/ui/button";
 
 const TambahKaryawanPage = () => {
@@ -26,10 +27,8 @@ const TambahKaryawanPage = () => {
       <div className="space-y-6">
         <AkunSection formData={formData} updateForm={updateForm} />
         <DataPribadiSection formData={formData} updateForm={updateForm} />
-
-        {/* Data Kepegawaian — Header biru langsung di komponennya */}
         <KepegawaianSection formData={formData} updateForm={updateForm} />
-
+        <InformasiGajiSection formData={formData} updateForm={updateForm} />
         <DokumenSection formData={formData} updateForm={updateForm} />
         <BankSection formData={formData} updateForm={updateForm} />
         <KontakSection formData={formData} updateForm={updateForm} />

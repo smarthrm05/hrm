@@ -1,4 +1,3 @@
-// src/pages/Karyawan/Sections/KontakSection.tsx
 import React from "react";
 import { Phone } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -6,7 +5,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 const KontakSection = ({ updateForm, formData }: any) => {
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-      {/* Header Biru #2794EB */}
       <div className="flex items-center space-x-2 p-3 bg-[#2794EB] text-white rounded-t-lg">
         <Phone className="w-5 h-5" />
         <h3 className="font-semibold">Kontak Darurat</h3>
@@ -28,7 +26,7 @@ const KontakSection = ({ updateForm, formData }: any) => {
             />
           </div>
 
-          {/* Hubungan — menggunakan Select UI Component */}
+          {/* Kontak Darurat */}
           <div className="flex flex-col gap-2">
             <label className="font-medium text-sm text-gray-700">Hubungan</label>
             <Select

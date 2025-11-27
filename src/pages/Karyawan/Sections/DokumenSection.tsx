@@ -1,16 +1,13 @@
-// src/pages/Karyawan/Sections/DokumenSection.tsx
 import React from "react";
 import { FileText } from "lucide-react";
 
 const DokumenSection = ({ updateForm, formData }: any) => {
-  // Fungsi untuk menampilkan nama file setelah dipilih
   const getFileName = (file: File | null) => {
     return file ? file.name : "Tidak ada file yang dipilih";
   };
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-      {/* Header Biru #2794EB */}
       <div className="flex items-center space-x-2 p-3 bg-[#2794EB] text-white rounded-t-lg">
         <FileText className="w-5 h-5" />
         <h3 className="font-semibold">Dokumen Pendukung</h3>
@@ -78,10 +75,10 @@ const DokumenSection = ({ updateForm, formData }: any) => {
 
           {/* NO KARTU KELUARGA */}
           <div className="flex flex-col gap-2">
-            <label className="font-medium text-sm text-gray-700">No Kartu Keluarga</label>
+            <label className="font-medium text-sm text-gray-700">No. Kartu Keluarga</label>
             <input
               type="text"
-              placeholder="Nama Bapak"
+              placeholder="Masukkan No KK"
               value={formData.noKartuKeluarga || ""}
               onChange={(e) => updateForm("noKartuKeluarga", e.target.value)}
               className="border p-2 rounded w-full text-sm text-gray-800"
@@ -110,7 +107,7 @@ const DokumenSection = ({ updateForm, formData }: any) => {
             </div>
           </div>
 
-          {/* NOMOR NPWP (dengan input box terpisah) */}
+          {/* NOMOR NPWP */}
           <div className="flex flex-col gap-2">
             <label className="font-medium text-sm text-gray-700">Nomor NPWP</label>
             <div className="flex gap-1 flex-wrap">

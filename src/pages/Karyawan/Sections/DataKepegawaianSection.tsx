@@ -1,4 +1,3 @@
-// src/pages/Karyawan/Sections/DataKepegawaianSection.tsx
 import React from "react";
 import { Briefcase } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -8,13 +7,10 @@ import { Label } from "@/components/ui/label";
 const KepegawaianSection = ({ updateForm, formData }: any) => {
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-      {/* Header Biru #2794EB */}
       <div className="flex items-center space-x-2 p-3 bg-[#2794EB] text-white rounded-t-lg">
         <Briefcase className="w-5 h-5" />
         <h3 className="font-semibold">Data Kepegawaian</h3>
       </div>
-
-      {/* Konten Form (TIDAK DIUBAH) */}
       <div className="p-4">
         <div className="grid grid-cols-2 gap-6">
 

@@ -1,22 +1,17 @@
-// src/pages/Karyawan/Sections/KendaraanSection.tsx
 import React from "react";
 import { Car } from "lucide-react";
 
 const KendaraanSection = ({ updateForm, formData }: any) => {
-  // Fungsi untuk menampilkan nama file setelah dipilih
   const getFileName = (file: File | null) => {
     return file ? file.name : "Tidak ada file yang dipilih";
   };
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-      {/* Header Biru #2794EB */}
       <div className="flex items-center space-x-2 p-3 bg-[#2794EB] text-white rounded-t-lg">
         <Car className="w-5 h-5" />
         <h3 className="font-semibold">Identitas Kendaraan</h3>
       </div>
-
-      {/* Konten Form */}
       <div className="p-4">
         <div className="grid grid-cols-2 gap-6">
 

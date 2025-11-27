@@ -1,4 +1,3 @@
-// src/pages/Karyawan/Sections/DataPribadiSection.tsx
 import React from "react";
 import { User } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -8,44 +7,52 @@ import { Label } from "@/components/ui/label";
 const DataPribadiSection = ({ formData, updateForm }: any) => {
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-      {/* Header Biru #2794EB */}
       <div className="flex items-center space-x-2 p-3 bg-[#2794EB] text-white rounded-t-lg">
         <User className="w-5 h-5" />
         <h3 className="font-semibold">Data Pribadi</h3>
       </div>
-
       <div className="p-4">
         <div className="grid grid-cols-2 gap-6">
-          {/* FOTO */}
-          <div className="flex items-center gap-4">
-            <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-              {formData.foto ? (
-                <img
-                  src={URL.createObjectURL(formData.foto)}
-                  alt="foto"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <span className="text-xs text-gray-500">Default</span>
-              )}
-            </div>
 
-            <div className="flex-1">
-              <Label className="font-semibold mb-1 block">File Foto Profile</Label>
-              <Input
-                type="file"
-                onChange={(e) => updateForm("foto", e.target.files?.[0])}
-                className="
-                h-[42px]
-                h-[42px]
-                file:bg-blue-600
-                file:text-white
-                file:border-0
-                file:px-4
-                file:py-2
-                file:rounded-md
-                file:cursor-pointer
-                hover:file:bg-blue-700"
+      {/* FOTO */}
+      <div className="flex items-center gap-4">
+
+        {/* PREVIEW FOTO */}
+        <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden ring-2 ring-gray-300 hover:ring-blue-500 transition">
+          {formData.foto ? (
+            <img
+              src={URL.createObjectURL(formData.foto)}
+              alt="foto"
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <span className="text-xs text-gray-500">No Image</span>
+          )}
+        </div>
+
+        {/* CUSTOM FILE INPUT */}
+        <div className="flex-1">
+          <Label className="font-semibold mb-1 block">File Foto Profile</Label>
+
+          <div className="flex items-center h-[42px] border border-gray-300 rounded-md overflow-hidden">
+            <label
+              htmlFor="fotoUpload"
+              className="bg-blue-600 text-white px-4 py-5 cursor-pointer hover:bg-blue-700 transition text-sm flex items-center"
+            >
+              Pilih File
+            </label>
+
+            <span className="px-3 text-sm text-gray-600 truncate">
+              {formData.foto ? formData.foto.name : "Tidak ada file yang dipilih"}
+            </span>
+          </div>
+
+          <input
+            id="fotoUpload"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => updateForm("foto", e.target.files?.[0])}
               />
             </div>
           </div>
@@ -150,7 +157,6 @@ const DataPribadiSection = ({ formData, updateForm }: any) => {
               </SelectContent>
             </Select>
           </div>
-
 
           {/* AGAMA */}
           <div className="flex flex-col gap-2">

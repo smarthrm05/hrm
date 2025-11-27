@@ -31,7 +31,6 @@ import {
   Trash,
 } from 'lucide-react';
 
-// Komponen Label Status
 const StatusLabel = ({ status }: { status: string }) => {
   const isAktif = status === 'Aktif';
   const color = isAktif ? 'bg-green-700 text-white' : 'bg-red-700 text-white';
@@ -246,7 +245,6 @@ export const DataKaryawanPage = () => {
   const [selectAll, setSelectAll] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Filter data berdasarkan search
   const filteredData = data.filter((k) =>
     [k.id, k.nama, k.divisi, k.jabatan, k.statusKerja]
       .some((field) => field.toLowerCase().includes(search.toLowerCase()))
@@ -260,7 +258,6 @@ export const DataKaryawanPage = () => {
     currentPage * entriesPerPage
   );
 
-  // Reset halaman dan selected saat show/search berubah
   useEffect(() => {
     setCurrentPage(1);
     setSelectedIds([]);
@@ -403,17 +400,15 @@ export const DataKaryawanPage = () => {
     });
   };
 
-  // State untuk modal
+
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<string>("");
 
-  // Fungsi untuk membuka modal
   const openModal = (location: string) => {
     setSelectedLocation(location);
     setIsOpen(true);
   };
 
-  // Fungsi untuk menutup modal
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -424,6 +419,7 @@ export const DataKaryawanPage = () => {
         <h1 className="text-3xl font-bold text-gray-900">Manajemen Karyawan</h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
         {/* Card Karyawan Aktif */}
         <Card className="bg-green-700 border-green-800 shadow-md">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
