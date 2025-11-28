@@ -18,15 +18,15 @@ const DataPribadiSection = ({ formData, updateForm }: any) => {
       <div className="flex items-center gap-4">
 
         {/* PREVIEW FOTO */}
-        <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden ring-2 ring-gray-300 hover:ring-blue-500 transition">
+        <div className="w-20 h-20 rounded-full bg-gray-100 border border-gray-300 flex items-center justify-center overflow-hidden shadow-sm">
           {formData.foto ? (
             <img
               src={URL.createObjectURL(formData.foto)}
-              alt="foto"
+              alt="avatar"
               className="w-full h-full object-cover"
             />
           ) : (
-            <span className="text-xs text-gray-500">No Image</span>
+            <User className="w-10 h-10 text-gray-400" />
           )}
         </div>
 
@@ -59,7 +59,7 @@ const DataPribadiSection = ({ formData, updateForm }: any) => {
 
           {/* NAMA */}
           <div className="flex flex-col gap-2">
-            <Label className="font-semibold mb-1">Nama Karyawan *</Label>
+            <Label className="font-semibold mb-1">Nama Karyawan <span className="text-red-500">*</span></Label>
             <Input
               type="text"
               placeholder="Nama Karyawan"
@@ -70,7 +70,7 @@ const DataPribadiSection = ({ formData, updateForm }: any) => {
 
           {/* TELEPON */}
           <div className="flex flex-col gap-2">
-            <Label className="font-semibold mb-1">Nomor Telepon *</Label>
+            <Label className="font-semibold mb-1">Nomor Telepon <span className="text-red-500">*</span></Label>
             <Input
               type="text"
               placeholder="08xxx"
@@ -81,7 +81,7 @@ const DataPribadiSection = ({ formData, updateForm }: any) => {
 
           {/* TEMPAT LAHIR */}
           <div className="flex flex-col gap-2">
-            <Label className="font-semibold mb-1">Tempat Lahir *</Label>
+            <Label className="font-semibold mb-1">Tempat Lahir <span className="text-red-500">*</span></Label>
             <Input
               type="text"
               placeholder="Tempat Lahir"
@@ -93,7 +93,7 @@ const DataPribadiSection = ({ formData, updateForm }: any) => {
 
           {/* TANGGAL LAHIR */}
           <div className="flex flex-col gap-2">
-            <Label className="font-semibold">Tanggal Lahir *</Label>
+            <Label className="font-semibold">Tanggal Lahir <span className="text-red-500">*</span></Label>
             <Input
               type="date"
               className="bg-[#ffff] text-sm"
@@ -103,7 +103,7 @@ const DataPribadiSection = ({ formData, updateForm }: any) => {
 
           {/* JENIS KELAMIN */}
           <div className="flex flex-col gap-2">
-            <Label className="font-semibold mb-1">Jenis Kelamin *</Label>
+            <Label className="font-semibold mb-1">Jenis Kelamin <span className="text-red-500">*</span></Label>
             <Select onValueChange={(value) => updateForm("jeniskelamin", value)}>
               <SelectTrigger className="h-[42px] bg-white">
                 <SelectValue placeholder="-- Pilih Jenis Kelamin --" />
@@ -118,7 +118,7 @@ const DataPribadiSection = ({ formData, updateForm }: any) => {
           
           {/* ALAMAT KTP */}
           <div className="flex flex-col gap-2">
-            <Label className="font-semibold mb-1">Alamat KTP *</Label>
+            <Label className="font-semibold mb-1">Alamat KTP <span className="text-red-500">*</span></Label>
             <textarea
               className="border rounded-md px-3 py-2 bg-white"
               onChange={(e) => updateForm("alamatKTP", e.target.value)}
@@ -129,7 +129,7 @@ const DataPribadiSection = ({ formData, updateForm }: any) => {
 
           {/* ALAMAT DOMISILI */}
           <div className="flex flex-col gap-2">
-            <Label className="font-semibold mb-1">Alamat Domisili *</Label>
+            <Label className="font-semibold mb-1">Alamat Domisili <span className="text-red-500">*</span></Label>
             <textarea
               className="border rounded-md px-3 py-2 bg-white"
               onChange={(e) => updateForm("alamatDomisili", e.target.value)}
@@ -139,7 +139,7 @@ const DataPribadiSection = ({ formData, updateForm }: any) => {
 
           {/* PENDIDIKAN */}
           <div className="flex flex-col gap-2">
-            <Label className="font-semibold mb-1">Pendidikan *</Label>
+            <Label className="font-semibold mb-1">Pendidikan <span className="text-red-500">*</span></Label>
             <Select onValueChange={(value) => updateForm("pendidikan", value)}>
               <SelectTrigger className="h-[42px] bg-white">
                 <SelectValue placeholder="-- Pilih Pendidikan --" />
@@ -160,7 +160,7 @@ const DataPribadiSection = ({ formData, updateForm }: any) => {
 
           {/* AGAMA */}
           <div className="flex flex-col gap-2">
-            <Label className="font-semibold mb-1">Agama *</Label>
+            <Label className="font-semibold mb-1">Agama <span className="text-red-500">*</span></Label>
             <Select onValueChange={(value) => updateForm("agama", value)}>
               <SelectTrigger className="h-[42px] bg-white">
                 <SelectValue placeholder="-- Pilih Agama --" />

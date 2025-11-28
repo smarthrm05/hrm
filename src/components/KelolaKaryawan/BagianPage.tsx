@@ -176,11 +176,12 @@ export const BagianPage = () => {
         </CardContent>
       </Card>
 
-      {/* Modal Tambah Bagian menggunakan Radix UI Dialog */}
       <Dialog.Root open={showCreateModal} onOpenChange={setShowCreateModal}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50 z-50" />
-          <Dialog.Content className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-96 rounded-lg shadow-lg p-5 focus:outline-none">
+       <Dialog.Portal>
+       <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" />
+
+          {/* Modal Content*/}
+          <Dialog.Content className="fixed z-[9999] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-96 rounded-lg shadow-lg p-5 focus:outline-none">
             <div className="flex justify-between items-center mb-4">
               <Dialog.Title className="text-lg font-semibold">Tambah Bagian</Dialog.Title>
               <Dialog.Close asChild>
@@ -203,20 +204,17 @@ export const BagianPage = () => {
               />
 
               <label className="text-sm font-medium">Relasi Divisi</label>
-              <Select
-                value={selectedDivisi}
-                onValueChange={setSelectedDivisi}
-              >
+              <Select value={selectedDivisi} onValueChange={setSelectedDivisi}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Pilih divisi" />
                 </SelectTrigger>
-                <SelectContent>
-                  {listDivisi.map((div) => (
-                    <SelectItem key={div.id} value={div.nama}>
-                      {div.nama}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
+                <SelectContent className="z-[10000]">
+                {listDivisi.map((div) => (
+                  <SelectItem key={div.id} value={div.nama}>
+                    {div.nama}
+                  </SelectItem>
+                ))}
+              </SelectContent>
               </Select>
             </div>
 
@@ -234,7 +232,6 @@ export const BagianPage = () => {
                       nama: newNamaBagian,
                       divisi: selectedDivisi,
                     };
-
                     setBagian([...bagian, newItem]);
                     setNewNamaBagian('');
                     setSelectedDivisi('');
@@ -247,6 +244,7 @@ export const BagianPage = () => {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
+
     </div>
   );
 };

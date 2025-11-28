@@ -50,7 +50,7 @@ const InformasiGajiSection: React.FC<InformasiGajiSectionProps> = ({ formData, u
 
           {/* GAJI POKOK */}
           <div className="flex flex-col gap-2">
-            <Label className="font-semibold text-sm">Gaji Pokok *</Label>
+            <Label className="font-semibold text-sm">Gaji Pokok <span className="text-red-500">*</span></Label>
             <InputRp
               value={formatRupiah(formData.gaji_pokok)}
               onChange={(v: any) => updateForm("gaji_pokok", v)}
