@@ -229,6 +229,40 @@ const KepegawaianSection = ({ updateForm, formData }: any) => {
             />
           </div>
 
+          {/* Status Akun */}
+          <div className="flex flex-col gap-2">
+            <Label className="font-semibold">Status Akun <span className="text-red-500">*</span></Label>
+            <Select
+              onValueChange={(value) => updateForm("akun", value)}
+              defaultValue={formData?.divisi}
+            >
+              <SelectTrigger className="h-[42px] bg-white">
+                <SelectValue placeholder="-- Pilih Status Akun --" />
+              </SelectTrigger>
+              <SelectContent className="text-sm">
+                <SelectItem value="Aktif">Aktif</SelectItem>
+                <SelectItem value="Tidak Aktif">Tidak Aktif</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+         { /* Status Kerja */}
+          <div className="flex flex-col gap-2">
+            <Label className="font-semibold">Status Kerja <span className="text-red-500">*</span></Label>
+            <Select
+              onValueChange={(value) => updateForm("akun", value)}
+              defaultValue={formData?.kerja}
+            >
+              <SelectTrigger className="h-[42px] bg-white">
+                <SelectValue placeholder="-- Pilih Status Kerja --" />
+              </SelectTrigger>
+              <SelectContent className="text-sm">
+                <SelectItem value="Aktif">Aktif</SelectItem>
+                <SelectItem value="Tidak Aktif">Tidak Aktif</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
         </div>
       </div>
     </div>
