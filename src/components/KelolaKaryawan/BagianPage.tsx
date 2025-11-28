@@ -97,27 +97,32 @@ export const BagianPage = () => {
             <Table className="w-full border border-gray-300 border-collapse">
               <TableHeader>
                 <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
-                  <TableHead className="text-white border border-gray-200 text-center">No.</TableHead>
+                  <TableHead className="text-white border border-gray-200">No.</TableHead>
                   <TableHead className="text-white border border-gray-200">Nama Bagian</TableHead>
-                  <TableHead className="text-white border border-gray-200 text-center">Aksi</TableHead>
+                  <TableHead className="text-white border border-gray-200">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
-
               <TableBody>
                 {paginatedData.map((item, idx) => (
                   <TableRow key={item.id} className="hover:bg-gray-50">
-                    <TableCell className="border border-gray-200 text-center">
+                    <TableCell className="border border-gray-200">
                       {(currentPage - 1) * entriesPerPage + idx + 1}
                     </TableCell>
-
                     <TableCell className="border border-gray-200">{item.nama}</TableCell>
-
-                    <TableCell className="border border-gray-200 text-center">
-                      <div className="flex justify-center space-x-2">
-                        <Button size="sm" variant="ghost" className="bg-blue-500 text-white hover:bg-blue-600">
+                    <TableCell className="border border-gray-200">
+                      <div className="flex space-x-2">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="bg-blue-400 text-white hover:bg-blue-500"
+                        >
                           <Edit className="h-4 w-4" />
                         </Button>
-                        <Button size="sm" variant="ghost" className="bg-red-600 text-white hover:bg-red-700">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="bg-red-600 text-white hover:bg-red-700"
+                        >
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
