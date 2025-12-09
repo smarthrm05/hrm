@@ -38,6 +38,8 @@ import { DivisiPage } from "./components/KelolaKaryawan/DivisiPage";
 import { JabatanPage } from "./components/KelolaKaryawan/JabatanPage";
 import { BagianPage } from "./components/KelolaKaryawan/BagianPage";
 import { KontrakKerjaPage } from "./components/KontrakKerjaPage";
+import SuratPenawaranKerjaPage from "./components/SuratPenawaranKerjaPage";
+
 
 // Auth
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -86,6 +88,7 @@ const App = () => (
                   <Route path="paklaring" element={<PaklaringPage />} />
                   <Route path="kontrak-kerja" element={<KontrakKerjaPage />} />
                   <Route path="surat-peringatan" element={<SuratPeringatanPage />} />
+                  <Route path="penawaran-kerja" element={<SuratPenawaranKerjaPage />} />
                   <Route path="*" element={<NotFound />} />
                 </Route>
               </Route>

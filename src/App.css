@@ -52,4 +52,14 @@
   color: #5f7676;
 }
 
+table tbody tr,
+table tbody td,
+table tbody {
+  background-color: white !important;
+}
+
+table td {
+  border-color: #e5e7eb !important; 
+}
+
 
