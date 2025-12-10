@@ -111,7 +111,7 @@ const menuItems = [
   { id: 'surat-peringatan', label: 'Surat Peringatan', icon: AlertTriangle },
   { id: 'pengunduran-diri', label: 'Surat Pengunduran Diri', icon: Mail },
   { id: 'keterangan-bekerja', label: 'Surat Keterangan Bekerja', icon: Mail },
-  { id: 'surat-penawaran-kerja', label: 'Surat Penawaran Kerja', icon: FileSignature },
+  { id: 'penawaran-kerja', label: 'Surat Penawaran Kerja', icon: FileSignature },
   { id: 'po', label: 'PO', icon: ShoppingCart },
   { id: 'kpi', label: 'KPI', icon: BarChart3 },
   { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings },

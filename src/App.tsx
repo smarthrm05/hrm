@@ -27,7 +27,7 @@ import { PengunduranDiriPage } from './components/PengunduranDiriPage';
 import { KeteranganBekerjaPage } from './components/KeteranganBekerjaPage';
 import { PaklaringPage } from './components/PaklaringPage';
 import { RegisterPage } from "./components/RegisterPage";
-import { LoginForm } from "./components/LoginForm";
+import { LoginForm } from "./components/LoginForm"; 
 import { ForgotPassword } from "./components/ForgotPassword";
 import { ResetPassword } from "./components/ResetPassword";
 import { SuratPeringatanPage } from "./components/SuratPeringatanPage";
