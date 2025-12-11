@@ -7,7 +7,7 @@ import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@
 import { Search, Plus, Eye, Trash2, Download, X } from 'lucide-react';
 import jsPDF from 'jspdf';
 
-// --- Import Radix UI Dialog ---
+// Radix Dialog
 import * as Dialog from '@radix-ui/react-dialog';
 
 interface OfferData {
@@ -42,22 +42,16 @@ export default function SuratPenawaranKerjaPage() {
 
   const [formData, setFormData] = useState({
     nomorSurat: '',
-    tanggalSurat: new Date().toISOString().split('T')[0], 
+    tanggalSurat: new Date().toISOString().split('T')[0],
     namaKaryawan: '',
     jenisKelamin: '',
     jabatan: '',
-    gajiGross: '', 
-    waktuKerja: 'normal', 
-    rincianJamKerja: {
-      jamHari: '',
-      jamMinggu: ''
-    },
-    tanggalPembayaranGaji: '', 
-    lamaKontrak: {
-      bulan: '',
-      tahun: ''
-    },
-    tunjangan: [] as { nama: string; nominal: string }[] 
+    gajiGross: '',
+    waktuKerja: 'normal',
+    rincianJamKerja: { jamHari: '', jamMinggu: '' },
+    tanggalPembayaranGaji: '',
+    lamaKontrak: { bulan: '', tahun: '' },
+    tunjangan: [] as { nama: string; nominal: string }[]
   });
 
   const filtered = data.filter((item) =>
@@ -82,7 +76,7 @@ export default function SuratPenawaranKerjaPage() {
       minute: '2-digit'
     });
 
-  // --- PDF GENERATOR ---
+  // PDF
   const handleDownloadPDF = (item: OfferData) => {
     const doc = new jsPDF();
 
@@ -114,22 +108,16 @@ export default function SuratPenawaranKerjaPage() {
       jabatan: '',
       gajiGross: '',
       waktuKerja: 'normal',
-      rincianJamKerja: {
-        jamHari: '',
-        jamMinggu: ''
-      },
+      rincianJamKerja: { jamHari: '', jamMinggu: '' },
       tanggalPembayaranGaji: '',
-      lamaKontrak: {
-        bulan: '',
-        tahun: ''
-      },
+      lamaKontrak: { bulan: '', tahun: '' },
       tunjangan: []
     });
   };
 
   const handleSubmitModal = (e: React.FormEvent) => {
     e.preventDefault();
-    const gajiValue = parseInt(formData.gajiGross.replace(/\D/g, '')) || 0; 
+    const gajiValue = parseInt(formData.gajiGross.replace(/\D/g, '')) || 0;
 
     const newData: OfferData = {
       no: data.length + 1,
@@ -137,90 +125,76 @@ export default function SuratPenawaranKerjaPage() {
       nama: formData.namaKaryawan,
       posisi: formData.jabatan,
       gaji: gajiValue,
-      tunjangan: formData.tunjangan.length > 0, 
+      tunjangan: formData.tunjangan.length > 0,
       tanggal: new Date(formData.tanggalSurat)
     };
 
-    setData(prev => [...prev, newData]);
+    setData((prev) => [...prev, newData]);
     setIsModalOpen(false);
   };
 
-  // --- Handler untuk mengubah input ---
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+
     if (name.startsWith('rincianJamKerja.')) {
       const key = name.split('.')[1];
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        rincianJamKerja: {
-          ...prev.rincianJamKerja,
-          [key]: value
-        }
+        rincianJamKerja: { ...prev.rincianJamKerja, [key]: value }
       }));
     } else if (name.startsWith('lamaKontrak.')) {
       const key = name.split('.')[1];
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        lamaKontrak: {
-          ...prev.lamaKontrak,
-          [key]: value
-        }
+        lamaKontrak: { ...prev.lamaKontrak, [key]: value }
       }));
     } else if (name === 'gajiGross') {
-      let formattedValue = value.replace(/[^\d]/g, ''); 
+      let formattedValue = value.replace(/[^\d]/g, '');
       if (formattedValue) {
         formattedValue = 'Rp' + parseInt(formattedValue).toLocaleString('id-ID');
       }
-      setFormData(prev => ({ ...prev, [name]: formattedValue }));
+      setFormData((prev) => ({ ...prev, [name]: formattedValue }));
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
   const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, waktuKerja: e.target.value }));
+    setFormData((prev) => ({ ...prev, waktuKerja: e.target.value }));
   };
 
   const handleAddTunjangan = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       tunjangan: [...prev.tunjangan, { nama: '', nominal: '' }]
     }));
   };
 
   const handleRemoveTunjangan = (index: number) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       tunjangan: prev.tunjangan.filter((_, i) => i !== index)
     }));
   };
 
-  // --- Handler untuk mengubah nilai nominal tunjangan (dengan Rp dan format) ---
   const handleNominalChange = (index: number, value: string) => {
-    let formattedValue = value.replace(/[^\d]/g, ''); 
+    let formattedValue = value.replace(/[^\d]/g, '');
     if (formattedValue) {
       formattedValue = 'Rp' + parseInt(formattedValue).toLocaleString('id-ID');
     }
 
-    setFormData(prev => {
-      const updatedTunjangan = [...prev.tunjangan];
-      updatedTunjangan[index] = {
-        ...updatedTunjangan[index],
-        nominal: formattedValue
-      };
-      return { ...prev, tunjangan: updatedTunjangan };
+    setFormData((prev) => {
+      const updated = [...prev.tunjangan];
+      updated[index].nominal = formattedValue;
+      return { ...prev, tunjangan: updated };
     });
   };
 
-  // --- Handler untuk mengubah nama tunjangan ---
   const handleNamaTunjanganChange = (index: number, value: string) => {
-    setFormData(prev => {
-      const updatedTunjangan = [...prev.tunjangan];
-      updatedTunjangan[index] = {
-        ...updatedTunjangan[index],
-        nama: value
-      };
-      return { ...prev, tunjangan: updatedTunjangan };
+    setFormData((prev) => {
+      const updated = [...prev.tunjangan];
+      updated[index].nama = value;
+      return { ...prev, tunjangan: updated };
     });
   };
 
@@ -232,9 +206,9 @@ export default function SuratPenawaranKerjaPage() {
         <CardHeader className="bg-blue-50 border-b">
           <CardTitle className="text-blue-800">Data Surat Penawaran</CardTitle>
         </CardHeader>
-        <CardContent className="p-6">
 
-          {/* Filter & Search */}
+        <CardContent className="p-6">
+          {/* --- FILTER --- */}
           <div className="flex flex-col md:flex-row justify-between gap-4 mb-6">
             <div className="flex items-center gap-2">
               <span className="text-sm text-gray-600">Show</span>
@@ -259,50 +233,47 @@ export default function SuratPenawaranKerjaPage() {
               />
             </div>
 
-            <Button
-              className="bg-blue-600 hover:bg-blue-700 w-full md:w-fit"
-              onClick={handleOpenModal} 
-            >
+            <Button className="bg-blue-600 hover:bg-blue-700 w-full md:w-fit" onClick={handleOpenModal}>
               <Plus className="w-4 h-4 mr-2" /> Buat Surat
             </Button>
           </div>
 
-          {/* Table */}
+          {/* --- TABLE --- */}
           <div className="overflow-x-auto border rounded-lg">
             <Table>
               <TableHeader>
                 <TableRow className="bg-blue-600 hover:bg-blue-600">
-                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">No</TableHead>
-                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">No Surat</TableHead>
-                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Nama</TableHead>
-                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Posisi</TableHead>
-                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Gaji</TableHead>
-                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Tunjangan</TableHead>
-                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Tanggal</TableHead>
-                  <TableHead className="text-white border border-gray-200 whitespace-nowrap text-center">Aksi</TableHead>
+                  <TableHead className="text-white whitespace-nowrap">No</TableHead>
+                  <TableHead className="text-white whitespace-nowrap">No Surat</TableHead>
+                  <TableHead className="text-white whitespace-nowrap">Nama</TableHead>
+                  <TableHead className="text-white whitespace-nowrap">Posisi</TableHead>
+                  <TableHead className="text-white whitespace-nowrap">Gaji</TableHead>
+                  <TableHead className="text-white whitespace-nowrap">Tunjangan</TableHead>
+                  <TableHead className="text-white whitespace-nowrap">Tanggal</TableHead>
+                  <TableHead className="text-white whitespace-nowrap text-center">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
 
               <TableBody>
                 {paginated.map((item) => (
                   <TableRow key={item.no}>
-                    <TableCell className="border">{item.no}</TableCell>
-                    <TableCell className="border">{item.noSurat}</TableCell>
-                    <TableCell className="border">{item.nama}</TableCell>
-                    <TableCell className="border">{item.posisi}</TableCell>
-                    <TableCell className="border">{formatCurrency(item.gaji)}</TableCell>
-                    <TableCell className="border">{item.tunjangan ? '✔' : '-'}</TableCell>
-                    <TableCell className="border">{formatDate(item.tanggal)}</TableCell>
+                    <TableCell>{item.no}</TableCell>
+                    <TableCell>{item.noSurat}</TableCell>
+                    <TableCell>{item.nama}</TableCell>
+                    <TableCell>{item.posisi}</TableCell>
+                    <TableCell>{formatCurrency(item.gaji)}</TableCell>
+                    <TableCell>{item.tunjangan ? '✔' : '-'}</TableCell>
+                    <TableCell>{formatDate(item.tanggal)}</TableCell>
 
-                    <TableCell className="border">
+                    <TableCell>
                       <div className="flex gap-2 justify-center">
-                        <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
+                        <Button size="sm" className="bg-blue-600 text-white">
                           <Eye className="w-4 h-4" />
                         </Button>
 
                         <Button
                           size="sm"
-                          className="bg-green-600 hover:bg-green-700 text-white"
+                          className="bg-green-600 text-white"
                           onClick={() => handleDownloadPDF(item)}
                         >
                           <Download className="w-4 h-4" />
@@ -310,7 +281,7 @@ export default function SuratPenawaranKerjaPage() {
 
                         <Button
                           size="sm"
-                          className="bg-red-600 hover:bg-red-700 text-white"
+                          className="bg-red-600 text-white"
                           onClick={() => handleDelete(item.no)}
                         >
                           <Trash2 className="w-4 h-4" />
@@ -323,20 +294,16 @@ export default function SuratPenawaranKerjaPage() {
             </Table>
           </div>
 
-          {/* Pagination */}
-          <div className="flex justify-between items-center mt-4">
+          {/* --- PAGINATION --- */}
+          <div className="flex justify-between mt-4">
             <div className="text-sm text-gray-500">
-              Menampilkan <strong>{start + 1}</strong> sampai{' '}
+              Menampilkan <strong>{start + 1}</strong> –
               <strong>{Math.min(start + itemsPerPage, filtered.length)}</strong> dari{' '}
               <strong>{filtered.length}</strong> data
             </div>
 
             <div className="flex gap-2">
-              <Button
-                disabled={currentPage === 1}
-                onClick={() => setCurrentPage((p) => p - 1)}
-                className="bg-blue-500 text-white"
-              >
+              <Button disabled={currentPage === 1} onClick={() => setCurrentPage((p) => p - 1)}>
                 Sebelumnya
               </Button>
 
@@ -344,21 +311,13 @@ export default function SuratPenawaranKerjaPage() {
                 <Button
                   key={i}
                   onClick={() => setCurrentPage(i + 1)}
-                  className={
-                    currentPage === i + 1
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-white text-blue-600 border border-blue-600'
-                  }
+                  className={currentPage === i + 1 ? 'bg-blue-500 text-white' : ''}
                 >
                   {i + 1}
                 </Button>
               ))}
 
-              <Button
-                disabled={currentPage === totalPages}
-                onClick={() => setCurrentPage((p) => p + 1)}
-                className="bg-blue-500 text-white"
-              >
+              <Button disabled={currentPage === totalPages} onClick={() => setCurrentPage((p) => p + 1)}>
                 Selanjutnya
               </Button>
             </div>
@@ -366,62 +325,48 @@ export default function SuratPenawaranKerjaPage() {
         </CardContent>
       </Card>
 
-      {/* --- Modal dengan Radix UI --- */}
+      {/* --- MODAL --- */}
       <Dialog.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" />
-          <Dialog.Content className="fixed z-[9999] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-[90vw] max-w-4xl max-h-[90vh] rounded-lg shadow-lg p-6 focus:outline-none overflow-y-auto">
+          <Dialog.Content className="fixed z-[9999] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white w-[90vw] max-w-4xl max-h-[90vh] rounded-lg shadow-lg p-6 overflow-y-auto">
+
             <div className="flex justify-between items-center mb-2">
               <Dialog.Title className="text-xl font-semibold">Surat Penawaran Kerja</Dialog.Title>
+
               <Dialog.Close asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 hover:bg-gray-200"
-                >
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                   <X className="h-5 w-5" />
                 </Button>
               </Dialog.Close>
             </div>
 
-            {/* Garis di bawah judul */}
-            <div className="border-t border-gray-200 my-4"></div>
+            <div className="border-t my-4"></div>
 
             <form onSubmit={handleSubmitModal}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Kolom Kiri */}
+                
+                {/* --- KOLOM KIRI --- */}
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Nomor Surat</label>
-                    <Input
-                      name="nomorSurat"
-                      value={formData.nomorSurat}
-                      onChange={handleChange}
-                      required
-                    />
+                    <label className="text-sm font-medium">Nomor Surat</label>
+                    <Input name="nomorSurat" value={formData.nomorSurat} onChange={handleChange} required />
                   </div>
+
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Nama Karyawan *</label>
-                    <Input
-                      name="namaKaryawan"
-                      value={formData.namaKaryawan}
-                      onChange={handleChange}
-                      required
-                    />
+                    <label className="text-sm font-medium">Nama Karyawan *</label>
+                    <Input name="namaKaryawan" value={formData.namaKaryawan} onChange={handleChange} required />
                   </div>
+
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Jabatan *</label>
-                    <Input
-                      name="jabatan"
-                      value={formData.jabatan}
-                      onChange={handleChange}
-                      required
-                    />
+                    <label className="text-sm font-medium">Jabatan *</label>
+                    <Input name="jabatan" value={formData.jabatan} onChange={handleChange} required />
                   </div>
+
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Waktu Kerja *</label>
-                    <div className="flex items-center space-x-4 mt-2">
-                      <label className="flex items-center text-sm">
+                    <label className="text-sm font-medium">Waktu Kerja *</label>
+                    <div className="flex items-center gap-4 mt-2 text-sm">
+                      <label className="flex items-center">
                         <input
                           type="radio"
                           name="waktuKerja"
@@ -432,7 +377,8 @@ export default function SuratPenawaranKerjaPage() {
                         />
                         Jam Kerja Normal
                       </label>
-                      <label className="flex items-center text-sm">
+
+                      <label className="flex items-center">
                         <input
                           type="radio"
                           name="waktuKerja"
@@ -445,8 +391,9 @@ export default function SuratPenawaranKerjaPage() {
                       </label>
                     </div>
                   </div>
+
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Tanggal Pembayaran Gaji *</label>
+                    <label className="text-sm font-medium">Tanggal Pembayaran Gaji *</label>
                     <Input
                       name="tanggalPembayaranGaji"
                       value={formData.tanggalPembayaranGaji}
@@ -457,10 +404,11 @@ export default function SuratPenawaranKerjaPage() {
                   </div>
                 </div>
 
-                {/* Kolom Kanan */}
+                {/* --- KOLOM KANAN --- */}
                 <div className="space-y-4">
+                  
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Tanggal Surat</label>
+                    <label className="text-sm font-medium">Tanggal Surat</label>
                     <Input
                       name="tanggalSurat"
                       type="date"
@@ -469,146 +417,149 @@ export default function SuratPenawaranKerjaPage() {
                       required
                     />
                   </div>
+
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Jenis Kelamin *</label>
+                    <label className="text-sm font-medium">Jenis Kelamin *</label>
                     <Select
-                      name="jenisKelamin"
                       value={formData.jenisKelamin}
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, jenisKelamin: value }))}
-                      required
+                      onValueChange={(value) => setFormData((prev) => ({ ...prev, jenisKelamin: value }))}
                     >
-                      <SelectTrigger><SelectValue placeholder="-- Pilih Jenis Kelamin --" /></SelectTrigger>
+                      <SelectTrigger>
+                        <SelectValue placeholder="-- Pilih Jenis Kelamin --" />
+                      </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="Laki-laki">Laki-laki</SelectItem>
                         <SelectItem value="Perempuan">Perempuan</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
+
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Gaji Gross *</label>
+                    <label className="text-sm font-medium">Gaji Gross *</label>
                     <Input
                       name="gajiGross"
                       value={formData.gajiGross}
                       onChange={handleChange}
                       placeholder="Rp0"
-                      required
                     />
                   </div>
 
-                  {/* --- RINCIAN JAM KERJA --- */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Rincian Jam Kerja *</label>
-                    <div className="flex space-x-2 mt-2">
-                      <div className="flex-1 relative">
-                        <Input
-                          name="rincianJamKerja.jamHari"
-                          value={formData.rincianJamKerja.jamHari}
-                          onChange={handleChange}
-                          placeholder="Jam/hari"
-                          className="pr-16" // Memberi ruang untuk placeholder teks
-                        />
-                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
-                          Jam/hari
-                        </span>
+                  {/* --- RINCIAN JAM KERJA DAN LAMA KONTRAK SEJAJAR --- */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Rincian Jam Kerja */}
+                    <div className="space-y-4">
+                      <label className="text-sm font-medium">Rincian Jam Kerja *</label>
+
+                      <div className="grid grid-cols-2 gap-3 mt-2">
+                        <div className="relative">
+                          <Input
+                            name="rincianJamKerja.jamHari"
+                            value={formData.rincianJamKerja.jamHari}
+                            onChange={handleChange}
+                            className="text-right pr-20"
+                          />
+                          <span className="absolute right-3 inset-y-0 flex items-center text-sm text-gray-500">
+                            Jam/hari
+                          </span>
+                        </div>
+
+                        <div className="relative">
+                          <Input
+                            name="rincianJamKerja.jamMinggu"
+                            value={formData.rincianJamKerja.jamMinggu}
+                            onChange={handleChange}
+                            className="text-right pr-24"
+                          />
+                          <span className="absolute right-3 inset-y-0 flex items-center text-sm text-gray-500">
+                            Jam/minggu
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex-1 relative">
-                        <Input
-                          name="rincianJamKerja.jamMinggu"
-                          value={formData.rincianJamKerja.jamMinggu}
-                          onChange={handleChange}
-                          placeholder="Jam/minggu"
-                          className="pr-16" // Memberi ruang untuk placeholder teks
-                        />
-                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
-                          Jam/minggu
-                        </span>
+                    </div>
+
+                    {/* Lama Kontrak */}
+                    <div className="space-y-4">
+                      <label className="text-sm font-medium">Lama Kontrak</label>
+
+                      <div className="grid grid-cols-2 gap-3 mt-2">
+                        <div className="relative">
+                          <Input
+                            name="lamaKontrak.bulan"
+                            value={formData.lamaKontrak.bulan}
+                            onChange={handleChange}
+                            className="text-right pr-14"
+                          />
+                          <span className="absolute right-3 inset-y-0 flex items-center text-sm text-gray-500">
+                            Bulan
+                          </span>
+                        </div>
+
+                        <div className="relative">
+                          <Input
+                            name="lamaKontrak.tahun"
+                            value={formData.lamaKontrak.tahun}
+                            onChange={handleChange}
+                            className="text-right pr-14"
+                          />
+                          <span className="absolute right-3 inset-y-0 flex items-center text-sm text-gray-500">
+                            Tahun
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* --- LAMA KONTRAK --- */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Lama Kontrak</label>
-                    <div className="flex space-x-2 mt-2">
-                      <div className="flex-1 relative">
-                        <Input
-                          name="lamaKontrak.bulan"
-                          value={formData.lamaKontrak.bulan}
-                          onChange={handleChange}
-                          placeholder="Bulan"
-                          className="pr-10" // Memberi ruang untuk placeholder teks
-                        />
-                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
-                          Bulan
-                        </span>
-                      </div>
-                      <div className="flex-1 relative">
-                        <Input
-                          name="lamaKontrak.tahun"
-                          value={formData.lamaKontrak.tahun}
-                          onChange={handleChange}
-                          placeholder="Tahun"
-                          className="pr-10" // Memberi ruang untuk placeholder teks
-                        />
-                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
-                          Tahun
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
 
-              {/* Bagian Tunjangan */}
+              {/* --- BAGIAN TUNJANGAN --- */}
               <div className="py-4">
                 <label className="block text-sm font-medium text-gray-700">Tunjangan</label>
-                <Button
-                  type="button"
-                  variant="outline"
+
+                {/* Tombol "Tambah Tunjangan" diubah menjadi warna biru */}
+                <Button 
+                  type="button" 
+                  variant="default" // Ini akan memberikan warna biru sesuai tema UI Anda
                   className="mt-2"
                   onClick={handleAddTunjangan}
                 >
                   + Tambah Tunjangan
                 </Button>
 
-                {/* Daftar Tunjangan */}
                 {formData.tunjangan.map((tunjangan, index) => (
                   <div key={index} className="flex items-center gap-2 mt-2">
-                    <div className="flex-1">
-                      <Input
-                        placeholder="Nama Tunjangan"
-                        value={tunjangan.nama}
-                        onChange={(e) => handleNamaTunjanganChange(index, e.target.value)}
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <Input
-                        placeholder="Nominal"
-                        value={tunjangan.nominal}
-                        onChange={(e) => handleNominalChange(index, e.target.value)}
-                      />
-                    </div>
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="icon"
-                      onClick={() => handleRemoveTunjangan(index)}
-                    >
+                    <Input
+                      className="flex-1"
+                      placeholder="Nama Tunjangan"
+                      value={tunjangan.nama}
+                      onChange={(e) => handleNamaTunjanganChange(index, e.target.value)}
+                    />
+
+                    <Input
+                      className="flex-1"
+                      placeholder="Nominal"
+                      value={tunjangan.nominal}
+                      onChange={(e) => handleNominalChange(index, e.target.value)}
+                    />
+
+                    <Button type="button" variant="destructive" size="icon" onClick={() => handleRemoveTunjangan(index)}>
                       -
                     </Button>
                   </div>
                 ))}
               </div>
 
-              <div className="flex justify-end gap-3 pt-4">
+              <div className="flex justify-end gap-3 mt-4">
                 <Dialog.Close asChild>
                   <Button variant="outline">Batal</Button>
                 </Dialog.Close>
+
                 <Button type="submit" className="bg-blue-600 text-white hover:bg-blue-700">
                   Simpan
                 </Button>
               </div>
             </form>
+
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>

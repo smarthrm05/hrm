@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { DataKaryawanPage } from '@/pages/Karyawan/DataKaryawanPage';
 import { DivisiPage } from '@/components/KelolaKaryawan/DivisiPage';
 import { JabatanPage } from '@/components/KelolaKaryawan/JabatanPage';
+import { BagianPage } from '@/components/KelolaKaryawan/BagianPage';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -12,7 +13,7 @@ import {
 import { ChevronDown } from 'lucide-react';
 
 export const KelolaKaryawanPage = () => {
-  const [activeTab, setActiveTab] = useState<'divisi' | 'jabatan' | 'data-karyawan'>('data-karyawan');
+  const [activeTab, setActiveTab] = useState<'divisi' | 'jabatan' | 'bagian' | 'data-karyawan'>('data-karyawan');
 
   const handleTabChange = (tab: 'divisi' | 'jabatan' | 'data-karyawan') => {
     setActiveTab(tab);
@@ -28,6 +29,7 @@ export const KelolaKaryawanPage = () => {
               <span>
                 {activeTab === 'divisi' ? 'Divisi' :
                  activeTab === 'jabatan' ? 'Jabatan' :
+                 activeTab === 'bagian ' ? 'Bagian' :
                  'Data Karyawan'}
               </span>
               <ChevronDown className="h-4 w-4" />
@@ -40,6 +42,9 @@ export const KelolaKaryawanPage = () => {
             <DropdownMenuItem onClick={() => handleTabChange('jabatan')}>
               Jabatan
             </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleTabChange('bagian')}>
+              Bagian
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleTabChange('data-karyawan')}>
               Data Karyawan
             </DropdownMenuItem>
@@ -49,6 +54,7 @@ export const KelolaKaryawanPage = () => {
 
       {activeTab === 'divisi' && <DivisiPage />}
       {activeTab === 'jabatan' && <JabatanPage />}
+      {activeTab === 'bagian' && <BagianPage />}
       {activeTab === 'data-karyawan' && <DataKaryawanPage />}
     </div>
   );

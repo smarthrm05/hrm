@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom'; 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Swal from 'sweetalert2';
@@ -72,7 +72,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 90 hari',
-    foto: 'https://randomuser.me/api/portraits/men/19.jpg ',
+    foto: 'https://randomuser.me/api/portraits/men/19.jpg   ',
   },
   {
     id: 'K001',
@@ -86,7 +86,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 90 hari',
-    foto: 'https://randomuser.me/api/portraits/men/2.jpg ',
+    foto: 'https://randomuser.me/api/portraits/men/2.jpg   ',
   },
   {
     id: 'K002',
@@ -100,7 +100,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Tidak Aktif',
     statusAkun: 'Tidak Aktif',
     pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/13.jpg ',
+    foto: 'https://randomuser.me/api/portraits/men/13.jpg   ',
   },
   {
     id: 'K002',
@@ -114,7 +114,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Tidak Aktif',
     statusAkun: 'Tidak Aktif',
     pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/15.jpg ',
+    foto: 'https://randomuser.me/api/portraits/men/15.jpg   ',
   },
   {
     id: 'K002',
@@ -128,7 +128,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Tidak Aktif',
     statusAkun: 'Tidak Aktif',
     pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/28.jpg ',
+    foto: 'https://randomuser.me/api/portraits/men/28.jpg   ',
   },
   {
     id: 'K003',
@@ -142,7 +142,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/men/11.jpg ',
+    foto: 'https://randomuser.me/api/portraits/men/11.jpg   ',
   },
   {
     id: 'K003',
@@ -156,7 +156,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/men/19.jpg ',
+    foto: 'https://randomuser.me/api/portraits/men/19.jpg   ',
   },
   {
     id: 'K003',
@@ -170,7 +170,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/men/20.jpg ',
+    foto: 'https://randomuser.me/api/portraits/men/20.jpg   ',
   },
   {
     id: 'K003',
@@ -184,7 +184,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/men/22.jpg ',
+    foto: 'https://randomuser.me/api/portraits/men/22.jpg   ',
   },
   {
     id: 'K003',
@@ -198,7 +198,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/men/28.jpg ',
+    foto: 'https://randomuser.me/api/portraits/men/28.jpg   ',
   },
   {
     id: 'K003',
@@ -212,7 +212,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/men/35.jpg ',
+    foto: 'https://randomuser.me/api/portraits/men/35.jpg   ',
   },
 ];
 
@@ -235,7 +235,7 @@ const ReminderLabel = ({ text }: { text: string }) => {
   );
 };
 
-
+// --- TAMBAHAN: Fungsi untuk navigasi ke halaman detail ---
 export const DataKaryawanPage = () => {
   const navigate = useNavigate();
   const [data, setData] = useState<Karyawan[]>(mockData);
@@ -411,6 +411,11 @@ export const DataKaryawanPage = () => {
 
   const closeModal = () => {
     setIsOpen(false);
+  };
+
+  // --- FUNGSI BARU UNTUK MENAMPILKAN DETAIL ---
+  const handleViewDetail = (id: string) => {
+    navigate(`/detail-karyawan/${id}`);
   };
 
   return (
@@ -600,11 +605,13 @@ export const DataKaryawanPage = () => {
                     <TableCell className="border border-gray-200 whitespace-nowrap"><ReminderLabel text={k.pengingat} /></TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">
                       <div className="flex justify-start space-x-2">
+                    {/* --- MODIFIKASI: TOMBOL LIHAT DETAIL --- */}
                     <Button
                       variant="ghost"
                       size="sm"
                       className="bg-blue-600 text-white hover:bg-blue-700"
                       title="Lihat Detail"
+                      onClick={() => handleViewDetail(k.id)} 
                     >
                       <Eye className="w-4 h-4" />
                     </Button>
@@ -669,7 +676,7 @@ export const DataKaryawanPage = () => {
             <div className="mb-4">
               {/* Google Maps */}
               <iframe
-                src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.597898988999!2d${selectedLocation.split(",")[1]}!3d${selectedLocation.split(",")[0]}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb902cfd15e7%3A0x7b2a993d9a2c1bb1!2sJakarta!5e0!3m2!1sid!2sid!4v1687470000000`}
+                src={`https://www.google.com/maps/embed?pb=  !1m18!1m12!1m3!1d3918.597898988999!2d${selectedLocation.split(",")[1]}!3d${selectedLocation.split(",")[0]}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb902cfd15e7%3A0x7b2a993d9a2c1bb1!2sJakarta!5e0!3m2!1sid!2sid!4v1687470000000`}
                 width="100%"
                 height="400px"
                 style={{ border: 0 }}

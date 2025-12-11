@@ -34,12 +34,12 @@ import { SuratPeringatanPage } from "./components/SuratPeringatanPage";
 import { KelolaKaryawanPage } from "./components/KelolaKaryawan/KelolaKaryawanPage";
 import { DataKaryawanPage } from '@/pages/Karyawan/DataKaryawanPage';
 import TambahKaryawanPage from './pages/Karyawan/TambahKaryawanPage';
+import DetailKaryawanPage from './pages/Karyawan/DetailKaryawanPage'; 
 import { DivisiPage } from "./components/KelolaKaryawan/DivisiPage";
 import { JabatanPage } from "./components/KelolaKaryawan/JabatanPage";
 import { BagianPage } from "./components/KelolaKaryawan/BagianPage";
 import { KontrakKerjaPage } from "./components/KontrakKerjaPage";
 import SuratPenawaranKerjaPage from "./components/SuratPenawaranKerjaPage";
-
 
 // Auth
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -56,19 +56,21 @@ const App = () => (
         <AuthProvider>
           <BrowserRouter>
             <Routes>
-
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<LoginForm />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/" element={<PrivateRoute />}>
                 <Route path="" element={<HRISApp />}>
-                  <Route path="dashboard" element={< DashboardPage />} />
+                  <Route path="dashboard" element={<DashboardPage />} />
                   <Route path="kehadiran-page" element={<KehadiranPage />} />
                   <Route path="data-kehadiran" element={<DataKehadiranPage />} />
                   <Route path="rekap-kehadiran" element={<RekapKehadiranPage />} />
                   <Route path="kelola-karyawan" element={<KelolaKaryawanPage />} />
                   <Route path="data-karyawan" element={<DataKaryawanPage />} />
+                  {/* --- PERUBAHAN UTAMA: TAMBAHKAN / DI DEPAN PATH --- */}
+                  <Route path="/detail-karyawan/:id" element={<DetailKaryawanPage />} />
+                  {/* --- AKHIR PERUBAHAN --- */}
                   <Route path="tambah-karyawan" element={<TambahKaryawanPage />} />
                   <Route path="request-absen" element={<RequestAbsenPage />} />
                   <Route path="divisi" element={<DivisiPage />} />
