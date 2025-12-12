@@ -1,10 +1,14 @@
-// pages/JadwalShiftPage.tsx
 import React, { useState } from 'react';
 import { ShiftPage } from '@/components/JadwalShift/ShiftPage';
-import { GroupPage } from '@/components/JadwalShift/GroupPage';
+import { GrupPage } from '@/components/JadwalShift/GrupPage';
 import { AturShiftPage } from '@/components/JadwalShift/AturShiftPage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 
@@ -23,15 +27,21 @@ export const JadwalShiftPage = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => setActiveTab('shift')}>Shift</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setActiveTab('group')}>Group</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setActiveTab('atur-shift')}>Atur Shift</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setActiveTab('shift')}>
+              Shift
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setActiveTab('grup')}>
+              Grup
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setActiveTab('atur-shift')}>
+              Atur Shift
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
 
       {activeTab === 'shift' && <ShiftPage />}
-      {activeTab === 'group' && <GroupPage />}
+      {activeTab === 'grup' && <GrupPage />} 
       {activeTab === 'atur-shift' && <AturShiftPage />}
     </div>
   );

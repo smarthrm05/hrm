@@ -520,11 +520,11 @@ export const DataKaryawanPage = () => {
             <div className="flex gap-2">
               <Button variant="outline" className="flex items-center gap-1">
                 <Upload className="w-4 h-4" />
-                Import
+                Unggah Data
               </Button>
               <Button variant="outline" className="flex items-center gap-1">
                 <Download className="w-4 h-4" />
-                Export
+                Download Data
               </Button>
               <Button 
               className="bg-blue-600 text-white hover:bg-blue-700" 

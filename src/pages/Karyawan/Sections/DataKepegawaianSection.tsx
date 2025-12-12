@@ -184,6 +184,8 @@ const KepegawaianSection = ({ updateForm, formData }: any) => {
                 <SelectItem value="PKWT">PKWT</SelectItem>
                 <SelectItem value="PKWTT">PKWTT</SelectItem>
                 <SelectItem value="KHL">KHL</SelectItem>
+                <SelectItem value="Harian">Harian</SelectItem>
+                <SelectItem value="Borongan">Borongan</SelectItem>
               </SelectContent>
             </Select>
           </div>

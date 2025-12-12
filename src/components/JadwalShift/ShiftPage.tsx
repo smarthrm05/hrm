@@ -39,7 +39,7 @@ export const ShiftPage = () => {
   // Update jumlah data per halaman jika dropdown berubah
   useEffect(() => {
     setEntriesPerPage(Number(showEntries));
-    setCurrentPage(1); // reset ke halaman 1 jika showEntries berubah
+    setCurrentPage(1); 
   }, [showEntries]);
 
   // Filter data berdasarkan pencarian
@@ -104,10 +104,10 @@ export const ShiftPage = () => {
             <Table className="w-full border border-gray-300">
               <TableHeader>
                 <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
-                  <TableHead className="border text-white whitespace-nowrap">No.</TableHead>
-                  <TableHead className="border text-white whitespace-nowrap">Keterangan Shift</TableHead>
-                  <TableHead className="border text-white whitespace-nowrap">Jam</TableHead>
-                  <TableHead className="border text-white whitespace-nowrap">Aksi</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">No.</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Keterangan Shift</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Jam</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

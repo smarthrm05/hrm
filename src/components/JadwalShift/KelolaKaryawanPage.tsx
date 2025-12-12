@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ShiftPage } from '@/components/JadwalShift/ShiftPage';
-import { GroupPage } from '@/components/JadwalShift/GroupPage';
+import { GroupPage } from '@/components/JadwalShift/GrupPage';
 import { AturShiftPage } from '@/components/JadwalShift/AturShiftPage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';

@@ -99,7 +99,7 @@ const menuItems = [
     icon: Calendar,
     submenu: [
       { id: 'shift', label: 'Shift' },
-      { id: 'group', label: 'Group' },
+      { id: 'grup', label: 'Grup' },
       { id: 'atur-shift', label: 'Atur Shift' },
       { id: 'rekap-jadwal', label: 'Rekap Jadwal' },
     ],

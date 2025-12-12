@@ -166,13 +166,11 @@ export const DataKehadiranPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const formatDateToInput = (dateString: string): string => {
-    // Convert DD/MM/YYYY to YYYY-MM-DD for internal input
     const [d, m, y] = dateString.split('/');
     return `${y}-${m}-${d}`;
   };
 
   const formatDateToDisplay = (dateString: string): string => {
-    // Convert YYYY-MM-DD to DD/MM/YYYY for display
     const [y, m, d] = dateString.split('-');
     return `${d}/${m}/${y}`;
   };
@@ -212,9 +210,12 @@ export const DataKehadiranPage = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">-- Semua Karyawan --</SelectItem>
-                  <SelectItem value="tetap">Karyawan Tetap</SelectItem>
-                  <SelectItem value="kontrak">Karyawan Kontrak</SelectItem>
-                  <SelectItem value="magang">Magang</SelectItem>
+                  <SelectItem value="tetap">Magang</SelectItem>
+                  <SelectItem value="kontrak">PKWT</SelectItem>
+                  <SelectItem value="magang">PKWTT</SelectItem>
+                  <SelectItem value="khl">KHL</SelectItem>
+                  <SelectItem value="harian">Harian</SelectItem>
+                  <SelectItem value="borongan">Borongan</SelectItem>
                 </SelectContent>
               </Select>
             </div>

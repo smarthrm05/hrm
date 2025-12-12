@@ -97,9 +97,9 @@ export const BagianPage = () => {
             <Table className="w-full border border-gray-300 border-collapse">
               <TableHeader>
                 <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
-                  <TableHead className="text-white border border-gray-200">No.</TableHead>
-                  <TableHead className="text-white border border-gray-200">Nama Bagian</TableHead>
-                  <TableHead className="text-white border border-gray-200">Aksi</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">No.</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Nama Bagian</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

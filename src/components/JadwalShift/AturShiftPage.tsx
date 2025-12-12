@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar } from 'lucide-react';
-import { DataTable } from '@/components/shared/DataTable'; // ✅ Import sudah benar
+import { DataTable } from '@/components/shared/DataTable'; 
 import { EmployeeDropdown } from '@/components/EmployeeDropdown';
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger,

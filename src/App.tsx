@@ -11,7 +11,7 @@ import NotFound from "./pages/NotFound";
 // Import semua halaman
 import DashboardPage from "./components/DashboardPage";
 import { ShiftPage } from "./components/JadwalShift/ShiftPage";
-import { GroupPage } from "./components/JadwalShift/GroupPage";
+import { GrupPage } from "./components/JadwalShift/GrupPage";
 import { JadwalShiftPage } from "./components/JadwalShift/JadwalShiftPage";
 import { KehadiranPage } from "./components/Kehadiran/KehadiranPage";
 import { DataKehadiranPage } from "./components/Kehadiran/DataKehadiranPage";
@@ -78,7 +78,7 @@ const App = () => (
                   <Route path="data-izin" element={<DataIzinPage />} />
                   <Route path="data-lembur" element={<DataLemburPage />} />
                   <Route path="shift" element={<ShiftPage />} />
-                  <Route path="group" element={<GroupPage />} />
+                  <Route path="grup" element={<GrupPage />} />
                   <Route path="jadwal-shift" element={<JadwalShiftPage />} />
                   <Route path="pinjaman" element={<PinjamanPage />} />
                   <Route path="reimbursement" element={<ReimbursementPage />} />
