@@ -147,10 +147,12 @@ const DataPribadiSection = ({ formData, updateForm }: any) => {
               <SelectContent>
                 <SelectItem value="SD">SD</SelectItem>
                 <SelectItem value="SMP">SMP</SelectItem>
-                <SelectItem value="SMA/SMK">SMA / SMK</SelectItem>
+                <SelectItem value="SMA">SMA</SelectItem>
+                <SelectItem value="SMK">SMK</SelectItem>
                 <SelectItem value="D1">D1</SelectItem>
                 <SelectItem value="D2">D2</SelectItem>
                 <SelectItem value="D3">D3</SelectItem>
+                <SelectItem value="D4">D4</SelectItem>
                 <SelectItem value="S1">S1</SelectItem>
                 <SelectItem value="S2">S2</SelectItem>
                 <SelectItem value="S3">S3</SelectItem>

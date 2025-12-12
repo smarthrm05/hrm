@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Swal from 'sweetalert2';
@@ -72,147 +72,63 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 90 hari',
-    foto: 'https://randomuser.me/api/portraits/men/19.jpg   ',
+    foto: 'https://randomuser.me/api/portraits/men/19.jpg',
   },
   {
-    id: 'K001',
-    nama: 'Andi Prasetyo',
+    id: 'K002',
+    nama: 'Budi Santoso',
+    divisi: 'HRD',
+    jabatan: 'HR Manager',
+    kategori: 'Full Time',
+    tanggalBergabung: '2019-07-20',
+    tanggalKontrak: '2019-07-20',
+    selesaiKontrak: '2024-07-20',
+    statusKerja: 'Tidak Aktif',
+    statusAkun: 'Tidak Aktif',
+    pengingat: '-',
+    foto: 'https://randomuser.me/api/portraits/men/13.jpg',
+  },
+  {
+    id: 'K003',
+    nama: 'Cindy Putri',
+    divisi: 'Marketing',
+    jabatan: 'Digital Marketing',
+    kategori: 'Internship',
+    tanggalBergabung: '2023-06-01',
+    tanggalKontrak: '2023-06-01',
+    selesaiKontrak: '2024-06-01',
+    statusKerja: 'Aktif',
+    statusAkun: 'Aktif',
+    pengingat: 'Kontrak akan habis dalam 365 hari',
+    foto: 'https://randomuser.me/api/portraits/women/44.jpg',
+  },
+  {
+    id: 'K004',
+    nama: 'Dewi Lestari',
+    divisi: 'Finance',
+    jabatan: 'Accountant',
+    kategori: 'Full Time',
+    tanggalBergabung: '2022-01-10',
+    tanggalKontrak: '2022-01-10',
+    selesaiKontrak: '2025-01-10',
+    statusKerja: 'Aktif',
+    statusAkun: 'Aktif',
+    pengingat: 'Kontrak akan habis dalam 395 hari',
+    foto: 'https://randomuser.me/api/portraits/women/26.jpg',
+  },
+  {
+    id: 'K005',
+    nama: 'Eko Prasetyo',
     divisi: 'IT',
-    jabatan: 'Software Engineer',
+    jabatan: 'DevOps Engineer',
     kategori: 'Full Time',
-    tanggalBergabung: '2021-03-15',
-    tanggalKontrak: '2021-03-15',
-    selesaiKontrak: '2024-03-15',
+    tanggalBergabung: '2020-11-05',
+    tanggalKontrak: '2023-11-05',
+    selesaiKontrak: '2024-11-05',
     statusKerja: 'Aktif',
-    statusAkun: 'Aktif',
-    pengingat: 'Kontrak akan habis dalam 90 hari',
-    foto: 'https://randomuser.me/api/portraits/men/2.jpg   ',
-  },
-  {
-    id: 'K002',
-    nama: 'Budi Santoso',
-    divisi: 'HRD',
-    jabatan: 'HR Manager',
-    kategori: 'Full Time',
-    tanggalBergabung: '2019-07-20',
-    tanggalKontrak: '2019-07-20',
-    selesaiKontrak: '2024-07-20',
-    statusKerja: 'Tidak Aktif',
     statusAkun: 'Tidak Aktif',
-    pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/13.jpg   ',
-  },
-  {
-    id: 'K002',
-    nama: 'Budi Santoso',
-    divisi: 'HRD',
-    jabatan: 'HR Manager',
-    kategori: 'Full Time',
-    tanggalBergabung: '2019-07-20',
-    tanggalKontrak: '2019-07-20',
-    selesaiKontrak: '2024-07-20',
-    statusKerja: 'Tidak Aktif',
-    statusAkun: 'Tidak Aktif',
-    pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/15.jpg   ',
-  },
-  {
-    id: 'K002',
-    nama: 'Budi Santoso',
-    divisi: 'HRD',
-    jabatan: 'HR Manager',
-    kategori: 'Full Time',
-    tanggalBergabung: '2019-07-20',
-    tanggalKontrak: '2019-07-20',
-    selesaiKontrak: '2024-07-20',
-    statusKerja: 'Tidak Aktif',
-    statusAkun: 'Tidak Aktif',
-    pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/28.jpg   ',
-  },
-  {
-    id: 'K003',
-    nama: 'Cindy Putri',
-    divisi: 'Marketing',
-    jabatan: 'Digital Marketing',
-    kategori: 'Internship',
-    tanggalBergabung: '2023-06-01',
-    tanggalKontrak: '2023-06-01',
-    selesaiKontrak: '2024-06-01',
-    statusKerja: 'Aktif',
-    statusAkun: 'Aktif',
-    pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/men/11.jpg   ',
-  },
-  {
-    id: 'K003',
-    nama: 'Cindy Putri',
-    divisi: 'Marketing',
-    jabatan: 'Digital Marketing',
-    kategori: 'Internship',
-    tanggalBergabung: '2023-06-01',
-    tanggalKontrak: '2023-06-01',
-    selesaiKontrak: '2024-06-01',
-    statusKerja: 'Aktif',
-    statusAkun: 'Aktif',
-    pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/men/19.jpg   ',
-  },
-  {
-    id: 'K003',
-    nama: 'Cindy Putri',
-    divisi: 'Marketing',
-    jabatan: 'Digital Marketing',
-    kategori: 'Internship',
-    tanggalBergabung: '2023-06-01',
-    tanggalKontrak: '2023-06-01',
-    selesaiKontrak: '2024-06-01',
-    statusKerja: 'Aktif',
-    statusAkun: 'Aktif',
-    pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/men/20.jpg   ',
-  },
-  {
-    id: 'K003',
-    nama: 'Cindy Putri',
-    divisi: 'Marketing',
-    jabatan: 'Digital Marketing',
-    kategori: 'Internship',
-    tanggalBergabung: '2023-06-01',
-    tanggalKontrak: '2023-06-01',
-    selesaiKontrak: '2024-06-01',
-    statusKerja: 'Aktif',
-    statusAkun: 'Aktif',
-    pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/men/22.jpg   ',
-  },
-  {
-    id: 'K003',
-    nama: 'Cindy Putri',
-    divisi: 'Marketing',
-    jabatan: 'Digital Marketing',
-    kategori: 'Internship',
-    tanggalBergabung: '2023-06-01',
-    tanggalKontrak: '2023-06-01',
-    selesaiKontrak: '2024-06-01',
-    statusKerja: 'Aktif',
-    statusAkun: 'Aktif',
-    pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/men/28.jpg   ',
-  },
-  {
-    id: 'K003',
-    nama: 'Cindy Putri',
-    divisi: 'Marketing',
-    jabatan: 'Digital Marketing',
-    kategori: 'Internship',
-    tanggalBergabung: '2023-06-01',
-    tanggalKontrak: '2023-06-01',
-    selesaiKontrak: '2024-06-01',
-    statusKerja: 'Aktif',
-    statusAkun: 'Aktif',
-    pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/men/35.jpg   ',
+    pengingat: 'Kontrak akan habis dalam 328 hari',
+    foto: 'https://randomuser.me/api/portraits/men/32.jpg',
   },
 ];
 
@@ -222,7 +138,7 @@ const formatTanggal = (tanggal: string): string => {
 };
 
 const ReminderLabel = ({ text }: { text: string }) => {
-  const isReminder = text?.toLowerCase().includes("kontrak akan habis");
+  const isReminder = text?.toLowerCase().includes('kontrak akan habis');
 
   if (!text || text.trim() === '' || text === '-' || !isReminder) {
     return <span className="text-gray-400 text-sm whitespace-nowrap max-w-full truncate">{text}</span>;
@@ -235,7 +151,6 @@ const ReminderLabel = ({ text }: { text: string }) => {
   );
 };
 
-// --- TAMBAHAN: Fungsi untuk navigasi ke halaman detail ---
 export const DataKaryawanPage = () => {
   const navigate = useNavigate();
   const [data, setData] = useState<Karyawan[]>(mockData);
@@ -244,6 +159,10 @@ export const DataKaryawanPage = () => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+
+  // State untuk modal upload
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const filteredData = data.filter((k) =>
     [k.id, k.nama, k.divisi, k.jabatan, k.statusKerja]
@@ -400,22 +319,56 @@ export const DataKaryawanPage = () => {
     });
   };
 
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState<string>("");
-
-  const openModal = (location: string) => {
-    setSelectedLocation(location);
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
-  // --- FUNGSI BARU UNTUK MENAMPILKAN DETAIL ---
   const handleViewDetail = (id: string) => {
     navigate(`/detail-karyawan/${id}`);
+  };
+
+  const openUploadModal = () => {
+    setIsUploadModalOpen(true);
+    setSelectedFile(null);
+  };
+
+  const closeUploadModal = () => {
+    setIsUploadModalOpen(false);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
+
+  const handleUpload = () => {
+    if (!selectedFile) {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Silakan pilih file Excel terlebih dahulu.',
+        icon: 'error',
+        timer: 2000,
+        showConfirmButton: false,
+        background: '#3b82f6',
+        color: '#ffffff',
+        customClass: {
+          popup: 'bg-blue-500 text-white',
+        },
+      });
+      return;
+    }
+
+    Swal.fire({
+      title: 'Berhasil!',
+      text: `File "${selectedFile.name}" berhasil diunggah.`,
+      icon: 'success',
+      timer: 2000,
+      showConfirmButton: false,
+      background: '#3b82f6',
+      color: '#ffffff',
+      customClass: {
+        popup: 'bg-blue-500 text-white',
+      },
+    });
+
+    closeUploadModal();
   };
 
   return (
@@ -424,12 +377,11 @@ export const DataKaryawanPage = () => {
         <h1 className="text-3xl font-bold text-gray-900">Manajemen Karyawan</h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        
         {/* Card Karyawan Aktif */}
         <Card className="bg-green-700 border-green-800 shadow-md">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-semibold text-white">
-              Total Karyawan Aktif 
+              Total Karyawan Aktif
             </CardTitle>
             <CheckCircle className="h-4 w-4 text-white" />
           </CardHeader>
@@ -445,7 +397,7 @@ export const DataKaryawanPage = () => {
         <Card className="bg-red-600 border-red-800 shadow-md">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-semibold text-white">
-              Total Karyawan Tidak Aktif 
+              Total Karyawan Tidak Aktif
             </CardTitle>
             <XCircle className="h-4 w-4 text-white" />
           </CardHeader>
@@ -464,7 +416,6 @@ export const DataKaryawanPage = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex gap-2">
-            {/* Tombol Aktifkan */}
             <Button
               className="bg-green-700 hover:bg-green-600 text-white flex items-center gap-1"
               disabled={selectedIds.length === 0}
@@ -472,7 +423,6 @@ export const DataKaryawanPage = () => {
             >
               <CheckCircle className="w-4 h-4" /> Aktifkan
             </Button>
-            {/* Tombol Non Aktifkan */}
             <Button
               className="bg-yellow-400 hover:bg-yellow-500 text-black flex items-center gap-1"
               disabled={selectedIds.length === 0}
@@ -518,7 +468,11 @@ export const DataKaryawanPage = () => {
               </div>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" className="flex items-center gap-1">
+              <Button
+                variant="outline"
+                className="flex items-center gap-1"
+                onClick={openUploadModal}
+              >
                 <Upload className="w-4 h-4" />
                 Unggah Data
               </Button>
@@ -526,15 +480,12 @@ export const DataKaryawanPage = () => {
                 <Download className="w-4 h-4" />
                 Download Data
               </Button>
-              <Button 
-              className="bg-blue-600 text-white hover:bg-blue-700" 
-              onClick={() => {
-                console.log("Tombol diklik!");
-                navigate('/tambah-karyawan');
-              }}
-            >
-              + Tambah Karyawan
-            </Button>
+              <Button
+                className="bg-blue-600 text-white hover:bg-blue-700"
+                onClick={() => navigate('/tambah-karyawan')}
+              >
+                + Tambah Karyawan
+              </Button>
             </div>
           </div>
           <div className="overflow-auto rounded border border-gray-300">
@@ -559,7 +510,9 @@ export const DataKaryawanPage = () => {
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Tgl Kontrak</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Selesai Kontrak</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Status Kerja</TableHead>
-                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Status Akun</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">
+                    Status Akun
+                  </TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Pengingat Kontrak</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
@@ -579,7 +532,7 @@ export const DataKaryawanPage = () => {
                     </TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">
                       <img
-                        src={k.foto}
+                        src={k.foto.trim()}
                         alt={k.nama}
                         className="rounded-full w-8 h-8 object-cover"
                       />
@@ -599,33 +552,34 @@ export const DataKaryawanPage = () => {
                       {formatTanggal(k.selesaiKontrak)}
                     </TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">{k.statusKerja}</TableCell>
-                    <TableCell className="border border-gray-200 whitespace-nowrap"> 
+                    <TableCell className="border border-gray-200 whitespace-nowrap">
                       <StatusLabel status={k.statusAkun} />
                     </TableCell>
-                    <TableCell className="border border-gray-200 whitespace-nowrap"><ReminderLabel text={k.pengingat} /></TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">
+                      <ReminderLabel text={k.pengingat} />
+                    </TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">
                       <div className="flex justify-start space-x-2">
-                    {/* --- MODIFIKASI: TOMBOL LIHAT DETAIL --- */}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="bg-blue-600 text-white hover:bg-blue-700"
-                      title="Lihat Detail"
-                      onClick={() => handleViewDetail(k.id)} 
-                    >
-                      <Eye className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="bg-red-600 text-white hover:bg-red-700"
-                      title="Hapus Data"
-                      onClick={() => handleDeleteSingle(k.id)}
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                    </div>
-                  </TableCell>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="bg-blue-600 text-white hover:bg-blue-700"
+                          title="Lihat Detail"
+                          onClick={() => handleViewDetail(k.id)}
+                        >
+                          <Eye className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="bg-red-600 text-white hover:bg-red-700"
+                          title="Hapus Data"
+                          onClick={() => handleDeleteSingle(k.id)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -668,31 +622,75 @@ export const DataKaryawanPage = () => {
         </CardContent>
       </Card>
 
-      {/* Modal untuk menampilkan lokasi */}
-      {isOpen && (
+      {/* Modal Upload Data Baru Karyawan */}
+      {isUploadModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded shadow-lg w-1/2">
-            <h2 className="text-xl font-bold mb-4">Detail Lokasi Karyawan</h2>
-            <div className="mb-4">
-              {/* Google Maps */}
-              <iframe
-                src={`https://www.google.com/maps/embed?pb=  !1m18!1m12!1m3!1d3918.597898988999!2d${selectedLocation.split(",")[1]}!3d${selectedLocation.split(",")[0]}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb902cfd15e7%3A0x7b2a993d9a2c1bb1!2sJakarta!5e0!3m2!1sid!2sid!4v1687470000000`}
-                width="100%"
-                height="400px"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
+          <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl max-h-screen overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">Unggah Data Baru Karyawan</h2>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={closeUploadModal}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </Button>
             </div>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={closeModal}
-              className="bg-gray-300 text-gray-800 hover:bg-gray-400"
-            >
-              Tutup
-            </Button>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2">Unggah dokumen Excel</label>
+              <div className="flex items-center gap-2">
+                <Input
+                  key={selectedFile?.name || 'file-input'}
+                  type="file"
+                  accept=".xlsx, .xls"
+                  onChange={handleFileChange}
+                  className="flex-grow"
+                />
+                <span className="text-sm text-gray-500">
+                  {selectedFile ? selectedFile.name : "Tidak ada file yang dipilih"}
+                </span>
+              </div>
+              <a href="#" className="text-blue-600 hover:text-blue-800 text-sm mt-2 inline-block">
+                Download Template disini
+              </a>
+            </div>
+
+            <div className="mb-6">
+              <h3 className="font-semibold mb-2">Panduan pengisian data karyawan di excel</h3>
+              <ul className="list-disc pl-5 space-y-1 text-sm">
+                <li>Isi kolom <strong>Nama</strong> dengan nama lengkap karyawan sesuai dengan identitas resmi.</li>
+                <li>Isi kolom <strong>N/K</strong> dengan Nomor Induk Karyawan yang sesuai dengan data resmi.</li>
+                <li>Pastikan pengisian data sesuai dengan format yang diminta, misalkan pengisian email harus menggunakan format email yang sesuai.</li>
+                <li>Sebelum mengisi kolom <strong>Jabatan</strong> atau <strong>Divisi</strong>, pastikan bahwa <strong>Jabatan</strong> dan <strong>Divisi</strong> yang dimaksud sudah terdaftar dalam aplikasi yang digunakan.</li>
+                <li>Pastikan kolom yang memuat tanggal diisi dengan format yang benar, yaitu <strong>Y-m-d</strong> (contoh: 2024-05-20).</li>
+                <li>Isi kolom <strong>Jenis Kelamin</strong> dengan kode L (Laki-laki) atau P (Perempuan).</li>
+                <li>Kolom <strong>Pendidikan</strong> hanya boleh diisi dengan salah satu dari pilihan yang valid: SD, SMP, SMA, SMK, MA, D1, D2, D3, D4, S1, S2, S3. Pengisian di luar opsi ini akan dianggap tidak valid.</li>
+                <li>Isi kolom <strong>Status Karyawan</strong> dengan salah satu status berikut: KHL, HL, PKWT, PKWT HARIAN atau PKWT BORONGAN.</li>
+                <li>Data Karyawan yang baru ditambahkan ke dalam sistem akan mendapatkan username dan password untuk masuk kedalam aplikasi. Username menggunakan default ID Karyawan dan Password akan dibuat otomatis dalam sistem yakni “1234”.</li>
+                <li>Kolom Agama hanya boleh diisi dengan salah satu dari pilihan yang valid: Islam, Kristen, Katolik, Hindu, Buddha, atau Konghucu. Pengisian di luar opsi ini akan dianggap tidak valid.</li>
+              </ul>
+            </div>
+
+            <div className="flex justify-end gap-2">
+              <Button
+                variant="outline"
+                onClick={closeUploadModal}
+                className="bg-gray-300 text-gray-800 hover:bg-gray-400"
+              >
+                Tutup
+              </Button>
+              <Button
+                onClick={handleUpload}
+                className="bg-blue-600 text-white hover:bg-blue-700"
+              >
+                Upload
+              </Button>
+            </div>
           </div>
         </div>
       )}
