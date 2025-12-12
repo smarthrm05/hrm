@@ -10,9 +10,9 @@ import NotFound from "./pages/NotFound";
 
 // Import semua halaman
 import DashboardPage from "./components/DashboardPage";
-import { ShiftPage } from "./components/jadwalshift/ShiftPage";
-import { GroupPage } from "./components/jadwalshift/GroupPage";
-import { JadwalShiftPage } from "./components/jadwalshift/JadwalShiftPage";
+import { ShiftPage } from "./components/JadwalShift/ShiftPage";
+import { GroupPage } from "./components/JadwalShift/GroupPage";
+import { JadwalShiftPage } from "./components/JadwalShift/JadwalShiftPage";
 import { KehadiranPage } from "./components/kehadiran/KehadiranPage";
 import { DataKehadiranPage } from "./components/kehadiran/DataKehadiranPage";
 import { RekapKehadiranPage } from "./components/kehadiran/RekapKehadiranPage";
@@ -68,9 +68,7 @@ const App = () => (
                   <Route path="rekap-kehadiran" element={<RekapKehadiranPage />} />
                   <Route path="kelola-karyawan" element={<KelolaKaryawanPage />} />
                   <Route path="data-karyawan" element={<DataKaryawanPage />} />
-                  {/* --- PERUBAHAN UTAMA: TAMBAHKAN / DI DEPAN PATH --- */}
                   <Route path="/detail-karyawan/:id" element={<DetailKaryawanPage />} />
-                  {/* --- AKHIR PERUBAHAN --- */}
                   <Route path="tambah-karyawan" element={<TambahKaryawanPage />} />
                   <Route path="request-absen" element={<RequestAbsenPage />} />
                   <Route path="divisi" element={<DivisiPage />} />
