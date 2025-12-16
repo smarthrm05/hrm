@@ -31,17 +31,17 @@ import {
   Trash,
 } from 'lucide-react';
 
-// Tambahkan impor Radix UI Dialog
+
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
 
 const StatusLabel = ({ status }: { status: string }) => {
   const isAktif = status === 'Aktif';
-  const color = isAktif ? 'bg-green-700 text-white' : 'bg-red-700 text-white';
+  const color = isAktif ? 'bg-green-600 text-white' : 'bg-red-600 text-white';
   const Icon = isAktif ? CheckCircle : XCircle;
 
   return (
-    <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full ${color} whitespace-nowrap max-w-full truncate`}>
+    <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-md ${color} whitespace-nowrap max-w-full truncate`}>
       <Icon className="w-3 h-3" />
       {status}
     </span>
@@ -149,7 +149,7 @@ const ReminderLabel = ({ text }: { text: string }) => {
   }
 
   return (
-    <span className="inline-block bg-orange-300 text-black text-xs font-semibold px-2 py-1 rounded-full whitespace-nowrap max-w-full truncate">
+    <span className="inline-block bg-orange-300 text-black text-xs font-semibold px-2 py-1 rounded-md whitespace-nowrap max-w-full truncate">
       {text}
     </span>
   );
@@ -202,7 +202,7 @@ export const DataKaryawanPage = () => {
     );
   };
 
-  const updateStatusAkun = (statusBaru: string) => {
+  const updateStatusKaryawan = (statusBaru: string) => {
     if (selectedIds.length === 0) return;
     Swal.fire({
       title: `Apakah Anda yakin?`,
@@ -224,7 +224,9 @@ export const DataKaryawanPage = () => {
       if (result.isConfirmed) {
         setData((prevData) =>
           prevData.map((k) =>
-            selectedIds.includes(k.id) ? { ...k, statusAkun: statusBaru } : k
+            selectedIds.includes(k.id)
+              ? { ...k, statusKerja: statusBaru, statusAkun: statusBaru } 
+              : k
           )
         );
         setSelectedIds([]);
@@ -419,14 +421,14 @@ export const DataKaryawanPage = () => {
             <Button
               className="bg-green-700 hover:bg-green-600 text-white flex items-center gap-1"
               disabled={selectedIds.length === 0}
-              onClick={() => updateStatusAkun('Aktif')}
+              onClick={() => updateStatusKaryawan('Aktif')}
             >
               <CheckCircle className="w-4 h-4" /> Aktifkan
             </Button>
             <Button
               className="bg-yellow-400 hover:bg-yellow-500 text-black flex items-center gap-1"
               disabled={selectedIds.length === 0}
-              onClick={() => updateStatusAkun('Tidak Aktif')}
+              onClick={() => updateStatusKaryawan('Tidak Aktif')}
             >
               <XCircle className="w-4 h-4" /> Non Aktifkan
             </Button>
@@ -551,7 +553,9 @@ export const DataKaryawanPage = () => {
                     <TableCell className="border border-gray-200 whitespace-nowrap">
                       {formatTanggal(k.selesaiKontrak)}
                     </TableCell>
-                    <TableCell className="border border-gray-200 whitespace-nowrap">{k.statusKerja}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">
+                      <StatusLabel status={k.statusKerja} />
+                    </TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">
                       <StatusLabel status={k.statusAkun} />
                     </TableCell>
@@ -621,12 +625,11 @@ export const DataKaryawanPage = () => {
         </CardContent>
       </Card>
 
-      {/* Modal Upload menggunakan Radix UI Dialog (seperti di BagianPage) */}
+      {/* Modal Upload */}
       <Dialog.Root open={isUploadModalOpen} onOpenChange={setIsUploadModalOpen}>
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" />
           <Dialog.Content className="fixed z-[9999] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-full max-w-2xl rounded-lg shadow-lg p-6 focus:outline-none max-h-[90vh] overflow-y-auto">
-            {/* Judul Modal + Garis Bawah */}
             <div className="flex justify-between items-center mb-4 border-b pb-2">
               <Dialog.Title className="text-xl font-bold">Unggah Data Baru Karyawan</Dialog.Title>
               <Dialog.Close asChild>
