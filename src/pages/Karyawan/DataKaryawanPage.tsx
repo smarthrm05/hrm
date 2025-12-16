@@ -31,6 +31,10 @@ import {
   Trash,
 } from 'lucide-react';
 
+// Tambahkan impor Radix UI Dialog
+import * as Dialog from '@radix-ui/react-dialog';
+import { Cross2Icon } from '@radix-ui/react-icons';
+
 const StatusLabel = ({ status }: { status: string }) => {
   const isAktif = status === 'Aktif';
   const color = isAktif ? 'bg-green-700 text-white' : 'bg-red-700 text-white';
@@ -617,27 +621,28 @@ export const DataKaryawanPage = () => {
         </CardContent>
       </Card>
 
-      {/* Modal Upload Data Baru Karyawan */}
-      {isUploadModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl max-h-screen overflow-y-auto">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">Unggah Data Baru Karyawan</h2>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={closeUploadModal}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </Button>
+      {/* Modal Upload menggunakan Radix UI Dialog (seperti di BagianPage) */}
+      <Dialog.Root open={isUploadModalOpen} onOpenChange={setIsUploadModalOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" />
+          <Dialog.Content className="fixed z-[9999] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-full max-w-2xl rounded-lg shadow-lg p-6 focus:outline-none max-h-[90vh] overflow-y-auto">
+            {/* Judul Modal + Garis Bawah */}
+            <div className="flex justify-between items-center mb-4 border-b pb-2">
+              <Dialog.Title className="text-xl font-bold">Unggah Data Baru Karyawan</Dialog.Title>
+              <Dialog.Close asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-6 w-6 p-0 hover:bg-gray-200"
+                >
+                  <Cross2Icon className="h-4 w-4" />
+                </Button>
+              </Dialog.Close>
             </div>
 
-            <div className="mb-4">
-              <label className="font-medium text-sm text-gray-700">Unggah dokumen Excel</label>
+            {/* Bagian Unggah Excel */}
+            <div className="mb-6 pt-2">
+              <label className="font-medium text-sm text-gray-700 block mb-2">Unggah dokumen Excel</label>
               <div className="flex items-center gap-0">
                 <input
                   type="file"
@@ -661,6 +666,7 @@ export const DataKaryawanPage = () => {
               </a>
             </div>
 
+            {/* Panduan Pengisian */}
             <div className="mb-6">
               <h3 className="font-semibold mb-2">Panduan pengisian data karyawan di excel</h3>
               <ul className="list-disc pl-5 space-y-1 text-sm">
@@ -706,24 +712,21 @@ export const DataKaryawanPage = () => {
               </ul>
             </div>
 
-            <div className="flex justify-end gap-2">
+            {/* Tombol Aksi */}
+            <div className="flex justify-end gap-3">
+              <Dialog.Close asChild>
+                <Button variant="outline">Batal</Button>
+              </Dialog.Close>
               <Button
-                variant="outline"
-                onClick={closeUploadModal}
-                className="bg-gray-300 text-gray-800 hover:bg-gray-400"
-              >
-                Tutup
-              </Button>
-              <Button
-                onClick={handleUpload}
                 className="bg-blue-600 text-white hover:bg-blue-700"
+                onClick={handleUpload}
               >
                 Upload
               </Button>
             </div>
-          </div>
-        </div>
-      )}
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
     </div>
   );
 };
