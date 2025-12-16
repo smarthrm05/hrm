@@ -31,7 +31,6 @@ import {
   Trash,
 } from 'lucide-react';
 
-
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
 
@@ -164,13 +163,38 @@ export const DataKaryawanPage = () => {
   const [selectAll, setSelectAll] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
+  // ✅ State untuk filter status — tetap 'all' sebagai nilai default
+  const [filterStatus, setFilterStatus] = useState<string>('all'); // 'all', 'aktif', 'tidak_aktif', 'habis_kontrak'
+
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const filteredData = data.filter((k) =>
-    [k.id, k.nama, k.divisi, k.jabatan, k.statusKerja]
-      .some((field) => field.toLowerCase().includes(search.toLowerCase()))
-  );
+  const isKontrakHabis = (selesaiKontrak: string): boolean => {
+    const today = new Date();
+    const endDate = new Date(selesaiKontrak);
+    return endDate < today;
+  };
+
+  const filteredData = data.filter((k) => {
+    const matchesSearch = [
+      k.id,
+      k.nama,
+      k.divisi,
+      k.jabatan,
+      k.statusKerja,
+    ].some((field) => field.toLowerCase().includes(search.toLowerCase()));
+
+    let matchesStatus = true;
+    if (filterStatus === 'aktif') {
+      matchesStatus = k.statusKerja === 'Aktif';
+    } else if (filterStatus === 'tidak_aktif') {
+      matchesStatus = k.statusKerja === 'Tidak Aktif';
+    } else if (filterStatus === 'habis_kontrak') {
+      matchesStatus = isKontrakHabis(k.selesaiKontrak);
+    }
+
+    return matchesSearch && matchesStatus;
+  });
 
   const entriesPerPage = parseInt(show);
   const totalPages = Math.ceil(filteredData.length / entriesPerPage);
@@ -183,7 +207,7 @@ export const DataKaryawanPage = () => {
     setCurrentPage(1);
     setSelectedIds([]);
     setSelectAll(false);
-  }, [show, search]);
+  }, [show, search, filterStatus]);
 
   const toggleSelectAll = () => {
     if (selectAll) {
@@ -225,7 +249,7 @@ export const DataKaryawanPage = () => {
         setData((prevData) =>
           prevData.map((k) =>
             selectedIds.includes(k.id)
-              ? { ...k, statusKerja: statusBaru, statusAkun: statusBaru } 
+              ? { ...k, statusKerja: statusBaru, statusAkun: statusBaru }
               : k
           )
         );
@@ -432,7 +456,7 @@ export const DataKaryawanPage = () => {
             >
               <XCircle className="w-4 h-4" /> Non Aktifkan
             </Button>
-            <Button className="bg-blue-500 hover:bg-blue-600 text-white flex items-center gap-1">
+            <Button className="bg-blue-600 hover:bg-blue-600 text-white flex items-center gap-1">
               <Calendar className="w-4 h-4" /> Perbarui Kontrak
             </Button>
             <Button
@@ -442,6 +466,21 @@ export const DataKaryawanPage = () => {
             >
               <Trash className="w-4 h-4" /> Hapus karyawan terpilih
             </Button>
+
+            {/* ✅ Dropdown Filter dengan Placeholder yang Muncul di Awal */}
+            <Select value={filterStatus} onValueChange={setFilterStatus}>
+              <SelectTrigger className="w-[240px]">
+                <SelectValue>
+                  {filterStatus === 'all' ? '-- Filter berdasarkan status --' : null}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Semua Karyawan</SelectItem>
+                <SelectItem value="aktif">Karyawan Aktif</SelectItem>
+                <SelectItem value="tidak_aktif">Karyawan Tidak Aktif</SelectItem>
+                <SelectItem value="habis_kontrak">Karyawan Habis Kontrak</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <div className="flex justify-between items-center flex-wrap gap-4">
             <div className="flex items-center gap-4 flex-wrap">
@@ -493,7 +532,7 @@ export const DataKaryawanPage = () => {
           <div className="overflow-auto rounded border border-gray-300">
             <Table className="w-full border border-gray-300 border-collapse">
               <TableHeader>
-                <TableRow className="bg-[#196de3] hover:bg-[#196de3] text-white">
+                <TableRow className="bg-[#2794eb] hover:bg-[#2794eb] text-white">
                   <TableHead className="text-white border border-gray-200">
                     <input
                       type="checkbox"
@@ -643,7 +682,6 @@ export const DataKaryawanPage = () => {
               </Dialog.Close>
             </div>
 
-            {/* Bagian Unggah Excel */}
             <div className="mb-6 pt-2">
               <label className="font-medium text-sm text-gray-700 block mb-2">Unggah dokumen Excel</label>
               <div className="flex items-center gap-0">
@@ -669,7 +707,6 @@ export const DataKaryawanPage = () => {
               </a>
             </div>
 
-            {/* Panduan Pengisian */}
             <div className="mb-6">
               <h3 className="font-semibold mb-2">Panduan pengisian data karyawan di excel</h3>
               <ul className="list-disc pl-5 space-y-1 text-sm">
@@ -715,7 +752,6 @@ export const DataKaryawanPage = () => {
               </ul>
             </div>
 
-            {/* Tombol Aksi */}
             <div className="flex justify-end gap-3">
               <Dialog.Close asChild>
                 <Button variant="outline">Batal</Button>

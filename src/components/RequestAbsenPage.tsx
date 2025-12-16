@@ -30,7 +30,6 @@ import {
   XCircle,
 } from "lucide-react";
 
-// Interface data - Diperbarui: Tambahkan namaApprover
 interface RequestAbsenData {
   no: number;
   tanggal: Date;
@@ -40,15 +39,15 @@ interface RequestAbsenData {
   nama: string;
   absenMasuk: string;
   lokasiAbsen: string;
-  detailLokasi: string; // Sekarang berisi nama jalan
+  detailLokasi: string; 
   shift: string;
   catatan: string;
   status: 'Menunggu Disetujui' | 'Disetujui';
   tanggalDisetujui?: Date;
-  namaApprover?: string; // Nama orang yang menyetujui
+  namaApprover?: string; 
 }
 
-// Mock Data - Diperbarui: Ubah detailLokasi, tambah data dummy, tambah namaApprover
+
 const mockRequestAbsen: RequestAbsenData[] = [
   {
     no: 1,
@@ -59,7 +58,7 @@ const mockRequestAbsen: RequestAbsenData[] = [
     jabatan: "Staff",
     absenMasuk: "08:10",
     lokasiAbsen: "Kantor Pusat",
-    detailLokasi: "Jalan Sudirman No. 123, Jakarta Pusat", // Nama jalan
+    detailLokasi: "Jalan Sudirman No. 123, Jakarta Pusat", 
     shift: "Shift 1",
     catatan: "Terlambat karena kemacetan",
     status: "Menunggu Disetujui",
@@ -73,14 +72,14 @@ const mockRequestAbsen: RequestAbsenData[] = [
     jabatan: "Programmer",
     absenMasuk: "08:00",
     lokasiAbsen: "Remote",
-    detailLokasi: "Jalan Diponegoro No. 45, Bandung", // Nama jalan
+    detailLokasi: "Jalan Diponegoro No. 45, Bandung", 
     shift: "Shift 1",
     catatan: "Hadir tepat waktu",
     status: "Disetujui",
     tanggalDisetujui: new Date('2024-06-01T09:30:00'),
-    namaApprover: "Rommy Gani", // Nama approver
+    namaApprover: "Rommy Gani", 
   },
-  // Data Dummy Baru
+ 
   {
     no: 3,
     tanggal: new Date("2024-06-19"),
@@ -90,7 +89,7 @@ const mockRequestAbsen: RequestAbsenData[] = [
     jabatan: "Manager",
     absenMasuk: "07:55",
     lokasiAbsen: "Kantor Cabang Surabaya",
-    detailLokasi: "Jalan Basuki Rahmat No. 78, Surabaya", // Nama jalan
+    detailLokasi: "Jalan Basuki Rahmat No. 78, Surabaya", 
     shift: "Shift 1",
     catatan: "Datang lebih awal",
     status: "Menunggu Disetujui",
@@ -104,12 +103,12 @@ const mockRequestAbsen: RequestAbsenData[] = [
     jabatan: "Staff",
     absenMasuk: "08:15",
     lokasiAbsen: "Kantor Pusat",
-    detailLokasi: "Jalan Thamrin No. 200, Jakarta Pusat", // Nama jalan
+    detailLokasi: "Jalan Thamrin No. 200, Jakarta Pusat", 
     shift: "Shift 1",
     catatan: "Terlambat 15 menit",
     status: "Disetujui",
     tanggalDisetujui: new Date('2024-06-02T10:00:00'),
-    namaApprover: "Budi Santoso", // Nama approver
+    namaApprover: "Budi Santoso",
   },
   {
     no: 5,
@@ -120,7 +119,7 @@ const mockRequestAbsen: RequestAbsenData[] = [
     jabatan: "Analyst",
     absenMasuk: "08:05",
     lokasiAbsen: "Remote",
-    detailLokasi: "Jalan Raya Bogor No. 34, Depok", // Nama jalan
+    detailLokasi: "Jalan Raya Bogor No. 34, Depok", 
     shift: "Shift 1",
     catatan: "Work from home",
     status: "Menunggu Disetujui",
@@ -158,7 +157,6 @@ export const RequestAbsenPage = () => {
     });
   };
 
-  // Fungsi getStatusBadge diperbarui untuk menyerupai halaman Reimbursement
   const getStatusBadge = (status: string, namaApprover?: string, tanggalDisetujui?: Date) => {
     if (status === "Menunggu Disetujui") {
       return (
@@ -186,7 +184,7 @@ export const RequestAbsenPage = () => {
         </div>
       );
     }
-    // Default fallback
+
     return <Badge className="bg-gray-100 text-gray-800">{status}</Badge>;
   };
 
@@ -259,7 +257,7 @@ export const RequestAbsenPage = () => {
                   <TableHead className="border text-white whitespace-nowrap">Shift</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Catatan</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Status</TableHead>
-                  <TableHead className="border text-white whitespace-nowrap">Aksi</TableHead> {/* Kolom Aksi tetap ada */}
+                  <TableHead className="border text-white whitespace-nowrap">Aksi</TableHead> 
                 </TableRow>
               </TableHeader>
               <TableBody>
