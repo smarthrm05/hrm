@@ -50,7 +50,8 @@ export const JabatanPage = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <Card>
+      {/* Card dengan latar belakang putih */}
+      <Card className="bg-white">
         <CardHeader>
           <CardTitle className="flex items-center">
             <Briefcase className="h-5 w-5 mr-2" />
@@ -113,17 +114,17 @@ export const JabatanPage = () => {
                     <TableCell className="border border-gray-200">
                       <div className="flex space-x-2">
                         <Button
-                         size="sm"
+                          size="sm"
                           variant="ghost"
                           className="bg-blue-400 text-white hover:bg-blue-500"
-                           >
+                        >
                           <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button
+                        </Button>
+                        <Button
                           size="sm"
                           variant="ghost"
                           className="bg-red-600 text-white hover:bg-red-700"
-                           >
+                        >
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>

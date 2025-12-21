@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
-import { Card,CardContent,CardHeader,CardTitle,} from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem,
+import {
+  Select,
+  SelectContent,
+  SelectItem,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
@@ -42,7 +50,8 @@ export const DivisiPage = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <Card>
+      {/* Card dengan latar belakang putih */}
+      <Card className="bg-white">
         <CardHeader>
           <CardTitle className="flex items-center">
             <Users className="h-5 w-5 mr-2" />

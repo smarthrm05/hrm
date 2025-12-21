@@ -36,6 +36,7 @@ import { Cross2Icon } from '@radix-ui/react-icons';
 
 const StatusLabel = ({ status }: { status: string }) => {
   const isAktif = status === 'Aktif';
+  const isKontrakHabis = status === 'Kontrak telah habis';
   const color = isAktif ? 'bg-green-600 text-white' : 'bg-red-600 text-white';
   const Icon = isAktif ? CheckCircle : XCircle;
 
@@ -75,7 +76,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 90 hari',
-    foto: 'https://randomuser.me/api/portraits/men/19.jpg',
+    foto: 'https://randomuser.me/api/portraits/men/19.jpg  ',
   },
   {
     id: 'K002',
@@ -89,7 +90,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Tidak Aktif',
     statusAkun: 'Tidak Aktif',
     pengingat: '-',
-    foto: 'https://randomuser.me/api/portraits/men/13.jpg',
+    foto: 'https://randomuser.me/api/portraits/men/13.jpg  ',
   },
   {
     id: 'K003',
@@ -103,7 +104,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 365 hari',
-    foto: 'https://randomuser.me/api/portraits/women/44.jpg',
+    foto: 'https://randomuser.me/api/portraits/women/44.jpg  ',
   },
   {
     id: 'K004',
@@ -117,7 +118,7 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Aktif',
     pengingat: 'Kontrak akan habis dalam 395 hari',
-    foto: 'https://randomuser.me/api/portraits/women/26.jpg',
+    foto: 'https://randomuser.me/api/portraits/women/26.jpg  ',
   },
   {
     id: 'K005',
@@ -131,7 +132,22 @@ const mockData: Karyawan[] = [
     statusKerja: 'Aktif',
     statusAkun: 'Tidak Aktif',
     pengingat: 'Kontrak akan habis dalam 328 hari',
-    foto: 'https://randomuser.me/api/portraits/men/32.jpg',
+    foto: 'https://randomuser.me/api/portraits/men/32.jpg  ',
+  },
+  // Tambahkan data dengan kontrak habis untuk testing
+  {
+    id: 'K006',
+    nama: 'Fajar Andi',
+    divisi: 'IT',
+    jabatan: 'Frontend Developer',
+    kategori: 'Full Time',
+    tanggalBergabung: '2020-05-01',
+    tanggalKontrak: '2020-05-01',
+    selesaiKontrak: '2024-05-01',
+    statusKerja: 'Aktif',
+    statusAkun: 'Aktif',
+    pengingat: '-',
+    foto: 'https://randomuser.me/api/portraits/men/45.jpg',
   },
 ];
 
@@ -163,8 +179,7 @@ export const DataKaryawanPage = () => {
   const [selectAll, setSelectAll] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // ✅ State untuk filter status — tetap 'all' sebagai nilai default
-  const [filterStatus, setFilterStatus] = useState<string>('all'); // 'all', 'aktif', 'tidak_aktif', 'habis_kontrak'
+  const [filterStatus, setFilterStatus] = useState<string>('all');
 
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -175,7 +190,13 @@ export const DataKaryawanPage = () => {
     return endDate < today;
   };
 
-  const filteredData = data.filter((k) => {
+  // Perbarui logika filteredData agar menampilkan status "Kontrak telah habis" saat filter dipilih
+  const filteredData = data.map((k) => {
+    if (filterStatus === 'habis_kontrak' && isKontrakHabis(k.selesaiKontrak)) {
+      return { ...k, statusKerja: 'Kontrak telah habis' };
+    }
+    return k;
+  }).filter((k) => {
     const matchesSearch = [
       k.id,
       k.nama,
@@ -429,14 +450,15 @@ export const DataKaryawanPage = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-white">
-              {data.filter(k => k.statusKerja === 'Tidak Aktif').length}
+              {data.filter(k => k.statusKerja === 'Tidak Aktif' || isKontrakHabis(k.selesaiKontrak)).length}
             </div>
             <p className="text-xs text-white">Karyawan</p>
           </CardContent>
         </Card>
       </div>
 
-      <Card>
+      {/* ✅ Card utama data karyawan — diubah menjadi putih */}
+      <Card className="bg-white">
         <CardHeader className="bg-blue-50 border-b mb-4">
           <CardTitle className="text-blue-800">Data Karyawan</CardTitle>
         </CardHeader>
@@ -467,7 +489,6 @@ export const DataKaryawanPage = () => {
               <Trash className="w-4 h-4" /> Hapus karyawan terpilih
             </Button>
 
-            {/* ✅ Dropdown Filter dengan Placeholder yang Muncul di Awal */}
             <Select value={filterStatus} onValueChange={setFilterStatus}>
               <SelectTrigger className="w-[240px]">
                 <SelectValue>
@@ -509,15 +530,20 @@ export const DataKaryawanPage = () => {
               </div>
             </div>
             <div className="flex gap-2">
+              {/* 🔵 Tombol Unggah Data berwarna biru */}
               <Button
                 variant="outline"
-                className="flex items-center gap-1"
+                className="bg-blue-500 hover:bg-blue-600 text-white flex items-center gap-1"
                 onClick={openUploadModal}
               >
                 <Upload className="w-4 h-4" />
                 Unggah Data
               </Button>
-              <Button variant="outline" className="flex items-center gap-1">
+              {/* 🟢 Tombol Download Data berwarna hijau */}
+              <Button 
+                variant="outline" 
+                className="bg-green-500 hover:bg-green-600 text-white flex items-center gap-1"
+              >
                 <Download className="w-4 h-4" />
                 Download Data
               </Button>
