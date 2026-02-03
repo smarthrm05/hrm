@@ -83,7 +83,7 @@ export const RegisterPage = () => {
         <Card className="shadow-2xl rounded-2xl">
           <CardContent className="p-8 max-h-[90vh] overflow-y-auto">
             <h1 className="text-2xl font-bold text-center mb-1">
-              Daftar <span className="text-blue-600">SMART HRM</span> Sekarang
+              Daftar <span className="text-[#2794eb]">SMART HRM</span> Sekarang
             </h1>
             <p className="text-center text-sm text-gray-600 mb-6">
               Dapatkan <b>FREE TRIAL Akun 90 Hari!</b>
