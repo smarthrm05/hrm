@@ -8,6 +8,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import { Check, X } from 'lucide-react';
 
 const TabRiwayatKontrakKerja = ({ data }: any) => {
   // Dummy data riwayat kontrak
@@ -49,39 +50,59 @@ const TabRiwayatKontrakKerja = ({ data }: any) => {
   return (
     <Card className="bg-white">
       <CardContent className="p-6 bg-white">
-        <div className="rounded-md border">
+        <div className="rounded-md border border-gray-200">
           <Table>
             <TableHeader>
-              <TableRow className="bg-gray-50">
-                <TableHead className="w-16 text-center">No.</TableHead>
-                <TableHead>Tanggal Kontrak Kerja</TableHead>
-                <TableHead>Selesai Kontrak Kerja</TableHead>
-                <TableHead>Durasi Kontrak</TableHead>
-                <TableHead>Terakhir Diperbaharui</TableHead>
-                <TableHead className="text-center">Status</TableHead>
+              <TableRow className="bg-gradient-to-r from-[#1E3A8A] to-[#1E40AF] hover:bg-gradient-to-r hover:from-[#1E3A8A] hover:to-[#1E40AF]">
+                <TableHead className="w-16 text-center text-white font-semibold border-r border-white/30">
+                  No.
+                </TableHead>
+                <TableHead className="text-white font-semibold border-r border-white/30">
+                  Tanggal Kontrak Kerja
+                </TableHead>
+                <TableHead className="text-white font-semibold border-r border-white/30">
+                  Selesai Kontrak Kerja
+                </TableHead>
+                <TableHead className="text-white font-semibold border-r border-white/30">
+                  Durasi Kontrak
+                </TableHead>
+                <TableHead className="text-white font-semibold border-r border-white/30">
+                  Terakhir Diperbaharui
+                </TableHead>
+                <TableHead className="text-center text-white font-semibold">
+                  Status
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {kontrakHistory.map((kontrak) => (
-                <TableRow key={kontrak.no} className="hover:bg-gray-50">
-                  <TableCell className="text-center font-medium">
+              {kontrakHistory.map((kontrak, index) => (
+                <TableRow 
+                  key={kontrak.no} 
+                  className="hover:bg-gray-50"
+                >
+                  <TableCell className="text-center font-medium border-r border-gray-200 border-b border-gray-200">
                     {kontrak.no}
                   </TableCell>
-                  <TableCell>{kontrak.tanggalKontrak}</TableCell>
-                  <TableCell>{kontrak.selesaiKontrak}</TableCell>
-                  <TableCell>{kontrak.durasi}</TableCell>
-                  <TableCell>{kontrak.terakhirDiperbaharui}</TableCell>
-                  <TableCell className="text-center">
-                    <Badge
-                      variant={kontrak.status === 'Aktif' ? 'default' : 'secondary'}
-                      className={
-                        kontrak.status === 'Aktif'
-                          ? 'bg-green-600 hover:bg-green-700'
-                          : 'bg-gray-500 hover:bg-gray-600'
-                      }
-                    >
-                      {kontrak.status}
-                    </Badge>
+                  <TableCell className="border-r border-gray-200 border-b border-gray-200">{kontrak.tanggalKontrak}</TableCell>
+                  <TableCell className="border-r border-gray-200 border-b border-gray-200">{kontrak.selesaiKontrak}</TableCell>
+                  <TableCell className="border-r border-gray-200 border-b border-gray-200">{kontrak.durasi}</TableCell>
+                  <TableCell className="border-r border-gray-200 border-b border-gray-200">{kontrak.terakhirDiperbaharui}</TableCell>
+                  <TableCell className="text-center border-b border-gray-200">
+                    {kontrak.status === 'Aktif' ? (
+                      <Badge
+                        className="bg-green-100 text-green-700 rounded-sm px-3 py-1 flex items-center gap-1.5 w-fit mx-auto font-medium hover:bg-green-100"
+                      >
+                        <Check className="w-3.5 h-3.5" />
+                        {kontrak.status}
+                      </Badge>
+                    ) : (
+                      <Badge
+                        className="bg-red-100 text-red-600 rounded-sm px-3 py-1 flex items-center gap-1.5 w-fit mx-auto font-medium hover:bg-red-100"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                        {kontrak.status}
+                      </Badge>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
@@ -92,7 +113,7 @@ const TabRiwayatKontrakKerja = ({ data }: any) => {
         {/* Summary Info */}
         <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-md">
           <div className="flex items-start gap-3">
-            <div className="w-2 h-2 mt-2 rounded-full bg-blue-600 shrink-0" />
+            <div className="w-2 h-2 mt-2 rounded-full bg-[#1E40AF] shrink-0" />
             <div>
               <p className="text-sm font-medium text-blue-900">
                 Total Riwayat Kontrak: {kontrakHistory.length} kali
