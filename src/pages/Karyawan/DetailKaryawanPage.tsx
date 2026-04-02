@@ -150,7 +150,7 @@ const DetailKaryawanPage = () => {
         </button>
         <ChevronRight className="w-4 h-4 text-gray-400" />
         <button 
-          onClick={() => navigate('/karyawan')}
+          onClick={() => navigate('/data-karyawan')}
           className="flex items-center gap-1 text-blue-600 hover:text-blue-800 transition-colors"
         >
           <Users className="w-4 h-4" />
