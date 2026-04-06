@@ -20,9 +20,12 @@ interface PinjamanData {
   termin: string;
   tanggalPengajuan: Date;
   catatan: string;
-  status: 'Menunggu Disetujui' | 'Disetujui' | 'Ditolak';
+  status: 'Menunggu Disetujui' | 'Disetujui' | 'Diproses Finance' | 'Ditransfer' | 'Ditolak';
   tanggalDisetujui?: Date;
+  tanggalDiprosesFinance?: Date;
+  tanggalDitransfer?: Date;
   tanggalDitolak?: Date;
+  catatanPenolakan?: string;
 }
 
 const mockData: PinjamanData[] = [
@@ -50,8 +53,9 @@ const mockData: PinjamanData[] = [
     termin: '6 bulan',
     tanggalPengajuan: new Date('2024-01-10T14:20:00'),
     catatan: 'Pendidikan anak',
-    status: 'Disetujui',
-    tanggalDisetujui: new Date('2024-01-12T10:15:00')
+    status: 'Diproses Finance',
+    tanggalDisetujui: new Date('2024-01-12T10:15:00'),
+    tanggalDiprosesFinance: new Date('2024-01-13T09:00:00')
   },
   {
     no: 3,
@@ -65,7 +69,24 @@ const mockData: PinjamanData[] = [
     tanggalPengajuan: new Date('2024-02-01T10:00:00'),
     catatan: 'Biaya medis keluarga',
     status: 'Ditolak',
-    tanggalDitolak: new Date('2024-02-05T14:30:00')
+    tanggalDitolak: new Date('2024-02-05T14:30:00'),
+    catatanPenolakan: 'Dokumen tidak lengkap'
+  },
+  {
+    no: 4,
+    idKaryawan: 'EMP004',
+    namaKaryawan: 'Dewi Lestari',
+    divisi: 'Marketing',
+    jabatan: 'Marketing Staff',
+    jumlahPinjaman: 4000000,
+    keteranganPinjaman: 'Pinjaman akan Dipotong setiap tanggal 25',
+    termin: '8 bulan',
+    tanggalPengajuan: new Date('2024-01-05T11:00:00'),
+    catatan: 'Biaya pendidikan',
+    status: 'Ditransfer',
+    tanggalDisetujui: new Date('2024-01-06T14:00:00'),
+    tanggalDiprosesFinance: new Date('2024-01-07T10:00:00'),
+    tanggalDitransfer: new Date('2024-01-08T15:30:00')
   }
 ];
 
@@ -94,18 +115,42 @@ export const PinjamanPage = () => {
   };
 
   const formatDateTime = (date: Date) => {
-    return date.toLocaleDateString('id-ID') + ' ' + date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    
+    return `${day}/${month}/${year}, ${hours}:${minutes}`;
   };
 
-  const getStatusBadge = (
-    status: string,
-    tanggalDisetujui?: Date,
-    tanggalDitolak?: Date
-  ) => {
+  const getStatusBadge = (item: PinjamanData) => {
+    const { status, tanggalDisetujui, tanggalDiprosesFinance, tanggalDitransfer, tanggalDitolak, catatanPenolakan } = item;
+
+    if (status === 'Ditolak') {
+      return (
+        <div className="flex flex-col">
+          <Badge className="bg-red-100 text-red-800 hover:bg-red-100 mb-1 w-fit">
+            {status}
+          </Badge>
+          {catatanPenolakan && (
+            <span className="text-xs text-red-600 mb-1 font-medium">
+              {catatanPenolakan}
+            </span>
+          )}
+          {tanggalDitolak && (
+            <span className="text-xs text-gray-500">
+              {formatDateTime(tanggalDitolak)}
+            </span>
+          )}
+        </div>
+      );
+    }
+
     if (status === 'Disetujui') {
       return (
         <div className="flex flex-col">
-          <Badge className="bg-green-100 text-green-800 hover:bg-green-100 mb-1">
+          <Badge className="bg-green-100 text-green-800 hover:bg-green-100 mb-1 w-fit">
             {status}
           </Badge>
           {tanggalDisetujui && (
@@ -117,15 +162,30 @@ export const PinjamanPage = () => {
       );
     }
 
-    if (status === 'Ditolak') {
+    if (status === 'Diproses Finance') {
       return (
         <div className="flex flex-col">
-          <Badge className="bg-red-100 text-red-800 hover:bg-red-100 mb-1">
-            {status}
+          <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100 mb-1 w-fit">
+            Diproses oleh Finance
           </Badge>
-          {tanggalDitolak && (
+          {tanggalDiprosesFinance && (
             <span className="text-xs text-gray-500">
-              {formatDateTime(tanggalDitolak)}
+              {formatDateTime(tanggalDiprosesFinance)}
+            </span>
+          )}
+        </div>
+      );
+    }
+
+    if (status === 'Ditransfer') {
+      return (
+        <div className="flex flex-col">
+          <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-100 mb-1 w-fit">
+            Pinjaman Ditransfer
+          </Badge>
+          {tanggalDitransfer && (
+            <span className="text-xs text-gray-500">
+              {formatDateTime(tanggalDitransfer)}
             </span>
           )}
         </div>
@@ -133,7 +193,7 @@ export const PinjamanPage = () => {
     }
 
     return (
-      <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100">
+      <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100 w-fit">
         {status}
       </Badge>
     );
@@ -209,7 +269,7 @@ export const PinjamanPage = () => {
               <div className="space-y-1">
                 <p className="text-sm font-medium text-gray-700">Total Pengajuan Disetujui</p>
                 <p className="text-3xl font-bold text-gray-900">
-                  {data.filter(d => d.status === 'Disetujui').length}
+                  {data.filter(d => d.status === 'Disetujui' || d.status === 'Diproses Finance' || d.status === 'Ditransfer').length}
                 </p>
                 <p className="text-xs text-gray-500">Pengajuan</p>
               </div>
@@ -302,8 +362,8 @@ export const PinjamanPage = () => {
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Jumlah Pinjaman</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Keterangan Pinjaman</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Termin</TableHead>
-                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Tanggal Pengajuan</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Tujuan Pinjaman</TableHead>
+                  <TableHead className="text-white border border-gray-200 whitespace-nowrap">Tanggal Pengajuan</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Status</TableHead>
                   <TableHead className="text-white border border-gray-200 whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
@@ -319,10 +379,10 @@ export const PinjamanPage = () => {
                     <TableCell className="font-semibold border-r whitespace-nowrap">{formatCurrency(item.jumlahPinjaman)}</TableCell>
                     <TableCell className="max-w-xs truncate border-r whitespace-nowrap">{item.keteranganPinjaman}</TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">{item.termin}</TableCell>
-                    <TableCell className="border border-gray-200 whitespace-nowrap">{formatDateTime(item.tanggalPengajuan)}</TableCell>
                     <TableCell className="max-w-xs truncate border-r whitespace-nowrap">{item.catatan}</TableCell>
+                    <TableCell className="border border-gray-200 whitespace-nowrap">{formatDateTime(item.tanggalPengajuan)}</TableCell>
                     <TableCell className="border border-gray-200 whitespace-nowrap">
-                      {getStatusBadge(item.status, item.tanggalDisetujui, item.tanggalDitolak)}
+                      {getStatusBadge(item)}
                     </TableCell>
                     <TableCell>
                       <div className="flex space-x-2">

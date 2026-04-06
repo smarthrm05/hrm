@@ -6,7 +6,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
-import { Info, Upload, X } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { Info, Upload, X, Calendar as CalendarIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { format } from 'date-fns';
+import { id } from 'date-fns/locale';
 
 interface PinjamanModalProps {
   isOpen: boolean;
@@ -19,7 +24,7 @@ export const PinjamanModal = ({ isOpen, onClose, onSave }: PinjamanModalProps) =
   const [tujuanPinjaman, setTujuanPinjaman] = useState('');
   const [termin, setTermin] = useState('');
   const [skemaPembayaran, setSkemaPembayaran] = useState<'gajian' | 'luar_gajian'>('gajian');
-  const [tanggalPotong, setTanggalPotong] = useState('');
+  const [tanggalPotong, setTanggalPotong] = useState<Date>();
   const [ulangSetiapBulanGajian, setUlangSetiapBulanGajian] = useState(true);
   const [ulangSetiapBulan, setUlangSetiapBulan] = useState(true);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
@@ -50,6 +55,12 @@ export const PinjamanModal = ({ isOpen, onClose, onSave }: PinjamanModalProps) =
     setUploadedFile(null);
   };
 
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date) {
+      setTanggalPotong(date);
+    }
+  };
+
   const handleAjukan = () => {
     const data = {
       karyawan: karyawanData,
@@ -57,7 +68,7 @@ export const PinjamanModal = ({ isOpen, onClose, onSave }: PinjamanModalProps) =
       tujuanPinjaman,
       termin,
       skemaPembayaran,
-      tanggalPotong: skemaPembayaran === 'gajian' ? '25' : tanggalPotong,
+      tanggalPotong: skemaPembayaran === 'gajian' ? '25' : tanggalPotong ? format(tanggalPotong, 'yyyy-MM-dd') : '',
       ulangSetiapBulan: skemaPembayaran === 'gajian' ? ulangSetiapBulanGajian : ulangSetiapBulan,
       cicilan: hitungCicilan(),
       file: uploadedFile
@@ -180,7 +191,7 @@ export const PinjamanModal = ({ isOpen, onClose, onSave }: PinjamanModalProps) =
                         onChange={() => setSkemaPembayaran('gajian')}
                         className="mt-1 h-4 w-4 text-blue-600"
                       />
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
                         <span className="text-sm font-medium text-gray-900">Potong saat Gajian</span>
                         <p className="text-xs text-gray-500 mt-1 mb-3">
                           Dipotong setiap tanggal 25<br />
@@ -216,35 +227,57 @@ export const PinjamanModal = ({ isOpen, onClose, onSave }: PinjamanModalProps) =
                         onChange={() => setSkemaPembayaran('luar_gajian')}
                         className="mt-1 h-4 w-4 text-blue-600"
                       />
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
                         <span className="text-sm font-medium text-gray-900">Potong di Luar Gajian</span>
                         {skemaPembayaran === 'luar_gajian' && (
-                          <div className="mt-3 space-y-2">
-                            <div className="flex items-center justify-between gap-3">
-                              <div className="flex-1">
-                                <Input
-                                  type="date"
-                                  value={tanggalPotong}
-                                  onChange={(e) => setTanggalPotong(e.target.value)}
-                                  className="h-8 text-xs bg-white border-gray-300"
-                                />
-                              </div>
-                              <div className="flex items-center gap-2 shrink-0">
-                                <span className="text-xs text-gray-600 whitespace-nowrap">Ulang setiap bulan</span>
-                                <button
-                                  type="button"
-                                  onClick={() => setUlangSetiapBulan(!ulangSetiapBulan)}
-                                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
-                                    ulangSetiapBulan ? 'bg-blue-600' : 'bg-gray-300'
-                                  }`}
+                          <div className="mt-3 space-y-3">
+                            <div>
+                              <Popover>
+                                <PopoverTrigger asChild>
+                                  <button
+                                    type="button"
+                                    className={cn(
+                                      "w-full flex items-center justify-between px-3 py-2 h-9 bg-white border border-gray-300 rounded-md text-sm font-normal hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500",
+                                      !tanggalPotong && "text-muted-foreground"
+                                    )}
+                                  >
+                                    <span className="truncate">
+                                      {tanggalPotong ? format(tanggalPotong, "dd MMMM yyyy", { locale: id }) : "Pilih tanggal"}
+                                    </span>
+                                    <CalendarIcon className="h-4 w-4 text-gray-400 flex-shrink-0 ml-2" />
+                                  </button>
+                                </PopoverTrigger>
+                                <PopoverContent 
+                                  className="w-auto p-0 z-[10002]" 
+                                  align="start" 
+                                  sideOffset={5}
+                                  avoidCollisions={true}
                                 >
-                                  <span
-                                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                                      ulangSetiapBulan ? 'translate-x-5' : 'translate-x-0.5'
-                                    }`}
+                                  <Calendar
+                                    mode="single"
+                                    selected={tanggalPotong}
+                                    onSelect={handleDateSelect}
+                                    initialFocus
+                                    className="rounded-md border pointer-events-auto"
                                   />
-                                </button>
-                              </div>
+                                </PopoverContent>
+                              </Popover>
+                            </div>
+                            <div className="flex items-center justify-between pt-2 border-t border-gray-200">
+                              <span className="text-xs text-gray-600">Ulang setiap bulan</span>
+                              <button
+                                type="button"
+                                onClick={() => setUlangSetiapBulan(!ulangSetiapBulan)}
+                                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                                  ulangSetiapBulan ? 'bg-blue-600' : 'bg-gray-300'
+                                }`}
+                              >
+                                <span
+                                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                    ulangSetiapBulan ? 'translate-x-5' : 'translate-x-0.5'
+                                  }`}
+                                />
+                              </button>
                             </div>
                           </div>
                         )}
@@ -267,7 +300,7 @@ export const PinjamanModal = ({ isOpen, onClose, onSave }: PinjamanModalProps) =
                             <span className="font-semibold">Cicilan:</span> {hitungCicilan()} / bulan
                           </p>
                           <p className="text-sm text-blue-800">
-                            <span className="font-semibold">Potong:</span> tiap tanggal {skemaPembayaran === 'gajian' ? '25' : tanggalPotong}
+                            <span className="font-semibold">Potong:</span> tiap tanggal {skemaPembayaran === 'gajian' ? '25' : tanggalPotong ? format(tanggalPotong, 'd') : '-'}
                           </p>
                           <p className="text-sm text-blue-800">
                             <span className="font-semibold">Mulai:</span> {new Date().toLocaleString('id-ID', { month: 'long', year: 'numeric' })}
