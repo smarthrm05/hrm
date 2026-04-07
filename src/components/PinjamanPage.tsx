@@ -70,7 +70,7 @@ const mockData: PinjamanData[] = [
     catatan: 'Biaya medis keluarga',
     status: 'Ditolak',
     tanggalDitolak: new Date('2024-02-05T14:30:00'),
-    catatanPenolakan: 'Dokumen tidak lengkap'
+    catatanPenolakan: 'Terlalu banyak reimbursement'
   },
   {
     no: 4,
@@ -87,6 +87,21 @@ const mockData: PinjamanData[] = [
     tanggalDisetujui: new Date('2024-01-06T14:00:00'),
     tanggalDiprosesFinance: new Date('2024-01-07T10:00:00'),
     tanggalDitransfer: new Date('2024-01-08T15:30:00')
+  },
+  // Data dummy ketika pengajuan disetujui oleh HRD
+  {
+    no: 5,
+    idKaryawan: 'EMP005',
+    namaKaryawan: 'Rina Wijaya',
+    divisi: 'Operasional',
+    jabatan: 'Staff Operasional',
+    jumlahPinjaman: 2500000,
+    keteranganPinjaman: 'Pinjaman akan Dipotong setiap tanggal 25',
+    termin: '5 bulan',
+    tanggalPengajuan: new Date('2024-02-10T08:45:00'),
+    catatan: 'Biaya perbaikan kendaraan',
+    status: 'Disetujui',
+    tanggalDisetujui: new Date('2024-02-11T13:20:00')
   }
 ];
 
@@ -115,13 +130,18 @@ export const PinjamanPage = () => {
   };
 
   const formatDateTime = (date: Date) => {
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
+    const options: Intl.DateTimeFormatOptions = { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric'
+    };
+    
+    const dateString = date.toLocaleDateString('id-ID', options);
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
     
-    return `${day}/${month}/${year}, ${hours}:${minutes}`;
+    return `${dateString}, ${hours}:${minutes}`;
   };
 
   const getStatusBadge = (item: PinjamanData) => {
@@ -129,14 +149,15 @@ export const PinjamanPage = () => {
 
     if (status === 'Ditolak') {
       return (
-        <div className="flex flex-col">
-          <Badge className="bg-red-100 text-red-800 hover:bg-red-100 mb-1 w-fit">
-            {status}
+        <div className="flex flex-col gap-1">
+          <Badge className="bg-red-100 text-red-800 hover:bg-red-100 w-fit rounded-none px-2 py-1">
+            Ditolak oleh HRD
           </Badge>
           {catatanPenolakan && (
-            <span className="text-xs text-red-600 mb-1 font-medium">
-              {catatanPenolakan}
-            </span>
+            <div className="text-xs">
+              <span className="font-bold text-gray-900">Catatan : </span>
+              <span className="text-gray-700">{catatanPenolakan}</span>
+            </div>
           )}
           {tanggalDitolak && (
             <span className="text-xs text-gray-500">
@@ -149,9 +170,9 @@ export const PinjamanPage = () => {
 
     if (status === 'Disetujui') {
       return (
-        <div className="flex flex-col">
-          <Badge className="bg-green-100 text-green-800 hover:bg-green-100 mb-1 w-fit">
-            {status}
+        <div className="flex flex-col gap-1">
+          <Badge className="bg-green-100 text-green-800 hover:bg-green-100 w-fit rounded-none px-2 py-1">
+            Disetujui oleh HRD
           </Badge>
           {tanggalDisetujui && (
             <span className="text-xs text-gray-500">
@@ -164,8 +185,8 @@ export const PinjamanPage = () => {
 
     if (status === 'Diproses Finance') {
       return (
-        <div className="flex flex-col">
-          <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100 mb-1 w-fit">
+        <div className="flex flex-col gap-1">
+          <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100 w-fit rounded-none px-2 py-1">
             Diproses oleh Finance
           </Badge>
           {tanggalDiprosesFinance && (
@@ -179,8 +200,8 @@ export const PinjamanPage = () => {
 
     if (status === 'Ditransfer') {
       return (
-        <div className="flex flex-col">
-          <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-100 mb-1 w-fit">
+        <div className="flex flex-col gap-1">
+          <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-100 w-fit rounded-none px-2 py-1">
             Pinjaman Ditransfer
           </Badge>
           {tanggalDitransfer && (
@@ -193,7 +214,7 @@ export const PinjamanPage = () => {
     }
 
     return (
-      <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100 w-fit">
+      <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100 w-fit rounded-none px-2 py-1">
         {status}
       </Badge>
     );
@@ -309,7 +330,7 @@ export const PinjamanPage = () => {
         </Card>
       </div>
       
-      <Card>
+      <Card className="bg-white">
         <CardHeader className="bg-blue-50 border-b">
           <CardTitle className="text-blue-800">Data Pengajuan</CardTitle>
         </CardHeader>

@@ -27,14 +27,38 @@ export const PinjamanModal = ({ isOpen, onClose, onSave }: PinjamanModalProps) =
   const [tanggalPotong, setTanggalPotong] = useState<Date>();
   const [ulangSetiapBulanGajian, setUlangSetiapBulanGajian] = useState(true);
   const [ulangSetiapBulan, setUlangSetiapBulan] = useState(true);
+  const [namaRekening, setNamaRekening] = useState('');
+  const [nomorRekening, setNomorRekening] = useState('');
+  const [bank, setBank] = useState('');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
-  // Data karyawan (nanti bisa diambil dari props atau context)
+  // Data karyawan 
   const karyawanData = {
     id: 'EMP001',
     nama: 'Ahmad Rizki',
     divisi: 'IT',
     jabatan: 'Developer'
+  };
+
+  const formatAngka = (angka: string) => {
+    const angkaBersih = angka.replace(/\./g, '');
+    
+    // Hanya izinkan angka
+    if (!/^\d*$/.test(angkaBersih)) {
+      return jumlahPinjaman;
+    }
+    
+    // Format dengan titik sebagai pemisah ribuan
+    if (angkaBersih === '') return '';
+    
+    const angkaNumber = parseInt(angkaBersih, 10);
+    return angkaNumber.toLocaleString('id-ID');
+  };
+
+  const handleJumlahPinjamanChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const formatted = formatAngka(value);
+    setJumlahPinjaman(formatted);
   };
 
   // Hitung simulasi cicilan
@@ -70,6 +94,9 @@ export const PinjamanModal = ({ isOpen, onClose, onSave }: PinjamanModalProps) =
       skemaPembayaran,
       tanggalPotong: skemaPembayaran === 'gajian' ? '25' : tanggalPotong ? format(tanggalPotong, 'yyyy-MM-dd') : '',
       ulangSetiapBulan: skemaPembayaran === 'gajian' ? ulangSetiapBulanGajian : ulangSetiapBulan,
+      namaRekening,
+      nomorRekening,
+      bank,
       cicilan: hitungCicilan(),
       file: uploadedFile
     };
@@ -82,7 +109,7 @@ export const PinjamanModal = ({ isOpen, onClose, onSave }: PinjamanModalProps) =
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" />
         
-        {/* Modal Content dengan struktur yang lebih baik */}
+        {/* Modal Content */}
         <Dialog.Content className="fixed z-[9999] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-full max-w-3xl rounded-lg shadow-lg focus:outline-none max-h-[85vh] flex flex-col">
           {/* Header - Fixed */}
           <div className="flex justify-between items-center p-6 border-b border-gray-200 flex-shrink-0">
@@ -146,7 +173,7 @@ export const PinjamanModal = ({ isOpen, onClose, onSave }: PinjamanModalProps) =
                     <Input
                       placeholder="5.000.000"
                       value={jumlahPinjaman}
-                      onChange={(e) => setJumlahPinjaman(e.target.value)}
+                      onChange={handleJumlahPinjamanChange}
                       className="pl-12 bg-white border-gray-300"
                     />
                   </div>
@@ -283,6 +310,51 @@ export const PinjamanModal = ({ isOpen, onClose, onSave }: PinjamanModalProps) =
                         )}
                       </div>
                     </label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tujuan No. Rekening */}
+              <div className="pt-4 border-t border-gray-200">
+                <Label className="text-sm font-medium text-gray-700 mb-3 block">Informasi Rekening</Label>
+                <div className="space-y-4">
+                  <div>
+                    <Label className="text-sm font-medium text-gray-700 mb-2 block">Nama Rekening</Label>
+                    <Input
+                      placeholder="Masukan nama rekening penerima"
+                      value={namaRekening}
+                      onChange={(e) => setNamaRekening(e.target.value)}
+                      className="bg-white border-gray-300"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label className="text-sm font-medium text-gray-700 mb-2 block">Nomor Rekening</Label>
+                      <Input
+                        placeholder="Masukan nomor rekening penerima"
+                        value={nomorRekening}
+                        onChange={(e) => setNomorRekening(e.target.value)}
+                        className="bg-white border-gray-300"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-sm font-medium text-gray-700 mb-2 block">Bank</Label>
+                      <Select value={bank} onValueChange={setBank}>
+                        <SelectTrigger className="bg-white border-gray-300">
+                          <SelectValue placeholder="Pilih Bank" />
+                        </SelectTrigger>
+                        <SelectContent className="z-[10000]">
+                          <SelectItem value="bca">BCA</SelectItem>
+                          <SelectItem value="mandiri">Mandiri</SelectItem>
+                          <SelectItem value="bni">BNI</SelectItem>
+                          <SelectItem value="bri">BRI</SelectItem>
+                          <SelectItem value="danamon">Danamon</SelectItem>
+                          <SelectItem value="permata">Permata</SelectItem>
+                          <SelectItem value="cimb">CIMB Niaga</SelectItem>
+                          <SelectItem value="btn">BTN</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                 </div>
               </div>
