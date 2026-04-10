@@ -35,12 +35,10 @@ export const DivisiPage = () => {
   const [showEntries, setShowEntries] = useState('10');
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Filter data
   const filteredData = divisiData.filter((item) =>
     item.nama.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Pagination
   const entriesPerPage = parseInt(showEntries);
   const totalPages = Math.ceil(filteredData.length / entriesPerPage);
   const paginatedData = filteredData.slice(
@@ -49,23 +47,26 @@ export const DivisiPage = () => {
   );
 
   return (
-    <div className="p-6 space-y-6">
-      {/* Card dengan latar belakang putih */}
-      <Card className="bg-white">
+    <div className="p-6 space-y-6 bg-[#F8FAFC] min-h-screen">
+      <Card className="border border-[#D1D5DB] shadow-sm bg-white">
+        
+        {/* Header */}
         <CardHeader>
-          <CardTitle className="flex items-center">
+          <CardTitle className="flex items-center text-[#0F2A4D] font-semibold">
             <Users className="h-5 w-5 mr-2" />
             Data Divisi
           </CardTitle>
         </CardHeader>
 
         <CardContent className="space-y-4">
+
           {/* Controls */}
           <div className="flex justify-between items-center flex-wrap gap-4">
+            
             <div className="flex items-center space-x-2">
               <span className="text-sm text-gray-600">Show</span>
               <Select value={showEntries} onValueChange={setShowEntries}>
-                <SelectTrigger className="w-20">
+                <SelectTrigger className="w-20 border-[#D1D5DB]">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -78,107 +79,125 @@ export const DivisiPage = () => {
             </div>
 
             <div className="flex items-center space-x-2">
+              
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
                   placeholder="Cari divisi..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-64"
+                  className="pl-10 w-64 border-[#D1D5DB]"
                 />
               </div>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+
+              <Button className="bg-[#1E4F85] text-white hover:bg-[#1E4F85]">
                 <Plus className="h-4 w-4 mr-2" />
                 Tambah Divisi
               </Button>
+
             </div>
           </div>
 
           {/* Table */}
-          <div className="border rounded-lg overflow-hidden">
-            <Table className="w-full border border-gray-300 border-collapse">
+          <div className="border border-[#D1D5DB] rounded-lg overflow-hidden bg-white">
+            <Table className="w-full border-collapse">
+              
               <TableHeader>
-                <TableRow className="bg-blue-600 hover:bg-blue-600 text-white">
-                  <TableHead className="text-white border border-gray-200">No.</TableHead>
-                  <TableHead className="text-white border border-gray-200">Nama Divisi</TableHead>
-                  <TableHead className="text-white border border-gray-200">Aksi</TableHead>
+                {/* Header dengan warna biru tua*/}
+                <TableRow className="bg-[#0F2A4D] text-white">
+                  <TableHead className="border border-white/20 text-white">No.</TableHead>
+                  <TableHead className="border border-white/20 text-white">Nama Divisi</TableHead>
+                  <TableHead className="border border-white/20 text-white">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
+
               <TableBody>
                 {paginatedData.map((item, idx) => (
-                  <TableRow key={item.id} className="hover:bg-gray-50">
-                    <TableCell className="border border-gray-200">
+                  <TableRow key={item.id} className="hover:bg-transparent">
+                    
+                    <TableCell className="border border-gray-300 bg-white text-center">
                       {(currentPage - 1) * entriesPerPage + idx + 1}
                     </TableCell>
-                    <TableCell className="border border-gray-200">{item.nama}</TableCell>
-                    <TableCell className="border border-gray-200">
-                      <div className="flex space-x-2">
+
+                    <TableCell className="border border-gray-300 bg-white">
+                      {item.nama}
+                    </TableCell>
+
+                    <TableCell className="border border-gray-300 bg-white">
+                      <div className="flex gap-2 justify-center">
+                        
                         <Button
                           size="sm"
-                          variant="ghost"
-                          className="bg-blue-400 text-white hover:bg-blue-500"
+                          className="bg-[#1E4F85] text-white hover:bg-[#1E4F85]"
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
+
                         <Button
                           size="sm"
-                          variant="ghost"
-                          className="bg-red-600 text-white hover:bg-red-700"
+                          className="bg-red-600 text-white hover:bg-red-600"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
+
                       </div>
                     </TableCell>
+
                   </TableRow>
                 ))}
               </TableBody>
+
             </Table>
           </div>
 
-          {/* Footer / Pagination */}
+          {/* Pagination */}
           <div className="flex justify-between items-center mt-4">
-            {/* Informasi pagination */}
+            
             <div className="text-sm text-gray-500">
               Menampilkan{' '}
               <strong>
-                {Math.max((currentPage - 1) * entriesPerPage + 1, 1)} sampai{' '}
+                {Math.max((currentPage - 1) * entriesPerPage + 1, 1)} -{' '}
                 {Math.min(currentPage * entriesPerPage, filteredData.length)}
               </strong>{' '}
-              dari <strong>{filteredData.length}</strong> data
+              dari <strong>{filteredData.length}</strong>
             </div>
-            {/* Navigasi pagination */}
+
             <div className="flex gap-2">
+              
               <Button
                 disabled={currentPage === 1}
-                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                className="bg-blue-500 text-white hover:bg-blue-600"
+                onClick={() => setCurrentPage((p) => p - 1)}
+                className="bg-[#1E4F85] text-white hover:bg-[#1E4F85]"
               >
-                Sebelumnya
+                Prev
               </Button>
+
               {[...Array(totalPages)].map((_, i) => (
                 <Button
                   key={i}
-                  variant={currentPage === i + 1 ? 'default' : 'outline'}
                   size="sm"
                   onClick={() => setCurrentPage(i + 1)}
                   className={
                     currentPage === i + 1
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-white text-blue-600 border border-blue-600 hover:bg-blue-50'
+                      ? 'bg-[#1E4F85] text-white'
+                      : 'bg-white text-[#1E4F85] border border-[#1E4F85]'
                   }
                 >
                   {i + 1}
                 </Button>
               ))}
+
               <Button
                 disabled={currentPage === totalPages}
-                onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-                className="bg-blue-500 text-white hover:bg-blue-600"
+                onClick={() => setCurrentPage((p) => p + 1)}
+                className="bg-[#1E4F85] text-white hover:bg-[#1E4F85]"
               >
-                Selanjutnya
+                Next
               </Button>
+
             </div>
           </div>
+
         </CardContent>
       </Card>
     </div>

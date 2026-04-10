@@ -35,12 +35,11 @@ interface SidebarProps {
 
 const menuItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, roles: ['HR', 'KARYAWAN', 'ATASAN'] },
-
   {
     id: 'kelola-karyawan',
     label: 'Kelola Karyawan',
     icon: Users,
-    roles: ['HR'], // HANYA HR
+    roles: ['HR'],
     submenu: [
       { id: 'divisi', label: 'Divisi' },
       { id: 'jabatan', label: 'Jabatan' },
@@ -48,70 +47,63 @@ const menuItems = [
       { id: 'data-karyawan', label: 'Data Karyawan' },
     ],
   },
-
   {
     id: 'kehadiran',
     label: 'Kehadiran',
     icon: Clock,
-    roles: ['HR', 'KARYAWAN', 'ATASAN'], // TAMBAH ATASAN
+    roles: ['HR', 'KARYAWAN', 'ATASAN'],
     submenu: [
       { id: 'data-kehadiran', label: 'Data Kehadiran' },
       { id: 'rekap-kehadiran', label: 'Rekap Kehadiran' },
     ],
   },
-
-  { id: 'request-absen', label: 'Request Absen', icon: MapPinCheck, roles: ['HR', 'KARYAWAN', 'ATASAN'] }, // TAMBAH ATASAN
-
+  { id: 'request-absen', label: 'Request Absen', icon: MapPinCheck, roles: ['HR', 'KARYAWAN', 'ATASAN'] },
   {
     id: 'cuti',
     label: 'Cuti',
     icon: CalendarClock,
-    roles: ['HR', 'KARYAWAN', 'ATASAN'], // TAMBAH ATASAN
+    roles: ['HR', 'KARYAWAN', 'ATASAN'],
     submenu: [
       { id: 'data-cuti', label: 'Data Cuti' },
       { id: 'rekap-cuti', label: 'Rekap Cuti' },
       { id: 'kategori-cuti', label: 'Kategori Cuti' },
     ],
   },
-
   {
     id: 'izin',
     label: 'Izin',
     icon: FileText,
-    roles: ['HR', 'KARYAWAN', 'ATASAN'], // TAMBAH ATASAN
+    roles: ['HR', 'KARYAWAN', 'ATASAN'],
     submenu: [
       { id: 'data-izin', label: 'Data Izin' },
       { id: 'rekap-izin', label: 'Rekap Izin' },
     ],
   },
-
   {
     id: 'lembur',
     label: 'Lembur',
     icon: CalendarClock,
-    roles: ['HR', 'ATASAN'], // SUDAH BENAR
+    roles: ['HR', 'ATASAN'],
     submenu: [
       { id: 'data-lembur', label: 'Data Lembur' },
       { id: 'rekap-lembur', label: 'Rekap Lembur' },
     ],
   },
-
   {
     id: 'penggajian',
     label: 'Penggajian',
     icon: DollarSign,
-    roles: ['HR'], // HANYA HR (TIDAK ADA ATASAN)
+    roles: ['HR'],
     submenu: [
       { id: 'hitung-gaji', label: 'Hitung Gaji' },
       { id: 'rekap-gaji', label: 'Rekap Gaji' },
     ],
   },
-
   {
     id: 'jadwal-shift',
     label: 'Jadwal Shift',
     icon: Calendar,
-    roles: ['HR', 'ATASAN'], // TAMBAH ATASAN
+    roles: ['HR', 'ATASAN'],
     submenu: [
       { id: 'shift', label: 'Shift' },
       { id: 'grup', label: 'Grup' },
@@ -119,24 +111,16 @@ const menuItems = [
       { id: 'rekap-jadwal', label: 'Rekap Jadwal' },
     ],
   },
-
-  // 🔥 PERBAIKAN: PINJAMAN HANYA HR & KARYAWAN (ATASAN DIHAPUS)
-  { id: 'pinjaman', label: 'Pinjaman', icon: CreditCard, roles: ['HR', 'KARYAWAN'] }, 
-  
-  { id: 'reimbursement', label: 'Reimbursement', icon: Receipt, roles: ['HR', 'KARYAWAN', 'ATASAN'] }, // TAMBAH ATASAN
-
+  { id: 'pinjaman', label: 'Pinjaman', icon: CreditCard, roles: ['HR', 'KARYAWAN'] },
+  { id: 'reimbursement', label: 'Reimbursement', icon: Receipt, roles: ['HR', 'KARYAWAN', 'ATASAN'] },
   { id: 'kontrak-kerja', label: 'Kontrak Kerja', icon: Users, roles: ['HR'] },
   { id: 'paklaring', label: 'Paklaring', icon: FileCheck, roles: ['HR'] },
   { id: 'surat-peringatan', label: 'Surat Peringatan', icon: AlertTriangle, roles: ['HR'] },
-
   { id: 'pengunduran-diri', label: 'Surat Pengunduran Diri', icon: Mail, roles: ['HR', 'KARYAWAN'] },
   { id: 'keterangan-bekerja', label: 'Surat Keterangan Bekerja', icon: Mail, roles: ['HR'] },
   { id: 'penawaran-kerja', label: 'Surat Penawaran Kerja', icon: FileSignature, roles: ['HR'] },
-
   { id: 'po', label: 'PO', icon: ShoppingCart, roles: ['HR'] },
-  
-  { id: 'kpi', label: 'KPI', icon: BarChart3, roles: ['HR'] }, // HANYA HR (ATASAN DIHAPUS)
-
+  { id: 'kpi', label: 'KPI', icon: BarChart3, roles: ['HR'] },
   { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings, roles: ['HR', 'KARYAWAN', 'ATASAN'] },
 ];
 
@@ -168,9 +152,7 @@ export const Sidebar = ({ onLogout, currentPath }: SidebarProps) => {
         <div key={item.id}>
           <Button
             variant="ghost"
-            className={cn(
-              'w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium text-white hover:bg-white/10 transition-all duration-200'
-            )}
+            className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-[#1E4F85]/40 transition-all duration-200"
             onClick={() => toggleDropdown(item.id)}
           >
             <div className="flex items-center gap-3">
@@ -188,20 +170,20 @@ export const Sidebar = ({ onLogout, currentPath }: SidebarProps) => {
           {isOpen && (
             <div
               className={cn(
-                'transition-all duration-300 ease-in-out overflow-hidden',
+                'transition-all duration-300 overflow-hidden',
                 isOpenDropdown ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0'
               )}
             >
-              <div className="ml-6 bg-white/10 backdrop-blur-sm rounded-xl py-2 px-3 space-y-1 border border-white/20">
+              <div className="ml-6 bg-[#0F2A4D]/80 backdrop-blur-md rounded-xl py-2 px-3 space-y-1 border border-[#1E4F85]/40">
                 {item.submenu.map((sub) => (
                   <button
                     key={sub.id}
                     onClick={() => handleNavigate(sub.id)}
                     className={cn(
-                      'block w-full text-left px-3 py-1.5 rounded-md text-sm transition-all text-white/90 hover:bg-white/20',
+                      'block w-full text-left px-3 py-1.5 rounded-md text-sm text-white/80 hover:text-white transition-all',
                       currentPath === sub.id
-                        ? 'bg-white/30 text-white font-semibold'
-                        : ''
+                        ? 'bg-[#3FA7FF]/20 text-white font-semibold border border-[#3FA7FF]/30'
+                        : 'hover:bg-[#3FA7FF]/20'
                     )}
                   >
                     {sub.label}
@@ -222,8 +204,8 @@ export const Sidebar = ({ onLogout, currentPath }: SidebarProps) => {
         className={cn(
           'w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 justify-start',
           isActive
-            ? 'bg-white/30 text-white font-semibold'
-            : 'text-white/90 hover:bg-white/10 hover:text-white'
+            ? 'bg-[#3FA7FF]/20 text-white font-semibold border border-[#3FA7FF]/30'
+            : 'text-white/80 hover:text-white hover:bg-[#1E4F85]/40'
         )}
         onClick={() => handleNavigate(item.id)}
       >
@@ -236,17 +218,17 @@ export const Sidebar = ({ onLogout, currentPath }: SidebarProps) => {
   return (
     <div
       className={cn(
-        'bg-gradient-to-b from-[#1E3A8A] to-[#1E40AF] text-white h-screen flex flex-col shadow-lg transition-all duration-300 fixed md:static top-0 left-0 z-40',
+        'bg-gradient-to-b from-[#0B1F3A] via-[#0F2A4D] to-[#133A63] text-white h-screen flex flex-col shadow-[0_0_40px_rgba(0,0,0,0.6)] transition-all duration-300 fixed md:static top-0 left-0 z-40',
         isOpen ? 'w-64' : 'w-16'
       )}
     >
       {/* Header */}
-      <div className="p-4 border-b border-white/20 flex items-center justify-between">
-        {isOpen && <h1 className="text-xl font-bold">SMART HRM</h1>}
+      <div className="p-4 border-b border-white/10 flex items-center justify-between">
+        {isOpen && <h1 className="text-xl font-bold tracking-wide">SMART HRM</h1>}
         <Button
           variant="ghost"
           size="icon"
-          className="text-white hover:bg-white/10"
+          className="text-white hover:bg-[#1E4F85]/40"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <ArrowLeft className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -261,10 +243,10 @@ export const Sidebar = ({ onLogout, currentPath }: SidebarProps) => {
       </div>
 
       {/* Logout */}
-      <div className="p-4 border-t border-white/20">
+      <div className="p-4 border-t border-white/10">
         <Button
           variant="ghost"
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-white/90 hover:bg-white/10 hover:text-white transition-all duration-150 justify-start"
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-white/80 hover:text-white hover:bg-[#1E4F85]/40 transition-all duration-150 justify-start"
           onClick={onLogout}
         >
           <LogOut className="h-5 w-5" />
