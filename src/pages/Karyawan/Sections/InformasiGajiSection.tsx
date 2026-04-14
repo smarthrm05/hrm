@@ -40,14 +40,15 @@ const InputRp = ({ value, onChange, placeholder }: any) => (
 const InformasiGajiSection: React.FC<InformasiGajiSectionProps> = ({ formData, updateForm }) => {
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-      <div className="flex items-center space-x-2 p-3 bg-[#2794EB] text-white rounded-t-lg">
+      {/* Header dengan warna deep blue seperti sidebar */}
+      <div className="flex items-center space-x-2 p-3 bg-[#0F2A4D] text-white rounded-t-lg">
         <Wallet className="w-5 h-5" /> 
         <h3 className="font-semibold">Informasi Gaji</h3>
       </div>
 
       <div className="p-4">
+        {/* GRID INPUT GAJI */}
         <div className="grid grid-cols-2 gap-6">
-
           {/* GAJI POKOK */}
           <div className="flex flex-col gap-2">
             <Label className="font-semibold text-sm">Gaji Pokok <span className="text-red-500">*</span></Label>

@@ -8,7 +8,7 @@ const DokumenSection = ({ updateForm, formData }: any) => {
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-      <div className="flex items-center space-x-2 p-3 bg-[#2794EB] text-white rounded-t-lg">
+      <div className="flex items-center space-x-2 p-3 bg-[#0F2A4D] text-white rounded-t-lg">
         <FileText className="w-5 h-5" />
         <h3 className="font-semibold">Dokumen Pendukung</h3>
       </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Briefcase } from "lucide-react";
+import { Briefcase, AlertTriangle, Calendar } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,10 +7,12 @@ import { Label } from "@/components/ui/label";
 const KepegawaianSection = ({ updateForm, formData }: any) => {
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-      <div className="flex items-center space-x-2 p-3 bg-[#2794EB] text-white rounded-t-lg">
+      {/* Header warna deep blue sesuai sidebar */}
+      <div className="flex items-center space-x-2 p-3 bg-[#0F2A4D] text-white rounded-t-lg">
         <Briefcase className="w-5 h-5" />
         <h3 className="font-semibold">Data Kepegawaian</h3>
       </div>
+      
       <div className="p-4">
         <div className="grid grid-cols-2 gap-6">
 
@@ -119,37 +121,46 @@ const KepegawaianSection = ({ updateForm, formData }: any) => {
             </Select>
           </div>
 
-          {/* Tanggal Bergabung */}
+          {/* Tanggal Bergabung - Dengan Icon Kalender */}
           <div className="flex flex-col gap-2">
             <Label className="font-semibold">Tanggal Bergabung <span className="text-red-500">*</span></Label>
-            <Input
-              type="date"
-              className="bg-[#ffff] text-sm"
-              value={formData.tanggalBergabung || ""}
-              onChange={(e) => updateForm("tanggalBergabung", e.target.value)}
-            />
+            <div className="relative">
+              <Input
+                type="date"
+                className="bg-white text-sm pr-10 [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                value={formData.tanggalBergabung || ""}
+                onChange={(e) => updateForm("tanggalBergabung", e.target.value)}
+              />
+              <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            </div>
           </div>
 
-          {/* Tanggal Kontrak */}
+          {/* Tanggal Kontrak - Dengan Icon Kalender */}
           <div className="flex flex-col gap-2">
             <Label className="font-semibold">Tanggal Kontrak <span className="text-red-500">*</span></Label>
-            <Input
-              type="date"
-              className="bg-[#ffff] text-sm"
-              value={formData.tanggalKontrak || ""}
-              onChange={(e) => updateForm("tanggalKontrak", e.target.value)}
-            />
+            <div className="relative">
+              <Input
+                type="date"
+                className="bg-white text-sm pr-10 [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                value={formData.tanggalKontrak || ""}
+                onChange={(e) => updateForm("tanggalKontrak", e.target.value)}
+              />
+              <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            </div>
           </div>
 
-          {/* Selesai Kontrak */}
+          {/* Selesai Kontrak - Dengan Icon Kalender */}
           <div className="flex flex-col gap-2">
             <Label className="font-semibold">Selesai Kontrak <span className="text-red-500">*</span></Label>
-            <Input
-              type="date"
-              className="bg-[#ffff] text-sm"
-              value={formData.selesaiKontrak || ""}
-              onChange={(e) => updateForm("selesaiKontrak", e.target.value)}
-            />
+            <div className="relative">
+              <Input
+                type="date"
+                className="bg-white text-sm pr-10 [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                value={formData.selesaiKontrak || ""}
+                onChange={(e) => updateForm("selesaiKontrak", e.target.value)}
+              />
+              <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            </div>
           </div>
 
           {/* Grup */}
@@ -201,10 +212,14 @@ const KepegawaianSection = ({ updateForm, formData }: any) => {
                 <SelectValue placeholder="-- Pilih Status Marital --" />
               </SelectTrigger>
               <SelectContent className="text-sm">
-                <SelectItem value="TK/0">TK/0</SelectItem>
-                <SelectItem value="K/1">K/1</SelectItem>
-                <SelectItem value="K/2">K/2</SelectItem>
-                <SelectItem value="K/3">K/3</SelectItem>
+                <SelectItem value="TK/0">TK/0 - Rp 54.000.000</SelectItem>
+                <SelectItem value="TK/1">TK/1 - Rp 58.500.000</SelectItem>
+                <SelectItem value="TK/2">TK/2 - Rp 63.000.000</SelectItem>
+                <SelectItem value="TK/3">TK/3 - Rp 67.500.000</SelectItem>
+                <SelectItem value="K/0">K/0 - Rp 58.500.000</SelectItem>
+                <SelectItem value="K/1">K/1 - Rp 63.000.000</SelectItem>
+                <SelectItem value="K/2">K/2 - Rp 67.500.000</SelectItem>
+                <SelectItem value="K/3">K/3 - Rp 72.000.000</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -215,7 +230,7 @@ const KepegawaianSection = ({ updateForm, formData }: any) => {
             <Input
               type="text"
               placeholder="Referensi"
-              className="bg-[#ffff] text-sm"
+              className="bg-white text-sm"
               onChange={(e) => updateForm("referensi", e.target.value)}
             />
           </div>
@@ -226,7 +241,7 @@ const KepegawaianSection = ({ updateForm, formData }: any) => {
             <Input
               type="text"
               placeholder="32xxxxxx"
-              className="bg-[#ffff] text-sm"
+              className="bg-white text-sm"
               onChange={(e) => updateForm("noSio", e.target.value)}
             />
           </div>
@@ -236,7 +251,7 @@ const KepegawaianSection = ({ updateForm, formData }: any) => {
             <Label className="font-semibold">Status Akun <span className="text-red-500">*</span></Label>
             <Select
               onValueChange={(value) => updateForm("akun", value)}
-              defaultValue={formData?.divisi}
+              defaultValue={formData?.akun}
             >
               <SelectTrigger className="h-[42px] bg-white">
                 <SelectValue placeholder="-- Pilih Status Akun --" />
@@ -248,12 +263,12 @@ const KepegawaianSection = ({ updateForm, formData }: any) => {
             </Select>
           </div>
 
-         { /* Status Kerja */}
+          {/* Status Kerja */}
           <div className="flex flex-col gap-2">
             <Label className="font-semibold">Status Kerja <span className="text-red-500">*</span></Label>
             <Select
-              onValueChange={(value) => updateForm("akun", value)}
-              defaultValue={formData?.kerja}
+              onValueChange={(value) => updateForm("statusKerja", value)}
+              defaultValue={formData?.statusKerja}
             >
               <SelectTrigger className="h-[42px] bg-white">
                 <SelectValue placeholder="-- Pilih Status Kerja --" />
@@ -263,6 +278,56 @@ const KepegawaianSection = ({ updateForm, formData }: any) => {
                 <SelectItem value="Tidak Aktif">Tidak Aktif</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+
+         {/* NPWP  */}
+          <div className="col-span-2 flex flex-col gap-2 mt-2">
+            <Label className="font-semibold text-sm">Apakah karyawan memiliki NPWP? <span className="text-red-500">*</span></Label>
+            <div className="flex items-center gap-8"> 
+              
+              {/* Pilihan YA */}
+              <label className="flex items-center gap-3 cursor-pointer group select-none">
+                <div className="relative flex items-center">
+                  <input
+                    type="radio"
+                    name="punyaNPWP"
+                    value="YA"
+                    checked={formData.punyaNPWP === "YA"}
+                    onChange={(e) => updateForm("punyaNPWP", e.target.value)}
+                    className="w-5 h-5 border-2 border-gray-300 text-[#0F2A4D] focus:outline-none focus:ring-0 accent-[#0F2A4D] cursor-pointer transition-colors"
+                  />
+                </div>
+                <span className="text-sm font-medium text-gray-600 group-hover:text-[#0F2A4D] transition-colors">
+                  YA
+                </span>
+              </label>
+
+              {/* Pilihan TIDAK */}
+              <label className="flex items-center gap-3 cursor-pointer group select-none">
+                <div className="relative flex items-center">
+                  <input
+                    type="radio"
+                    name="punyaNPWP"
+                    value="TIDAK"
+                    checked={formData.punyaNPWP === "TIDAK"}
+                    onChange={(e) => updateForm("punyaNPWP", e.target.value)}
+                    className="w-5 h-5 border-2 border-gray-300 text-[#0F2A4D] focus:outline-none focus:ring-0 accent-[#0F2A4D] cursor-pointer transition-colors"
+                  />
+                </div>
+                <span className="text-sm font-medium text-gray-600 group-hover:text-[#0F2A4D] transition-colors">
+                  TIDAK
+                </span>
+              </label>
+
+            </div>
+            
+            {/* Warning otomatis */}
+            {formData.punyaNPWP === "TIDAK" && (
+              <div className="mt-3 flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-md text-xs text-amber-800 animate-in fade-in slide-in-from-top-1 duration-200">
+                <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+                <p>Jika karyawan <strong>tidak memiliki NPWP</strong>, potongan PPh Pasal 21 akan dikenakan tarif <strong>20% lebih tinggi</strong> sesuai ketentuan perpajakan.</p>
+              </div>
+            )}
           </div>
 
         </div>

@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 const KontakSection = ({ updateForm, formData }: any) => {
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-      <div className="flex items-center space-x-2 p-3 bg-[#2794EB] text-white rounded-t-lg">
+      <div className="flex items-center space-x-2 p-3 bg-[#0F2A4D] text-white rounded-t-lg">
         <Phone className="w-5 h-5" />
         <h3 className="font-semibold">Kontak Darurat</h3>
       </div>

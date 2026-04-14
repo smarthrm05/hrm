@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 const DataPribadiSection = ({ formData, updateForm }: any) => {
   return (
     <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-      <div className="flex items-center space-x-2 p-3 bg-[#2794EB] text-white rounded-t-lg">
+      <div className="flex items-center space-x-2 p-3 bg-[#0F2A4D] text-white rounded-t-lg">
         <User className="w-5 h-5" />
         <h3 className="font-semibold">Data Pribadi</h3>
       </div>
@@ -85,7 +85,7 @@ const DataPribadiSection = ({ formData, updateForm }: any) => {
             <Input
               type="text"
               placeholder="Tempat Lahir"
-              className="bg-[#ffff] text-sm"
+              className="bg-white text-sm"
               value={formData.tempatLahir || ""}
               onChange={(e) => updateForm("tempatLahir", e.target.value)}
             />
@@ -96,7 +96,7 @@ const DataPribadiSection = ({ formData, updateForm }: any) => {
             <Label className="font-semibold">Tanggal Lahir <span className="text-red-500">*</span></Label>
             <Input
               type="date"
-              className="bg-[#ffff] text-sm"
+              className="bg-white text-sm"
               onChange={(e) => updateForm("tanggallahir", e.target.value)}
             />
           </div>

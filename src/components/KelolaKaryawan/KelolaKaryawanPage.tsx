@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import Swal from 'sweetalert2';
 import {
   Table,
   TableBody,
@@ -12,30 +11,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Card, CardContent } from '@/components/ui/card';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  Search,
-  Eye,
-  Trash2,
-  Download,
-  Upload,
-  CheckCircle,
-  XCircle,
-  Calendar,
-  Trash,
-  TrendingUp,
-  TrendingDown,
-  AlertCircle,
-} from 'lucide-react';
-
-import * as Dialog from '@radix-ui/react-dialog';
-import { Cross2Icon } from '@radix-ui/react-icons';
+import { Search, Eye, Trash2, CheckCircle, XCircle } from 'lucide-react';
 
 const StatusLabel = ({ status }: { status: string }) => {
   const isAktif = status === 'Aktif';
@@ -82,30 +58,10 @@ const mockData: Karyawan[] = [
   },
 ];
 
-const formatTanggal = (tanggal: string): string => {
-  const [year, month, day] = tanggal.split('-');
-  return `${day}-${month}-${year}`;
-};
-
-const ReminderLabel = ({ text }: { text: string }) => {
-  const isReminder = text?.toLowerCase().includes('kontrak akan habis');
-
-  if (!text || text === '-' || !isReminder) {
-    return <span className="text-gray-400 text-sm">{text}</span>;
-  }
-
-  return (
-    <span className="bg-orange-300 text-black text-xs px-2 py-1 rounded-md">
-      {text}
-    </span>
-  );
-};
-
 const KelolaKaryawanPage = () => {
   const navigate = useNavigate();
   const [data, setData] = useState<Karyawan[]>(mockData);
   const [search, setSearch] = useState('');
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   const filteredData = data.filter((k) =>
     [k.nama, k.divisi, k.jabatan].some((field) =>
@@ -121,7 +77,6 @@ const KelolaKaryawanPage = () => {
     <div className="p-6 space-y-6">
       <h1 className="text-2xl font-bold">Manajemen Karyawan</h1>
 
-      {/* Search */}
       <div className="flex justify-between">
         <div className="relative">
           <Search className="absolute left-2 top-2 w-4 h-4 text-gray-400" />
@@ -138,7 +93,6 @@ const KelolaKaryawanPage = () => {
         </Button>
       </div>
 
-      {/* Table */}
       <Card>
         <CardContent>
           <Table>
