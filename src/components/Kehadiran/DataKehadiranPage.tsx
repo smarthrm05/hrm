@@ -182,7 +182,7 @@ export const DataKehadiranPage = () => {
                   <TableHead className="border text-white whitespace-nowrap">Jam Masuk</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Shift</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Lokasi Masuk</TableHead>
-                  <TableHead className="border text-white whitespace-nowrap">Detail Masuk</TableHead>
+                  <TableHead className="border text-white whitespace-nowrap">Detail Lokasid</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Catatan Masuk</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Jam Pulang</TableHead>
                   <TableHead className="border text-white whitespace-nowrap">Shift</TableHead>
